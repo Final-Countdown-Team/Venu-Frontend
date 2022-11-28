@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100&display=swap");
+
+// FONTS
+$font-main: "Roboto", sans-serif;
+$font-special: "Major Mono Display", monospace;
+
+// COLORS
+$color-venu-primary: #b02476;
+$color-artist-primary: #0168b5;
+$color-text-white: #f4f4f4;
+$color-text-black: #222;
+$color-text-placeholder: #555;
+
+// Border radius
+$brad-sm: 5px;
+$brad-md: 10px;
+$brad-lg: 15px;
+$brad-xxl: 25px;
+
+// Box shadows
+$drop-black-sm: 0 5px 5px #111;
+$drop-black-md: 2px 10px 10px #111;
+$drop-black-lg: 4px 15px 20px #111;
+
+// ----- Media Queries Utlity -----
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone-xs {
+    @media only screen and (max-width: 325px) {
+      @content;
+    }
+  }
+  @if $breakpoint == landscape {
+    @media only screen and (min-width: 600px) {
+      @content;
+    }
+  }
+  @if $breakpoint == medium {
+    @media only screen and (min-width: 800px) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop-lg {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop-xl {
+    @media only screen and (min-width: 1920px) {
+      @content;
+    }
+  }
+}
