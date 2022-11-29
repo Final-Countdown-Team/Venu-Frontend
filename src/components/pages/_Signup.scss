@@ -1,0 +1,21 @@
+@import "../../Utilities";
+
+.signup-page {
+  .signup-heading {
+    font-family: $font-special;
+    padding: 1rem 2rem 3rem;
+
+    h1 {
+      padding: 1rem;
+      font-size: 4rem;
+    }
+    h2 {
+      text-transform: lowercase;
+    }
+  }
+  .arrow-back {
+    font-size: 4rem;
+    padding: 1.5rem;
+    display: flex;
+  }
+}
