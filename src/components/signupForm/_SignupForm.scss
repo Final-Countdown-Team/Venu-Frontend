@@ -1,0 +1,66 @@
+@import "../../_Utilities.scss";
+@import "../formInputs/FormInputs";
+
+.signup-form {
+  background-color: $color-bg-form;
+  border-radius: 15px;
+  max-width: 90%;
+  margin: auto;
+  overflow: hidden;
+
+  // TOP GROUP
+  .form-top-group {
+    padding: 1.5rem;
+    position: relative;
+    &--image {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      padding: 1.5rem;
+      transform: translateY(-50%);
+      img {
+        width: 11rem;
+      }
+    }
+    &--inputs {
+      position: relative;
+      z-index: 2;
+      .form-input-half {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 60%;
+        padding-bottom: 0.5rem;
+      }
+    }
+  }
+
+  // GENERAL
+  .form-group-bg {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem 1.5rem 3rem;
+  }
+
+  .form-group-transparent {
+    padding: 1rem 1.5rem 3rem;
+  }
+
+  .form-group-password {
+    padding-bottom: 0.5rem;
+  }
+
+  .form-group-button {
+    margin-top: 1rem;
+  }
+
+  .form-info-text {
+    font-size: 1.2rem;
+    text-align: justify;
+    opacity: 0.5;
+  }
+
+  .form-group-heading {
+    text-align: left;
+    padding-bottom: 1rem;
+  }
+}

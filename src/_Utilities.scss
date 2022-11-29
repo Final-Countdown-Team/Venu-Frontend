@@ -6,10 +6,15 @@ $font-special: "Major Mono Display", monospace;
 
 // COLORS
 $color-venu-primary: #b02476;
+$color-venu-primary-transparent: rgba(176, 36, 118, 0.2);
+
 $color-artist-primary: #0168b5;
 $color-text-white: #f4f4f4;
 $color-text-black: #222;
 $color-text-placeholder: #555;
+
+$color-bg-black: #111;
+$color-bg-form: rgba(31, 38, 47, 0.8);
 
 // Border radius
 $brad-sm: 5px;
