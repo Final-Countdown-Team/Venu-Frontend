@@ -1,29 +1,93 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+:root {
+	--background-color: #fff;
+	--background-color-2: #111010;
+	--background-light: #fff;
+	--shadow-color: rgba(0, 0, 0, 0.2);
+	--primary-color: #B02476;
+	--text-color: #0a0a0a;
+	--text-color-2: #fff;
+	--text-color-light: #fff;
+	--text-light: #575757;
+	--font-size: 16px;
+	--animation-speed: 1;
 }
-html {
-  font-size: 62.5%;
+
+@function getAnimationDuration($duration: number) {
+	@return calc($duration * var(--animation-speed));
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  font-size: 1.6rem;
-  height: 100vh;
-  width: 100vw;
+	font-size: var(--font-size);
+	font-family: "Roboto", sans-serif;
+	padding-top: 55px;
+	background-color: var(--background-light);
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 a {
-  color: inherit;
+	text-decoration: none;
 }
+
+@import "./components/navbar/_Navbar";
+
+@media screen and (max-width: 1280px) {
+	.container {
+		padding-inline: 18vw;
+	}
+}
+@media screen and (max-width: 1050px) {
+	.container {
+		padding-inline: 12vw;
+	}
+}
+@media screen and (max-width: 768px) {
+	.navbar {
+		.nav-links {
+			display: none;
+		}
+		.sidebar-btn {
+			display: block;
+		}
+	}
+}
+@media screen and (max-width: 480px) {
+	.container {
+		padding-inline: 3vw;
+	}
+}
+
+
+
+// * {
+//   padding: 0;
+//   margin: 0;
+//   box-sizing: border-box;
+// }
+// html {
+//   font-size: 62.5%;
+// }
+
+// body {
+//   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+//     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+//     sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+
+//   font-size: 1.6rem;
+//   height: 100vh;
+//   width: 100vw;
+// }
+
+// code {
+//   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+//     monospace;
+// }
+
+// a {
+//   color: inherit;
+// }
