@@ -14,7 +14,10 @@ $color-text-black: #222;
 $color-text-placeholder: #555;
 
 $color-bg-black: #111;
+$color-bg-white: #fff;
 $color-bg-form: rgba(31, 38, 47, 0.8);
+
+$color-shadow-black: #00000033;
 
 // Border radius
 $brad-sm: 5px;
@@ -26,6 +29,11 @@ $brad-xxl: 25px;
 $drop-black-sm: 0 5px 5px #111;
 $drop-black-md: 2px 10px 10px #111;
 $drop-black-lg: 4px 15px 20px #111;
+
+// ----- Functions -----
+@function getAnimationDuration($duration: number) {
+  @return calc($duration * var(--animation-speed));
+}
 
 // ----- Media Queries Utlity -----
 @mixin respond($breakpoint) {
