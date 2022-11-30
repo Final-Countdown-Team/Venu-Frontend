@@ -2,7 +2,7 @@
 	--background-color: #fff;
 	--background-color-2: #111010;
 	--background-light: #fff;
-	--shadow-color: rgba(0, 0, 0, 0.2);
+	--shadow-color: #00000033;
 	--primary-color: #B02476;
 	--text-color: #0a0a0a;
 	--text-color-2: #fff;
@@ -54,6 +54,7 @@ a {
 		}
 	}
 }
+
 @media screen and (max-width: 480px) {
 	.container {
 		padding-inline: 3vw;
