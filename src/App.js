@@ -5,11 +5,14 @@ import "./App.scss";
 import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
 import Home from "./components/pages/Home";
+import SearchBar from "./components/search/SearchBar";
+
 
 function App() {
   return (
     <Router>
       <div className="wrapper">
+        <SearchBar />
         <Routes>
           <Route path="/" element={<NavbarLayout />}>
             <Route index element={<Home />} />

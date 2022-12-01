@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import Sidebar from "../navbar/Sidebar";
 import "./_Navbar.scss";
 import venuLogo from "../../img/venu-logo.png";
-// import { faHome } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Navbar() {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -14,7 +14,6 @@ export default function Navbar() {
     {
       name: "Home",
       path: "/",
-      // icon: faHome
     },
     {
       name: "artists",
