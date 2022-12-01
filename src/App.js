@@ -5,17 +5,17 @@ import "./App.scss";
 import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
 import Home from "./components/pages/Home";
-import SearchBar from "./components/search/SearchBar";
-
+import VenuesOverview from "./components/pages/VenuesOverview";
 
 function App() {
   return (
     <Router>
       <div className="wrapper">
-        <SearchBar />
         <Routes>
           <Route path="/" element={<NavbarLayout />}>
             <Route index element={<Home />} />
+            <Route path="/venues" element={<VenuesOverview />} />
+            <Route path="/artists" element={<VenuesOverview />} />
           </Route>
           <Route path="/venues/signup" element={<Signup type={"venues"} />} />
           <Route path="/artists/signup" element={<Signup type={"artists"} />} />
