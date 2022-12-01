@@ -21,7 +21,7 @@ export default function SearchBar(props) {
 			<input
 				onChange={handleSearch}
 				onKeyPress={handleSubmit}
-				type="search"
+				type="text"
 				value={searchText}
 				placeholder="Search for artist"
 			/>
