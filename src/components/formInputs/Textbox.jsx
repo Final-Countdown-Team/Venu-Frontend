@@ -1,12 +1,15 @@
-import React from "react";
+import { Field } from "formik";
 
-function Textbox({ placeholder }) {
+function Textbox(props) {
+  const { name, placeholder } = props;
+
   return (
-    <textarea
+    <Field
+      as="textarea"
       className="textbox"
-      name="description"
+      name={name}
       placeholder={placeholder}
-    ></textarea>
+    />
   );
 }
 

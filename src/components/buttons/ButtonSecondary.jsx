@@ -6,7 +6,7 @@ function ButtonSecondary({ text, link, submit, type }) {
     <button
       type={submit && "submit"}
       className={`button-secondary ${
-        type === "venue"
+        type === "venues"
           ? "button-secondary--venue"
           : "button-secondary--artist"
       }`}

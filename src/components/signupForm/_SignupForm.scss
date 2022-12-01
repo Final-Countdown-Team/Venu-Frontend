@@ -4,7 +4,8 @@
 .signup-form {
   background-color: $color-bg-form;
   border-radius: 15px;
-  max-width: 90%;
+  max-width: 60rem;
+  min-width: 28rem;
   margin: auto;
   overflow: hidden;
 
@@ -23,8 +24,7 @@
       }
     }
     &--inputs {
-      position: relative;
-      z-index: 2;
+      // position: relative;
       .form-input-half {
         display: flex;
         flex-direction: column;

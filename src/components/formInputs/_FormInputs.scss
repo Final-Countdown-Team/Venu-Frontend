@@ -25,11 +25,20 @@
   margin-bottom: 0.5rem;
   border-radius: 8px;
   border: none;
+  outline-offset: 2px;
+
+  &:focus {
+    outline: 2px solid $color-artist-primary;
+  }
 
   &::placeholder {
     font-size: 1.1rem;
     color: $color-text-placeholder;
     opacity: 1;
+  }
+
+  &-error {
+    outline: 2px solid #fa5c5c;
   }
 }
 
@@ -58,10 +67,10 @@
 .datepicker-group {
   .datepicker-container {
     width: 100%;
-    position: relative;
   }
   .datepicker-input {
     cursor: pointer;
+    font-size: 1.1rem;
   }
 
   .datepicker-icon {
@@ -74,4 +83,11 @@
     font-size: 3rem;
     pointer-events: none;
   }
+}
+
+.error {
+  color: #fc8181;
+  font-size: 1rem;
+  text-align: left;
+  margin-top: 0.25rem;
 }
