@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import "./_SearchBar.scss";
+import "./_SearchBar.scss";
 
 export default function SearchBar(props) {
 	const { onSearch } = props;
@@ -15,28 +15,18 @@ export default function SearchBar(props) {
 		if (e.key === "Enter") {
 			onSearch(searchText);
 		}
-    };
-    
-    const inputStyle = {
-			width: "40%",
-			height: "40px",
-			borderRadius: "20px",
-			// border: "1px solid #ccc",
-			position: "relative",
-			zIndex: "1",
-			padding: "0 20px",
-			marginTop: "20px",
-		};
+	};
+
 
 	return (
-		<div className="searchBar">
+		<div>
 			<input
+				className="searchBar"
 				onChange={handleSearch}
 				onKeyPress={handleSubmit}
-				type="text"
+				type="search"
 				value={searchText}
 				placeholder="Search for artist"
-				style={inputStyle}
 			/>
 		</div>
 	);

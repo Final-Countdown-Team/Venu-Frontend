@@ -1,7 +1,7 @@
 @import "../../_Utilities.scss";
 
 .searchBar {
-    width: 100%;
+    width: 50%;
     height: 40px;
     border-radius: 20px;
     border: "1px solid #ccc";
@@ -9,4 +9,5 @@
     z-index: 1;
     position: relative;
     margin-top: 20px;
+    font-size: 1.5rem;
 }
