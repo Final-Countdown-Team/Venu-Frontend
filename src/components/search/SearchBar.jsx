@@ -17,7 +17,7 @@ export default function SearchBar(props) {
 	};
 
 	return (
-		<div className="saerchBar">
+		<div className="searchBar">
 			<input
 				onChange={handleSearch}
 				onKeyPress={handleSubmit}
