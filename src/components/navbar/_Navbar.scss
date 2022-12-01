@@ -90,6 +90,7 @@
       }
     }
     &.active {
+      z-index: 1000;
       .bar {
         transform-origin: center;
         top: 50%;

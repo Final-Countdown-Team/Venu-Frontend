@@ -5,7 +5,6 @@ import SignupForm from "../signupForm/SignupForm";
 import { MdArrowBack } from "react-icons/md";
 
 function Signup({ type }) {
-  console.log(type);
   return (
     <div className="signup-page">
       <div className="signup-heading">
@@ -13,9 +12,11 @@ function Signup({ type }) {
         <h2>Sign Up</h2>
       </div>
       <SignupForm type={type} />
-      <NavLink to="/" className="arrow-back">
-        <MdArrowBack />
-      </NavLink>
+      <div className="arrow-container">
+        <NavLink to="/" className="arrow-back">
+          <MdArrowBack className="arrow-icon" />
+        </NavLink>
+      </div>
     </div>
   );
 }

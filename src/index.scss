@@ -13,10 +13,11 @@ html {
 body {
   font-size: 1.6rem;
   font-family: $font-main;
-  background-color: $color-bg-black;
+  background-color: #000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
+  overflow-x: hidden;
 }
 
 code {

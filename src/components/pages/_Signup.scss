@@ -13,9 +13,18 @@
       text-transform: lowercase;
     }
   }
-  .arrow-back {
+  .arrow-container {
     font-size: 4rem;
-    padding: 1.5rem;
+    margin: auto;
+    max-width: 60rem;
     display: flex;
+    .arrow-back {
+      padding: 1rem 0;
+      transition: all 0.1s;
+
+      &:hover {
+        color: $color-venu-primary;
+      }
+    }
   }
 }
