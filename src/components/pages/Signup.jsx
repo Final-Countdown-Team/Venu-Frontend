@@ -1,8 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+
 import "./_Signup.scss";
 import SignupForm from "../signupForm/SignupForm";
-import { MdArrowBack } from "react-icons/md";
+import ArrowBack from "../utils/ArrowBack";
 
 function Signup({ type }) {
   return (
@@ -12,11 +12,7 @@ function Signup({ type }) {
         <h2>Sign Up</h2>
       </div>
       <SignupForm type={type} />
-      <div className="arrow-container">
-        <NavLink to="/" className="arrow-back">
-          <MdArrowBack className="arrow-icon" />
-        </NavLink>
-      </div>
+      <ArrowBack />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "./_ButtonSecondary.scss";
 
-function ButtonSecondary({ text, link, submit, type }) {
+function ButtonSecondary({ text, purpose, submit, type }) {
   return (
     <button
       type={submit && "submit"}
@@ -9,7 +9,7 @@ function ButtonSecondary({ text, link, submit, type }) {
         type === "venues"
           ? "button-secondary--venue"
           : "button-secondary--artist"
-      }`}
+      } ${purpose === "login" && "button-login"}`}
     >
       {text}
     </button>

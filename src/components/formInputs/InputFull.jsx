@@ -6,18 +6,23 @@ function InputFull(props) {
 
   const { name, label, type, required, placeholder, thin } = props;
 
-  const blurHandler = async (e) => {
-    const val = e.target.value;
+  const changeHandler = (e) => {
     if (type === "url") {
-      if (val.startsWith("https://")) return field.onBlur(e);
-      if (!val || val === "https://")
-        return formikContext.setFieldValue(name, "");
-      if (!val.startsWith("https://")) {
-        formikContext.setFieldValue(name, "https://" + val);
-      }
-    } else {
-      field.onBlur(e);
+      const prefix = "https://";
+      const input = e.target.value;
+      e.target.value = prefix + input.substr(prefix.length);
+      formikContext.setFieldValue(name, e.target.value);
     }
+    formikContext.setFieldValue(name, e.target.value);
+  };
+
+  const blurHandler = (e) => {
+    const input = e.target.value;
+    if (type === "url" && input === "https://") {
+      e.target.value = "";
+      return formikContext.setFieldValue(name, e.target.value);
+    }
+    field.onBlur(e);
   };
 
   return (
@@ -38,6 +43,7 @@ function InputFull(props) {
         type={type ? type : "text"}
         name={name}
         placeholder={placeholder}
+        onChange={(e) => changeHandler(e)}
         onBlur={(e) => blurHandler(e)}
       />
       <ErrorMessage name={name} component="div" className="error" />

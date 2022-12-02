@@ -26,6 +26,7 @@
   border-radius: 8px;
   border: none;
   outline-offset: 2px;
+  position: relative;
 
   &:focus {
     outline: 2px solid $color-artist-primary;
@@ -75,10 +76,8 @@
 
   .datepicker-icon {
     position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.5;
+    right: 1rem;
+    opacity: 0.6;
     color: $color-text-black;
     font-size: 3rem;
     pointer-events: none;
@@ -87,7 +86,9 @@
 
 .error {
   color: #fc8181;
-  font-size: 1rem;
   text-align: left;
-  margin-top: 0.25rem;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0;
+  bottom: -1rem;
 }
