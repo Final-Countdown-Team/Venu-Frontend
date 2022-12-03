@@ -21,6 +21,11 @@
   }
 }
 
+.blur-wrapper {
+  filter: blur(4px);
+  transition: filter 0.7s;
+}
+
 @keyframes transition {
   0% {
     filter: grayscale(1);

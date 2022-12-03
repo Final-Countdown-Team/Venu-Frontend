@@ -23,8 +23,9 @@ function LoginForm({ type }) {
         try {
           console.log(values);
 
-          const req = await fetch(`http://127.0.0.1:6969/${type}/login`, {
+          const req = await fetch(`/${type}/login`, {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },

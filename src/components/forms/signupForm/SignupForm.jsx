@@ -43,8 +43,9 @@ function SignupForm({ type }) {
           };
           console.log(newValues);
           // Sending POST request to backend
-          const req = await fetch(`http://127.0.0.1:6969/${type}/signup`, {
+          const req = await fetch(`/${type}/signup`, {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
