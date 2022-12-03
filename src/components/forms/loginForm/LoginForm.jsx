@@ -3,7 +3,7 @@ import "./_LoginForm.scss";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import InputFull from "../formInputs/InputFull";
-import ButtonSecondary from "../buttons/ButtonSecondary";
+import ButtonSecondary from "../../buttons/ButtonSecondary";
 
 function LoginForm({ type }) {
   return (
@@ -19,8 +19,25 @@ function LoginForm({ type }) {
           .required("Required"),
         password: yup.string().required("Required"),
       })}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={async (values, actions) => {
+        try {
+          console.log(values);
+
+          const req = await fetch(`http://127.0.0.1:6969/${type}/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          });
+          const res = await req.json();
+          if (res.status === "fail") throw new Error(res.message);
+
+          console.log(res);
+        } catch (err) {
+          console.error(err);
+          actions.setErrors({ email: err.message, password: err.message });
+        }
       }}
     >
       <Form noValidate className="login-form">

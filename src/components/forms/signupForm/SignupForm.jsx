@@ -1,14 +1,14 @@
-import "./_SignupForm.scss";
-
 import { Formik, Form } from "formik";
+
+import "./_SignupForm.scss";
 import { signUpSchema, signupInitialValues } from "./signUpSchema";
-import defaultUser from "../../img/default_user_small.png";
+import defaultUser from "../../../img/default_user_small.png";
 import InputHalf from "../formInputs/InputHalf";
 import InputFull from "../formInputs/InputFull";
 import Textbox from "../formInputs/Textbox";
 import DropdownGenre from "../formInputs/DropdownGenre";
 import DateSelector from "../formInputs/DateSelector";
-import ButtonSecondary from "../buttons/ButtonSecondary";
+import ButtonSecondary from "../../buttons/ButtonSecondary";
 
 function SignupForm({ type }) {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./_Signup.scss";
-import SignupForm from "../signupForm/SignupForm";
+import SignupForm from "../forms/signupForm/SignupForm";
 import ArrowBack from "../utils/ArrowBack";
 
 function Signup({ type }) {

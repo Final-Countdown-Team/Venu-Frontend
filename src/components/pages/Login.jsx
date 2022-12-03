@@ -1,5 +1,5 @@
 import React from "react";
-import LoginForm from "../loginForm/LoginForm";
+import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
 
