@@ -12,13 +12,6 @@
     align-items: center;
     width: fit-content;
 
-    &-venues:hover {
-      color: $color-venu-primary;
-    }
-    &-artists:hover {
-      color: $color-artist-primary;
-    }
-
     &-text {
       font-family: $font-special;
       font-size: 2rem;
@@ -26,5 +19,11 @@
     &-login {
       margin-top: 5rem;
     }
+  }
+  .arrow-back-venues:hover {
+    color: $color-venu-primary;
+  }
+  .arrow-back-artists:hover {
+    color: $color-artist-primary;
   }
 }

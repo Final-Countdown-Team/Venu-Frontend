@@ -6,12 +6,19 @@ function InputFull(props) {
 
   const { name, label, type, required, placeholder, thin } = props;
 
+  const focusHandler = (e) => {
+    if (type === "url") {
+      const prefix = "https://";
+      formikContext.setFieldValue(name, prefix);
+    }
+    return;
+  };
+
   const changeHandler = (e) => {
     if (type === "url") {
       const prefix = "https://";
       const input = e.target.value;
       e.target.value = prefix + input.substr(prefix.length);
-      formikContext.setFieldValue(name, e.target.value);
     }
     formikContext.setFieldValue(name, e.target.value);
   };
@@ -43,6 +50,7 @@ function InputFull(props) {
         type={type ? type : "text"}
         name={name}
         placeholder={placeholder}
+        onFocus={(e) => focusHandler(e)}
         onChange={(e) => changeHandler(e)}
         onBlur={(e) => blurHandler(e)}
       />

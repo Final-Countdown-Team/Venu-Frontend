@@ -52,3 +52,24 @@ export const signUpSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords do not match")
     .required("This field is required"),
 });
+
+export const signupInitialValues = {
+  name: "",
+  email: "",
+  address: {
+    street: "",
+    city: "",
+    zipcode: "",
+  },
+  description: "",
+  genre: "",
+  facebookUrl: "",
+  instagramTag: "",
+  twitterTag: "",
+  websiteUrl: "",
+  capacity: "",
+  members: "",
+  dates: "",
+  password: "",
+  passwordConfirm: "",
+};

@@ -12,7 +12,7 @@ function Signup({ type }) {
         <h2>Sign Up</h2>
       </div>
       <SignupForm type={type} />
-      <ArrowBack />
+      <ArrowBack type={type} />
     </div>
   );
 }
