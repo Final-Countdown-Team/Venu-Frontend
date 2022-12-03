@@ -1,13 +1,14 @@
 import React from "react";
-import { useState } from "react";
+import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Sidebar from "../navbar/Sidebar";
 import "./_Navbar.scss";
 import venuLogo from "../../img/venu-logo.png";
-
+import { MainContext } from "../contexts/MainContext";
 
 export default function Navbar() {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const { showSidebar, setShowSidebar } = useContext(MainContext);
+
   const location = useLocation();
 
   const links = [
@@ -43,15 +44,16 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar navbar-container">
-        <Link to="/" className="logo">
+      <div className="navbar">
+        <Link to="/" className={`logo ${showSidebar && "logo-active"}`}>
           <img
             src={venuLogo}
-            alt=""
+            alt="company logo"
             width="50"
             height="50"
             boarder-radius="50"
           />
+          <span>Venu</span>
         </Link>
         <div className="nav-links">
           {links.map((link) => (
@@ -65,15 +67,15 @@ export default function Navbar() {
           ))}
         </div>
         <div
-          onClick={() => setShowSidebar(true)}
-          className={showSidebar ? "sidebar-btn active" : "sidebar-btn"}
+          onClick={() => setShowSidebar(!showSidebar)}
+          className={`sidebar-btn ${showSidebar && "active"}`}
         >
           <div className="bar"></div>
           <div className="bar"></div>
           <div className="bar"></div>
         </div>
       </div>
-      {showSidebar && <Sidebar close={closeSidebar} links={links} />}
+      <Sidebar close={closeSidebar} links={links} />
     </>
   );
 }

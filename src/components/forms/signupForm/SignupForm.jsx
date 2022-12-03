@@ -1,41 +1,70 @@
-import "./_SignupForm.scss";
-
 import { Formik, Form } from "formik";
-import { signUpSchema } from "./signUpSchema";
-import defaultUser from "../../img/default_user_small.png";
+
+import "./_SignupForm.scss";
+import { signUpSchema, signupInitialValues } from "./signUpSchema";
+import defaultUser from "../../../img/default_user_small.png";
 import InputHalf from "../formInputs/InputHalf";
 import InputFull from "../formInputs/InputFull";
 import Textbox from "../formInputs/Textbox";
 import DropdownGenre from "../formInputs/DropdownGenre";
 import DateSelector from "../formInputs/DateSelector";
-import ButtonSecondary from "../buttons/ButtonSecondary";
+import ButtonSecondary from "../../buttons/ButtonSecondary";
 
 function SignupForm({ type }) {
   return (
     <Formik
-      initialValues={{
-        name: "",
-        email: "",
-        address: {
-          street: "",
-          city: "",
-          zipcode: "",
-        },
-        description: "",
-        genre: "",
-        facebookUrl: "",
-        instagramTag: "",
-        twitterTag: "",
-        websiteUrl: "",
-        capacity: "",
-        members: "",
-        dates: "",
-        password: "",
-        passwordConfirm: "",
-      }}
+      initialValues={signupInitialValues}
       validationSchema={signUpSchema}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={async (values, actions) => {
+        try {
+          // const { street, city, zipcode } = values.address;
+          // // Fetching address data from geoApify
+          // const geoRes = await fetch(
+          //   `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
+          // );
+
+          // if (!geoRes.ok)
+          //   throw new Error(
+          //     "Something went wrong validating your address. Please check if you entered a valid address."
+          //   );
+          // const geoData = await geoRes.json();
+          // // Destructuring coordinates
+          // const [{ lat, lon }] = geoData.results;
+          // console.log(lat, lon);
+
+          // const newValues = {
+          //   ...values,
+          //   location: { coordinates: [lon, lat] },
+          // };
+
+          const newValues = {
+            ...values,
+            location: { coordinates: [12.75597, 51.372651] },
+          };
+          console.log(newValues);
+          // Sending POST request to backend
+          const req = await fetch(`/${type}/signup`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newValues),
+          });
+          const res = await req.json();
+          // Throw error when failed
+          if (res.status === "fail") {
+            const error = new Error(res.message);
+            error.code = res.code;
+            throw error;
+          }
+        } catch (err) {
+          console.error(err);
+          if (err.code === 11000) {
+            const [name, message] = err.message.split(":");
+            actions.setFieldError(name, message);
+          }
+        }
       }}
     >
       <Form noValidate className="signup-form">

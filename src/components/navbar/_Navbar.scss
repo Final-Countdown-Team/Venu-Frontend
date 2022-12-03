@@ -1,48 +1,61 @@
 @import "../../_Utilities.scss";
 
+@function getAnimationDuration($duration: number) {
+  @return calc($duration * var(--animation-speed));
+}
+
 .navbar {
-  height: 68px;
-  box-shadow: 0 3px 6px $color-shadow-black;
-  background-color: $color-bg-black;
-  color: $color-text-black;
+  height: 8rem;
+  box-shadow: 0 3px 6px #000;
+  background-color: rgba(20, 20, 20, 0.701);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   width: 100%;
-  top: 0;
-  z-index: 998;
   padding-inline: 3vw;
-
-  @include respond(desktop-lg) {
-    padding-inline: 18vw;
-  }
+  transition: all 0.7s;
 
   .logo {
-    margin-left: 0.7em;
+    margin-left: 1rem;
+    font-family: $font-special;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+
+    span {
+      padding-left: 1rem;
+    }
+  }
+  .logo-active {
+    filter: blur(2px);
   }
   .nav-links {
     display: none;
     a {
-      margin-left: 1em;
+      position: relative;
+      display: flex;
+      width: 8rem;
+      margin-left: 1rem;
       color: $color-text-white;
       letter-spacing: 2px;
       text-transform: uppercase;
-      position: relative;
-      font-size: 0.9em;
+      font-size: 1.6rem;
       margin-right: 0.7em;
 
       &::before {
         content: "";
         display: inline-block;
+        left: 0;
         height: 3px;
         width: 100%;
         background-color: $color-venu-primary;
         position: absolute;
         bottom: -5px;
-        left: 0;
         transform: scaleX(0);
-        transition: getAnimationDuration(0.2s) ease-in-out;
+        transition: all 0.2s 0.2s;
       }
       &:hover {
         &::before {
@@ -55,122 +68,97 @@
       }
     }
     @include respond(medium) {
-      display: block;
+      display: flex;
     }
   }
   .sidebar-btn {
     height: 2.8rem;
     width: 3rem;
     position: relative;
-    // display: none;
+    z-index: 100;
+
+    @include respond(medium) {
+      display: none;
+    }
 
     .bar {
-      border-radius: 5px;
-      height: 6px;
-      width: 100%;
-      background-color: $color-text-white;
+      border-radius: 4px;
+      height: 4px;
+      width: 110%;
+      background-color: $color-off-white;
       position: absolute;
-      transition: transform getAnimationDuration(0.5s);
-      &:nth-child(1) {
-        top: 0;
-      }
+      transform-origin: right;
+      transition: transform 0.5s ease-in-out;
+
       &:nth-child(2) {
         top: 50%;
-        transform-origin: right;
-        transform: scaleX(0.8) translateY(-50%);
+        transform: scaleX(1) translateY(-50%);
+        transform-origin: center;
       }
       &:nth-child(3) {
         top: 100%;
-        transform-origin: right;
-        transform: scaleX(1.1) translateY(-100%);
-      }
-
-      @include respond(medium) {
-        display: none;
+        transform: scaleX(1) translate(0, -100%) rotate(0);
       }
     }
     &.active {
-      z-index: 1000;
       .bar {
-        transform-origin: center;
-        top: 50%;
         &:nth-child(1) {
-          transform: translate(0, -50%) scale(1) rotate(45deg);
+          transform: translate(0, 50%) scale(1) rotate(-45deg);
         }
         &:nth-child(2) {
           transform: scaleX(0) translateY(-50%);
+          transition: transform 0.2s;
         }
         &:nth-child(3) {
-          transform: translate(0, -50%) scale(1) rotate(-45deg);
+          transform: translate(0, -50%) scale(1) rotate(45deg);
         }
       }
     }
   }
 }
 .sidebar {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100vh;
   width: 100%;
-  z-index: 999;
-  background-color: rgba(0, 0, 0, 0.861);
-  // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.2), 3px 0 5px $color-shadow-black;
-  animation: getAnimationDuration(0.3s) slideInLeft;
+  z-index: 10;
+  padding-top: 8rem;
+  background: linear-gradient(0deg, #220717d5, #00121fe6);
+  transition: all 0.7s ease;
+
   .sidebar-link {
     display: block;
-    padding: 0.5em 1em;
-    border-left: 0.4em solid transparent;
+    position: relative;
+    letter-spacing: 1rem;
+    padding: 2rem 0;
+    width: 20rem;
+    margin: auto;
+    text-transform: uppercase;
+    font-weight: 500;
     margin-bottom: 1em;
-    color: $color-text-black;
-    font-size: 1.1em;
-    transform: translateX(-100%);
-    animation: getAnimationDuration(0.3s) slideInLeft forwards;
-    @for $i from 1 through 3 {
-      &:nth-child(#{$i}) {
-        animation-delay: #{$i * 0.1}s;
+    font-size: 1.6em;
+
+    &::before {
+      content: "";
+      left: 0;
+      z-index: 100;
+      height: 3px;
+      width: 100%;
+      background-color: $color-venu-primary;
+      position: absolute;
+      bottom: -5px;
+      transform: scaleX(0);
+      transition: all 0.2s 0.2s;
+    }
+    &:hover {
+      &::before {
+        transform: scaleX(1);
       }
     }
     &.active {
-      border-left-color: $color-venu-primary;
-    }
-    &:hover {
-      border-left-color: $color-venu-primary;
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    svg {
-      width: 1.2em;
-      margin-right: 0.5em;
+      color: $color-venu-primary;
+      font-weight: bold;
     }
   }
 }
-
-// @media screen and (max-width: 1280px) {
-//   .container {
-//     padding-inline: 18vw;
-//   }
-// }
-// @media screen and (max-width: 1050px) {
-//   .container {
-//     padding-inline: 12vw;
-//   }
-// }
-// @media screen and (max-width: 768px) {
-//   .navbar {
-//     .nav-links {
-//       display: none;
-//     }
-//     .sidebar-btn {
-//       display: block;
-//     }
-//   }
-// }
-
-// @media screen and (max-width: 480px) {
-//   .container {
-//     padding-inline: 3vw;
-//   }
-// }
-
-// -----------------------------------------------------------------------------------------------
-
