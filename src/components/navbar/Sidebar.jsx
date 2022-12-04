@@ -12,11 +12,11 @@ export default function Sidebar({ links, close }) {
       className="sidebar"
       onClick={close}
       style={
-        !showSidebar
+        showSidebar
           ? {
-              transform: "translateY(-100%)",
-              visibility: "hidden",
-              userSelect: "none",
+              transform: "translateY(0)",
+              visibility: "visible",
+              userSelect: "all",
             }
           : {}
       }

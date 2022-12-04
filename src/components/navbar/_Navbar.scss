@@ -36,7 +36,6 @@
     display: none;
     a {
       position: relative;
-      display: flex;
       width: 8rem;
       margin-left: 1rem;
       color: $color-text-white;
@@ -124,6 +123,10 @@
   width: 100%;
   z-index: 10;
   padding-top: 8rem;
+  transform: translateY(-100%);
+  visibility: hidden;
+
+  user-select: none;
   background: linear-gradient(0deg, #220717d5, #00121fe6);
   transition: all 0.7s ease;
 

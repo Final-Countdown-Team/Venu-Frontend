@@ -5,7 +5,8 @@ import * as yup from "yup";
 import InputFull from "../formInputs/InputFull";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
 
-function LoginForm({ type }) {
+function LoginForm({ userType }) {
+  console.log(userType);
   return (
     <Formik
       initialValues={{
@@ -21,9 +22,7 @@ function LoginForm({ type }) {
       })}
       onSubmit={async (values, actions) => {
         try {
-          console.log(values);
-
-          const req = await fetch(`/${type}/login`, {
+          const req = await fetch(`/${userType}/login`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -32,9 +31,10 @@ function LoginForm({ type }) {
             body: JSON.stringify(values),
           });
           const res = await req.json();
+          console.log(res);
           if (res.status === "fail") throw new Error(res.message);
 
-          console.log(res);
+          actions.resetForm();
         } catch (err) {
           console.error(err);
           actions.setErrors({ email: err.message, password: err.message });
@@ -58,7 +58,7 @@ function LoginForm({ type }) {
             purpose="login"
             text="Log In"
             submit={true}
-            type={type}
+            userType={userType}
           />
         </div>
       </Form>
