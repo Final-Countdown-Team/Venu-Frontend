@@ -46,19 +46,23 @@
   // GENERAL
   .form-group-bg {
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 1rem 1.5rem 3rem;
+    padding: 2rem 1.5rem 3.3rem;
   }
 
   .form-group-transparent {
-    padding: 1rem 1.5rem 3rem;
+    padding: 2rem 1.5rem;
   }
 
-  .form-group-password {
-    padding-bottom: 0.5rem;
+  .signup-form-group-password {
+    padding-bottom: 0rem;
+  }
+
+  .edit-form-group-password {
+    padding: 2rem 1.5rem 3rem;
   }
 
   .form-group-button {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 
   .form-info-text {
@@ -69,6 +73,6 @@
 
   .form-group-heading {
     text-align: left;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
   }
 }

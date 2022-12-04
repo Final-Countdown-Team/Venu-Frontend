@@ -10,7 +10,7 @@ function NavbarLayout() {
   return (
     <div>
       <Navbar />
-      <div className={showSidebar && "blur-wrapper"}>
+      <div className={showSidebar ? "blur-wrapper" : "false"}>
         <Outlet />
       </div>
     </div>

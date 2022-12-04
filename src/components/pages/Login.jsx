@@ -3,13 +3,13 @@ import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
 
-function Login({ type }) {
+function Login({ userType }) {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h1>{type === "venues" ? "Venues" : "Artists"}</h1>
-        <LoginForm type={type} />
-        <ArrowBack type={type} className="arrow-back-login" />
+        <h1>{userType === "venues" ? "Venues" : "Artists"}</h1>
+        <LoginForm userType={userType} />
+        <ArrowBack userType={userType} className="arrow-back-login" />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { Formik, Form } from "formik";
 
-import "./_SignupForm.scss";
-import { signUpSchema, signupInitialValues } from "./signUpSchema";
+import "../signupForm/_SignupForm.scss";
+import { signUpSchema, signupInitialValues } from "../signupForm/signUpSchema";
 import defaultUser from "../../../img/default_user_small.png";
 import InputHalf from "../formInputs/InputHalf";
 import InputFull from "../formInputs/InputFull";
@@ -9,31 +9,27 @@ import Textbox from "../formInputs/Textbox";
 import DropdownGenre from "../formInputs/DropdownGenre";
 import DateSelector from "../formInputs/DateSelector";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
-import { signupOnSubmit } from "./signupOnSubmit";
+import ImageUploader from "../formInputs/ImageUploader";
 
-function SignupForm({ userType }) {
+function EditForm({ userType }) {
   return (
     <Formik
       initialValues={signupInitialValues}
       validationSchema={signUpSchema}
-      onSubmit={async (values, actions) =>
-        signupOnSubmit(values, actions, userType)
-      }
+      onSubmit={(values, actions) => console.log(values)}
     >
-      <Form noValidate className="signup-form">
+      <Form noValidate className="signup-form edit-form">
         <div className="form-top-group">
           <div className="form-top-group--inputs">
             <InputHalf
               name="name"
               label="Name"
               placeholder="Enter the name of your venue"
-              required={true}
             />
             <InputHalf
               name="email"
               label="Email"
               placeholder="Enter your email address"
-              required={true}
             />
           </div>
 
@@ -48,21 +44,18 @@ function SignupForm({ userType }) {
             name="address.street"
             label="Street"
             placeholder="Please enter the street your venue is located"
-            required={true}
             thin={true}
           />
           <InputFull
             name="address.city"
             label="City"
             placeholder="Please enter the city your venue is located"
-            required={true}
             thin={true}
           />
           <InputFull
             name="address.zipcode"
             label="Zipcode"
             placeholder="Please enter zipcode of your city"
-            required={true}
             thin={true}
           />
         </div>
@@ -122,36 +115,30 @@ function SignupForm({ userType }) {
             placeholder="Click to open date picker"
           />
         </div>
-        <div className="form-group-transparent signup-form-group-password">
+        <div className="form-group-transparent">
+          <ImageUploader />
+        </div>
+
+        <div className="form-group-bg edit-form-group-password">
           <InputFull
             name="password"
             type="password"
             label="Password"
             placeholder="Your password needs to be min. 8 characters long"
-            required={true}
           />
           <InputFull
             type="password"
             name="passwordConfirm"
             label="Password Confirm"
             placeholder="Please confirm your password"
-            required={true}
           />
           <div className="form-group-button">
             <ButtonSecondary text="Sign Up" submit={true} userType={userType} />
           </div>
-        </div>
-
-        <div className="form-group-transparent">
-          <p className="form-info-text">
-            You can complete your profile once you’ve registered. Please add
-            images and and a custom profile image. A complete profile helps you
-            to find the perfect match for your event.
-          </p>
         </div>
       </Form>
     </Formik>
   );
 }
 
-export default SignupForm;
+export default EditForm;
