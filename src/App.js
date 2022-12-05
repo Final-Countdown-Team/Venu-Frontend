@@ -2,6 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.scss";
 
+import Footer from "./components/footer/Footer";
+
+
+
 import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
 import Home from "./components/pages/Home";
@@ -48,9 +52,18 @@ function App() {
             element={<Signup userType={"artists"} />}
           />
         </Routes>
+        
+        <Footer/>
       </div>
+      
     </Router>
+
   );
 }
 
 export default App;
+{/* <div className="page-container">
+          <div className="content-wrap"> 
+          </div>
+        </div>*/}
+       
