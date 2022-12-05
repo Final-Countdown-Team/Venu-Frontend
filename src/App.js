@@ -12,18 +12,11 @@ function App() {
           <Route path="/venues/signup" element={<Signup type={"venues"} />} />
           <Route path="/artists/signup" element={<Signup type={"artists"} />} />
         </Routes>
-        
         <Footer/>
-      </div>
-      
+      </div> 
     </Router>
 
   );
 }
 
 export default App;
-{/* <div className="page-container">
-          <div className="content-wrap"> 
-          </div>
-        </div>*/}
-       
