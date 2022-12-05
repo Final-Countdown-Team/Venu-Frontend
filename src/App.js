@@ -4,8 +4,6 @@ import "./App.scss";
 
 import Footer from "./components/footer/Footer";
 
-
-
 import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
 import Home from "./components/pages/Home";
@@ -21,63 +19,52 @@ import Heading from "./components/heading/Heading.jsx";
 import ReuseButton from "./components/buttons/Reusable_BB";
 import About from "./components/pages/About";
 
-
 function App() {
-  const { showSidebar } = useContext(MainContext);
+	const { showSidebar } = useContext(MainContext);
 
-  useEffect(() => {
-    showSidebar
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "unset");
-  }, [showSidebar]);
+	useEffect(() => {
+		showSidebar
+			? (document.body.style.overflow = "hidden")
+			: (document.body.style.overflow = "unset");
+	}, [showSidebar]);
 
-  return (
-    <Router>
-      <div
-        className="wrapper"
-        style={{ overflow: showSidebar ? "hidden" : "" }}
-      >
-        <Routes>
-          <Route path="/" element={<NavbarLayout />}>
-            <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/venues" element={<VenuesOverview />} />
-            <Route path="/artists" element={<VenuesOverview />} />
-            <Route path="/me/profile" element={<ProfileEdit />} />
-          </Route>
-          <Route path="/venues/login" element={<Login userType={"venues"} />} />
-          <Route
-            path="/venues/signup"
-            element={<Signup userType={"venues"} />}
-          />
-          <Route
-            path="/artists/login"
-            element={<Login userType={"artists"} />}
-          />
-          <Route
-            path="/artists/signup"
-            element={<Signup userType={"artists"} />}
-          />
-        </Routes>
+	return (
+		<Router>
+			<div
+				className="wrapper"
+				style={{ overflow: showSidebar ? "hidden" : "" }}
+			>
+				<Routes>
+					<Route path="/" element={<NavbarLayout />}>
+						<Route index element={<Home />} />
+						<Route path="/about" element={<About />} />
+						<Route path="/venues" element={<VenuesOverview />} />
+						<Route path="/artists" element={<VenuesOverview />} />
+						<Route path="/me/profile" element={<ProfileEdit />} />
+					</Route>
+					<Route path="/venues/login" element={<Login userType={"venues"} />} />
+					<Route
+						path="/venues/signup"
+						element={<Signup userType={"venues"} />}
+					/>
+					<Route
+						path="/artists/login"
+						element={<Login userType={"artists"} />}
+					/>
+					<Route
+						path="/artists/signup"
+						element={<Signup userType={"artists"} />}
+					/>
+				</Routes>
 
-       
-       <Heading/>
+				<Heading />
+			</div>
 
-      </div>
+			<ReuseButton />
 
-    </Router>
-
-
-        {/* <ReuseButton /> */}
-
-        <Footer/>
-
-      </div>
-      
-    </Router>
-
-
-  );
+			<Footer />
+		</Router>
+	);
 }
 
 export default App;
