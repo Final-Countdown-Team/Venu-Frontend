@@ -2,7 +2,6 @@
 
 .wrapper {
   text-align: center;
-  background-color: #000;
   width: 100vw;
   color: $color-text-white;
 
@@ -13,18 +12,28 @@
     content: "";
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     background: url(./img/background.jpg) no-repeat left center/cover;
     background-attachment: fixed;
-    opacity: 0.9;
+    opacity: 0.5;
     filter: grayscale(1);
-    z-index: 0;
+    z-index: -1;
+    animation: transition 1s;
   }
+}
 
-  & * {
-    position: relative;
-    z-index: 1;
+.blur-wrapper {
+  filter: blur(4px);
+  transition: filter 0.7s;
+}
+
+@keyframes transition {
+  0% {
+    filter: grayscale(1);
+  }
+  100% {
+    filter: grayscale(0);
   }
 }

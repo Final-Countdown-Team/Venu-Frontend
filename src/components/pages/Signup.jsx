@@ -1,21 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import "./_Signup.scss";
-import SignupForm from "../signupForm/SignupForm";
-import { MdArrowBack } from "react-icons/md";
 
-function Signup({ type }) {
-  console.log(type);
+import "./_Signup.scss";
+import SignupForm from "../forms/signupForm/SignupForm";
+import ArrowBack from "../utils/ArrowBack";
+
+function Signup({ userType }) {
   return (
     <div className="signup-page">
       <div className="signup-heading">
-        {type === "venues" ? <h1>Venues</h1> : <h1>Artists</h1>}
+        {userType === "venues" ? <h1>Venues</h1> : <h1>Artists</h1>}
         <h2>Sign Up</h2>
       </div>
-      <SignupForm type={type} />
-      <NavLink to="/" className="arrow-back">
-        <MdArrowBack />
-      </NavLink>
+      <SignupForm userType={userType} />
+      <div className="arrow-wrapper">
+        <ArrowBack userType={userType} />
+      </div>
     </div>
   );
 }

@@ -1,10 +1,11 @@
-@import "../../_Utilities.scss";
+@import "../../../_Utilities.scss";
 @import "../formInputs/FormInputs";
 
 .signup-form {
   background-color: $color-bg-form;
   border-radius: 15px;
-  max-width: 90%;
+  max-width: 60rem;
+  min-width: 28rem;
   margin: auto;
   overflow: hidden;
 
@@ -23,34 +24,45 @@
       }
     }
     &--inputs {
-      position: relative;
-      z-index: 2;
+      // position: relative;
       .form-input-half {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         width: 60%;
-        padding-bottom: 0.5rem;
+        height: 8rem;
+        position: relative;
+        z-index: 2;
       }
     }
+  }
+
+  .form-input-full {
+    // height: 7.5rem;
+    display: flex;
+    flex-direction: column;
   }
 
   // GENERAL
   .form-group-bg {
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 1rem 1.5rem 3rem;
+    padding: 2rem 1.5rem 3.3rem;
   }
 
   .form-group-transparent {
-    padding: 1rem 1.5rem 3rem;
+    padding: 2rem 1.5rem;
   }
 
-  .form-group-password {
-    padding-bottom: 0.5rem;
+  .signup-form-group-password {
+    padding-bottom: 0rem;
+  }
+
+  .edit-form-group-password {
+    padding: 2rem 1.5rem 3rem;
   }
 
   .form-group-button {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 
   .form-info-text {
@@ -61,6 +73,6 @@
 
   .form-group-heading {
     text-align: left;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
   }
 }
