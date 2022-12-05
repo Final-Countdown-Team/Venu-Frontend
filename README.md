@@ -7,4 +7,4 @@ Please make sure to use the variables provided in the \_Utilities.scss file when
 ```scss
 @import "<path to Utilites.scss file>";
 ```
-Thanks Max. I'm just writing this to see if my branch is working. 
+ 

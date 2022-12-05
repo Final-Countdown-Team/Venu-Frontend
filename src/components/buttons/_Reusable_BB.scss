@@ -1,0 +1,48 @@
+@import "../../Utilities";
+
+.button-secondary {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.8rem;
+
+  transition: all 0.3s;
+  transition-property: color, background-color, border;
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &--venue {
+    color: $color-venu-primary;
+    background-color: rgba(176, 36, 118, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      color: lighten($color-venu-primary, $amount: 30);
+      background-color: rgba(176, 36, 118, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &--artist {
+    position: relative;
+    color: $color-artist-primary;
+    background-color: rgba(1, 103, 181, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      color: lighten($color-artist-primary, $amount: 30);
+      background-color: rgba(1, 103, 181, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+.button-login {
+  padding: 1.6rem 1rem;
+}
