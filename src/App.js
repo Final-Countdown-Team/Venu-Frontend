@@ -15,8 +15,12 @@ import ProfileEdit from "./components/pages/ProfileEdit";
 import { MainContext } from "./components/contexts/MainContext";
 import { useContext } from "react";
 import { useEffect } from "react";
+
+import Heading from "./components/heading/Heading.jsx";
+
 import ReuseButton from "./components/buttons/Reusable_BB";
 import About from "./components/pages/About";
+
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -56,6 +60,14 @@ function App() {
           />
         </Routes>
 
+       
+       <Heading/>
+
+      </div>
+
+    </Router>
+
+
         {/* <ReuseButton /> */}
 
         <Footer/>
@@ -63,6 +75,7 @@ function App() {
       </div>
       
     </Router>
+
 
   );
 }
