@@ -11,6 +11,8 @@ import ProfileEdit from "./components/pages/ProfileEdit";
 import { MainContext } from "./components/contexts/MainContext";
 import { useContext } from "react";
 import { useEffect } from "react";
+import Heading from "./components/heading/Heading.jsx";
+
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -48,8 +50,14 @@ function App() {
             element={<Signup userType={"artists"} />}
           />
         </Routes>
+       
+       <Heading/>
+
       </div>
+
     </Router>
+     
+
   );
 }
 
