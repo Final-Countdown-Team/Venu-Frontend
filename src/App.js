@@ -16,6 +16,7 @@ import { MainContext } from "./components/contexts/MainContext";
 import { useContext } from "react";
 import { useEffect } from "react";
 import ReuseButton from "./components/buttons/Reusable_BB";
+import About from "./components/pages/About";
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path="/" element={<NavbarLayout />}>
             <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/venues" element={<VenuesOverview />} />
             <Route path="/artists" element={<VenuesOverview />} />
             <Route path="/me/profile" element={<ProfileEdit />} />
@@ -54,10 +56,10 @@ function App() {
           />
         </Routes>
 
-        <ReuseButton />
+        {/* <ReuseButton /> */}
 
         <Footer/>
- main
+
       </div>
       
     </Router>
@@ -66,8 +68,3 @@ function App() {
 }
 
 export default App;
-{/* <div className="page-container">
-          <div className="content-wrap"> 
-          </div>
-        </div>*/}
-       
