@@ -1,0 +1,15 @@
+@import "../../Utilities";
+
+.main-footer {
+  color: $color-text-white;
+  background-color: $color-bg-black;
+  padding: 2rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+}

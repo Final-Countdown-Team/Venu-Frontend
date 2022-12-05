@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.scss";
+import Footer from "./components/footer/Footer";
 import Signup from "./components/pages/Signup";
 
 function App() {
@@ -11,9 +12,18 @@ function App() {
           <Route path="/venues/signup" element={<Signup type={"venues"} />} />
           <Route path="/artists/signup" element={<Signup type={"artists"} />} />
         </Routes>
+        
+        <Footer/>
       </div>
+      
     </Router>
+
   );
 }
 
 export default App;
+{/* <div className="page-container">
+          <div className="content-wrap"> 
+          </div>
+        </div>*/}
+       
