@@ -15,6 +15,7 @@ import ProfileEdit from "./components/pages/ProfileEdit";
 import { MainContext } from "./components/contexts/MainContext";
 import { useContext } from "react";
 import { useEffect } from "react";
+import ReuseButton from "./components/buttons/Reusable_BB";
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -52,8 +53,11 @@ function App() {
             element={<Signup userType={"artists"} />}
           />
         </Routes>
-        
+
+        <ReuseButton />
+
         <Footer/>
+ main
       </div>
       
     </Router>
