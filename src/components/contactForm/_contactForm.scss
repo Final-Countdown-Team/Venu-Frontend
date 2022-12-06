@@ -1,0 +1,28 @@
+@import "../../_Utilities.scss";
+
+form > div{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin: 1rem;
+}
+
+form > div > label{
+    margin: 1rem;
+}
+
+form > div > input,
+form > div > textarea{
+    min-width: 30rem;
+    padding: 1rem;
+    border: 1px solid $color-text-white;
+    background-color: transparent;
+    color: $color-text-white;
+    font-family: $font-main;
+    font-size: 1.6rem;
+    transition: all 0.3s;
+    &:focus{
+        outline: none;
+        border: 1px solid $color-venu-primary;
+    }
+}
