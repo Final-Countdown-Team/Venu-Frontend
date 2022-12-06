@@ -21,7 +21,20 @@ import About from "./components/pages/About";
 import Footer from "./components/footer/Footer";
 
 function App() {
+
+  return (
+    <Router>
+      <div className="wrapper">
+        <Routes>
+          <Route path="/venues/signup" element={<Signup type={"venues"} />} />
+          <Route path="/artists/signup" element={<Signup type={"artists"} />} />
+        </Routes>
+        <Footer/>
+      </div> 
+    </Router>
+
 	const { showSidebar } = useContext(MainContext);
+
 
 	useEffect(() => {
 		showSidebar
