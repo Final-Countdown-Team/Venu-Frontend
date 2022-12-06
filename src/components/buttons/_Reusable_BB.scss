@@ -1,14 +1,15 @@
 @import "../../Utilities";
 
-.button-secondary {
-  width: 100%;
+.button-reuse {
+  width: 10%;
+  height: 5rem;
   padding: 1rem;
   border: none;
   border-radius: 8px;
-  background-color: transparent;
+  background-color: $color-venu-primary;
   cursor: pointer;
-  font-weight: 600;
   font-size: 1.8rem;
+  position:absolute;
 
   transition: all 0.3s;
   transition-property: color, background-color, border;
@@ -46,3 +47,7 @@
 .button-login {
   padding: 1.6rem 1rem;
 }
+
+
+
+

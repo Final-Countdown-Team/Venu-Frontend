@@ -1,0 +1,29 @@
+@import "../../Utilities";
+
+.arrow-container {
+  font-size: 4rem;
+  margin: auto;
+  max-width: 60rem;
+
+  .arrow-back {
+    padding: 1rem 0;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+
+    &-text {
+      font-family: $font-special;
+      font-size: 2rem;
+    }
+    &-login {
+      margin-top: 5rem;
+    }
+  }
+  .arrow-back-venues:hover {
+    color: $color-venu-primary;
+  }
+  .arrow-back-artists:hover {
+    color: $color-artist-primary;
+  }
+}
