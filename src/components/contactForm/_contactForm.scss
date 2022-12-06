@@ -1,28 +1,32 @@
 @import "../../_Utilities.scss";
 
-form > div{
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    margin: 1rem;
+.contact-form {
+	text-align: center;              
 }
 
-form > div > label{
-    margin: 1rem;
+.form-header {
+	min-height: 60vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
 }
 
+form > div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 1rem;
+}
+form > div > label {
+	margin: 1rem;
+}
 form > div > input,
-form > div > textarea{
-    min-width: 30rem;
-    padding: 1rem;
-    border: 1px solid $color-text-white;
-    background-color: transparent;
-    color: $color-text-white;
-    font-family: $font-main;
-    font-size: 1.6rem;
-    transition: all 0.3s;
-    &:focus{
-        outline: none;
-        border: 1px solid $color-venu-primary;
-    }
+form > div > textarea {
+	padding: 0.5rem;
+	min-width: 30rem;
+	font-family: $font-main;
+    border-radius: 5px;
 }
