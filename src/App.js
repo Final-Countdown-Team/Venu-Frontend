@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.scss";
 
-import Footer from "./components/footer/Footer";
+
 
 import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
@@ -18,6 +18,7 @@ import Heading from "./components/heading/Heading.jsx";
 
 import ReuseButton from "./components/buttons/Reusable_BB";
 import About from "./components/pages/About";
+import Footer from "./components/footer/Footer";
 
 function App() {
 	const { showSidebar } = useContext(MainContext);
