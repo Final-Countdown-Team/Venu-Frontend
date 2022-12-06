@@ -6,7 +6,7 @@ export default function Footer() {
     <div className="main-footer">
       <div className="footer-content">
         <p>&copy;{new Date().getFullYear()}</p>
-        <p>Impressum</p>
+        <p>Impressumm</p>
       </div>
     </div>
   );
