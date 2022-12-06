@@ -31,7 +31,7 @@ function App() {
         </Routes>
         <Footer/>
       </div> 
-    </Router>
+    </Router>)
 
 	const { showSidebar } = useContext(MainContext);
 

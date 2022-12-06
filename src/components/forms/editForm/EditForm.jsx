@@ -1,5 +1,4 @@
 import { Formik, Form } from "formik";
-
 import "../signupForm/_SignupForm.scss";
 import { signUpSchema, signupInitialValues } from "../signupForm/signUpSchema";
 import defaultUser from "../../../img/default_user_small.png";
