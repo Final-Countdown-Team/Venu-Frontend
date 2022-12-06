@@ -1,8 +1,10 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./_contactForm.scss";
+
+// npm i react-toastify axios
 
 export default function ContactForm() {
 	const [email, setEmail] = useState("");
@@ -17,7 +19,7 @@ export default function ContactForm() {
 		}
 		try {
 			setLoading(true);
-			const { data } = await axios.post("/api/email", {
+			const { data } = await axios.post(`/api/email`, {
 				email,
 				subject,
 				message,
@@ -34,11 +36,11 @@ export default function ContactForm() {
 		}
 	};
 	return (
-		<div className="contact-form">
+		<div className="contact-form logo-form">
 			<ToastContainer position="bottom-center" limit={1} />
-			<header className="contact-header">
+			<header className="form-header">
 				<form onSubmit={submitHandler}>
-					<h1>Send Email</h1>
+					<h1>Contact Us</h1>
 					<div>
 						<label htmlFor="email">Email</label>
 						<input
@@ -50,24 +52,21 @@ export default function ContactForm() {
 					<div>
 						<label htmlFor="subject">Subject</label>
 						<input
-							onChange={(e) => setSubject(e.target.value)}
-							type="text"
 							placeholder="Subject"
+							type="text"
+							onChange={(e) => setSubject(e.target.value)}
 						></input>
 					</div>
 					<div>
 						<label htmlFor="message">Message</label>
 						<textarea
-							onChange={(e) => setMessage(e.target.value)}
-							type="text"
 							placeholder="Message"
-							rows="5"
-							cols="50"
+							onChange={(e) => setMessage(e.target.value)}
 						></textarea>
 					</div>
 					<div>
 						<label></label>
-						<button type="submit" disabled={loading}>
+						<button disabled={loading} type="submit">
 							{loading ? "Sending..." : "Submit"}
 						</button>
 					</div>
