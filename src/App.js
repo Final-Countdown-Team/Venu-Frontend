@@ -19,6 +19,7 @@ import Heading from "./components/heading/Heading.jsx";
 import ReuseButton from "./components/buttons/Reusable_BB";
 import About from "./components/pages/About";
 import Footer from "./components/footer/Footer";
+import PreviewCard from "./components/cards/PreviewCard";
 
 function App() {
 
@@ -43,42 +44,43 @@ function App() {
 	}, [showSidebar]);
 
 	return (
-		<Router>
-			<div
-				className="wrapper"
-				style={{ overflow: showSidebar ? "hidden" : "" }}
-			>
-				<Routes>
-					<Route path="/" element={<NavbarLayout />}>
-						<Route index element={<Home />} />
-						<Route path="/about" element={<About />} />
-						<Route path="/venues" element={<VenuesOverview />} />
-						<Route path="/artists" element={<VenuesOverview />} />
-						<Route path="/me/profile" element={<ProfileEdit />} />
-					</Route>
-					<Route path="/venues/login" element={<Login userType={"venues"} />} />
-					<Route
-						path="/venues/signup"
-						element={<Signup userType={"venues"} />}
-					/>
-					<Route
-						path="/artists/login"
-						element={<Login userType={"artists"} />}
-					/>
-					<Route
-						path="/artists/signup"
-						element={<Signup userType={"artists"} />}
-					/>
-				</Routes>
+    <Router>
+      <div
+        className="wrapper"
+        style={{ overflow: showSidebar ? "hidden" : "" }}
+      >
+        <Routes>
+          <Route path="/" element={<NavbarLayout />}>
+            <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/venues" element={<VenuesOverview />} />
+            <Route path="/artists" element={<VenuesOverview />} />
+            <Route path="/me/profile" element={<ProfileEdit />} />
+          </Route>
+          <Route path="/venues/login" element={<Login userType={"venues"} />} />
+          <Route
+            path="/venues/signup"
+            element={<Signup userType={"venues"} />}
+          />
+          <Route
+            path="/artists/login"
+            element={<Login userType={"artists"} />}
+          />
+          <Route
+            path="/artists/signup"
+            element={<Signup userType={"artists"} />}
+          />
+        </Routes>
 
-				<Heading />
-			</div>
+        <Heading />
+      </div>
+      <PreviewCard />
 
-			{/* <ReuseButton /> */}
+      {/* <ReuseButton /> */}
 
-			<Footer />
-		</Router>
-	);
+      <Footer />
+    </Router>
+  );
 }
 
 export default App;
