@@ -61,7 +61,7 @@ function App() {
 				<Heading />
 			</div>
 
-			<ReuseButton />
+			{/* <ReuseButton /> */}
 
 			<Footer />
 		</Router>
