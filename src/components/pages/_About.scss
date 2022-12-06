@@ -2,9 +2,17 @@
 
 
 .about-desc{
+    font-family: $font-main;
     display: flex;
+    position: absolute;
     color: $color-off-white;
-    
+    margin-left: 10vw;
+    margin-right: 10vw;
 
+}
+
+.about-h2{
+    font-family: $font-special;
+    
 
 }
