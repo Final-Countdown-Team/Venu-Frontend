@@ -21,7 +21,7 @@ import About from "./components/pages/About";
 import Footer from "./components/footer/Footer";
 
 function App() {
-<<<<<<< HEAD
+
   return (
     <Router>
       <div className="wrapper">
@@ -32,9 +32,9 @@ function App() {
         <Footer/>
       </div> 
     </Router>
-=======
+
 	const { showSidebar } = useContext(MainContext);
->>>>>>> 0497f8b398c1e87cbe3e0dba9d80d577bcb923c1
+
 
 	useEffect(() => {
 		showSidebar
