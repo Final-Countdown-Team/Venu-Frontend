@@ -58,7 +58,7 @@ export default function ContactForm() {
 						></input>
 					</div>
 					<div>
-						<label htmlFor="message">Message</label>
+						<label htmlFor="message">Messagessss</label>
 						<textarea
 							placeholder="Message"
 							onChange={(e) => setMessage(e.target.value)}
