@@ -1,0 +1,12 @@
+@import "../../_Utilities.scss";
+
+form > div{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin: 1rem;
+}
+
+form > div > label{
+    margin: 1rem;
+}
