@@ -5,14 +5,19 @@
     font-family: $font-main;
     display: flex;
     position: absolute;
+    align-items: center;
+    justify-content: center;
     color: $color-off-white;
     margin-left: 10vw;
     margin-right: 10vw;
+    margin-top: 10rem;
 
 }
 
-.about-h2{
-    font-family: $font-special;
+// .about-h2{
+    
+//     font-family: $font-special;
+//     font-weight: lighter;
     
 
-}
+// }
