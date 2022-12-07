@@ -1,0 +1,53 @@
+@import "../../_Utilities.scss";
+
+.searchbar {
+  max-width: 80rem;
+  margin: 2rem auto;
+  padding: 2rem;
+
+  &--input {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 2rem;
+    z-index: 1;
+    font-size: 1.6rem;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  .dropdown-group {
+    width: 100%;
+    margin: 2rem 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    .dropdown--input {
+      font-family: inherit;
+      color: $color-text-placeholder;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 5px;
+      padding: 1rem;
+      width: 8rem;
+      font-size: 1.3rem;
+      flex-basis: 15%;
+      flex-grow: 1;
+      //   flex-shrink: 2;
+      //   height: 4rem;
+      &::selection {
+        color: red;
+      }
+    }
+
+    .search-btn-group {
+      flex-grow: 4;
+
+      @include respond(phone-xs) {
+        flex-basis: 100%;
+      }
+    }
+  }
+}

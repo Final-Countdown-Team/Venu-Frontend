@@ -10,7 +10,8 @@ function ButtonSecondary({ text, purpose, submit, userType }) {
         userType === "venues"
           ? "button-secondary--venue"
           : "button-secondary--artist"
-      } ${purpose === "login" && "button-login"}`}
+      } ${purpose === "login" && "button-login"}
+      ${purpose === "search" && "button-search"}`}
     >
       {text}
     </button>

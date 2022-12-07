@@ -13,6 +13,7 @@ import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import About from "./components/pages/About";
 import ContactForm from "./components/contactForm/ContactForm";
+import ArtistsOverview from "./components/pages/ArtistsOverview";
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -34,7 +35,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/venues" element={<VenuesOverview />} />
-            <Route path="/artists" element={<VenuesOverview />} />
+            <Route path="/artists" element={<ArtistsOverview />} />
             <Route path="/me/profile" element={<ProfileEdit />} />
           </Route>
           <Route path="/venues/login" element={<Login userType={"venues"} />} />
