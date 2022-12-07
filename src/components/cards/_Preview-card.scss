@@ -1,67 +1,38 @@
 @import "../../Utilities.scss";
-@import "../buttons/ButtonSecondary.scss"; 
-
-.float-layout {
-padding: 5px 5px;
-float: left;
-width: 100%;
-height: auto;
-box-sizing: border-box;
-margin: 0;
-}
+@import "../buttons/ButtonSecondary.scss";
 
 .card-container {
-overflow: hidden;
-}
+  display: flex;
+  width: 90%;
+  height: 25%;
+  margin: 3rem 2rem;
+  padding: 3%;
+  background-color: rgb(34, 34, 35);
+  border-radius: 10px;
 
-.card {
-background-color: $color-text-placeholder;
-color: black;
-min-height: 50%;
-width: 50%;
-float: right;
-}
+  .card-image img {
+    width: 20%;
+    height: auto;
+    float: left;
+    border-radius: 10px;
+    margin-right: 1rem;
+  }
 
-.card-title {
-font-size: 30px;
-text-align: center;
-font-weight: bold;
-padding-top: 20px;
-}
+  .card {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+  }
+  .card-title {
+    position: relative;
+    float: left;
+    padding-bottom: 0.5rem;
+    font-size: large;
+    font-weight: bold;
+  }
 
-.card-desc {
-padding: 10px;
-text-align: left;
-font-size: 18px;
+  .card-desc {
+    font-size: small;
+    font-weight: lighter;
+  }
 }
-
-/*add this it*/
-.card-image {
-display: flex;
-
-}
-/*-------------*/
-
-div.card-image img {
-width: 25%;
-height: auto;
-}
-
-/* Phone Devices Query */
-@media only screen and (max-width: 37.5em) {
-div.card-image img {
-width: 100%;
-height: auto;
-}
-
-/*add this it*/
-.card-image {
-flex-direction: column;
-}
-/*----------------------*/
-
-.card {
-width: 100%;
-margin-top: -4px;
-}
-} 

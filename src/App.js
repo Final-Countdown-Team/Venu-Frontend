@@ -9,6 +9,7 @@ import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
 import Home from "./components/pages/Home";
 import VenuesOverview from "./components/pages/VenuesOverview";
+import ArtistsOverview from "./components/pages/ArtistsOverview";
 import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import About from "./components/pages/About";
@@ -34,7 +35,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/venues" element={<VenuesOverview />} />
-            <Route path="/artists" element={<VenuesOverview />} />
+            <Route path="/artists" element={<ArtistsOverview />} />
             <Route path="/me/profile" element={<ProfileEdit />} />
           </Route>
           <Route path="/venues/login" element={<Login userType={"venues"} />} />
