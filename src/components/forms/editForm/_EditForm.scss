@@ -1,0 +1,76 @@
+@import "../../../Utilities";
+
+.edit-form {
+  .edit-button {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    position: absolute;
+    bottom: 10%;
+    border: 1px solid rgba($color: #fff, $alpha: 0.5);
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    display: flex;
+    align-items: center;
+    transition: all 0.1s;
+
+    &:hover {
+      border: 1px solid rgba($color: #fff, $alpha: 0.8);
+      background-color: rgba($color: #000000, $alpha: 0.8);
+    }
+    .edit-icon {
+      margin-right: 0.5rem;
+    }
+    .edit-input {
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      opacity: 0;
+    }
+  }
+
+  .profile-button-container {
+    margin: 0 1.5rem;
+    // border: 1px solid red;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    transform: translateY(-1.5rem);
+  }
+
+  .profile-button-container--password {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+
+  .form-group-delete {
+    position: relative;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+
+    .form-group-heading--delete {
+      padding: 2rem 0;
+      color: $color-profile-button--delete;
+      font-size: 2rem;
+      display: flex;
+      // justify-content: space-between;
+      align-items: center;
+
+      span {
+        width: 100%;
+        margin: 0 1rem;
+      }
+
+      .delete-bar--left {
+        width: 100%;
+        height: 2px;
+        background-color: $color-profile-button--delete;
+      }
+
+      .delete-bar--right {
+        width: 100%;
+        height: 2px;
+        background-color: $color-profile-button--delete;
+      }
+    }
+  }
+}
