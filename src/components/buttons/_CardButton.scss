@@ -1,30 +1,30 @@
 @import "../../Utilities";
 
+.card-button {
+  position: relative;
+  align-items: center;
+  float: right;
+  background-color: #111111;
+  border-radius: 30px;
+  width: 20%;
+  text-align: center;
+  margin-top: 2rem;
 
-
-.card-button{
-    position: relative;
-    float: right;
-    background-color:#111111;
-    border-radius: 30px;
-    width: 35%;
-    text-align: center;
-    margin-top: 2rem;
-  
-    button {
+  button {
+    display: flex;
     font-size: x-small;
     color: $color-artist-primary;
     background-color: transparent;
     border: none;
-    align-items: center;
-    padding: 2px;
-    margin-bottom: 2px;
-}
+    padding: 4px;
+    margin: auto;
+    margin-top: 5px ;
+
     
-}
 
-.fa-arrow-right{
-    color:#AAAAAA ;
-    padding-left: 5px;
+    .button-arrow {
+      padding-left: 5px;
+      color: antiquewhite;
+    }
+  }
 }
-
