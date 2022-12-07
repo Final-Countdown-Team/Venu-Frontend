@@ -2,7 +2,6 @@ import React from "react";
 import "./_ButtonSecondary.scss";
 
 function ButtonSecondary({ text, purpose, submit, userType }) {
-  console.log(userType);
   return (
     <button
       type={submit && "submit"}
