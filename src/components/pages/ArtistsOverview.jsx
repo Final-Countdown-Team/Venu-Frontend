@@ -1,11 +1,13 @@
 import PreviewCard from "../cards/PreviewCard";
 import SearchBar from "../searchbar/SearchBar";
+import photo from "../../img/dancing.gif"
 
 function ArtistsOverview() {
   return (
     <div>
       <SearchBar />
-      <PreviewCard />
+      <PreviewCard description="This is the description of the artist that no one cares about right now." name="Jimmy Jones" img={photo} />
+      
     </div>
   );
 }

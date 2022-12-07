@@ -1,0 +1,30 @@
+@import "../../Utilities";
+
+.card-button {
+  position: relative;
+  align-items: center;
+  float: right;
+  background-color: #111111;
+  border-radius: 30px;
+  width: 20%;
+  text-align: center;
+  margin-top: 2rem;
+
+  button {
+    display: flex;
+    font-size: x-small;
+    color: $color-artist-primary;
+    background-color: transparent;
+    border: none;
+    padding: 4px;
+    margin: auto;
+    margin-top: 5px ;
+
+    
+
+    .button-arrow {
+      padding-left: 5px;
+      color: antiquewhite;
+    }
+  }
+}

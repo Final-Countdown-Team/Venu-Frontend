@@ -9,6 +9,7 @@ import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
 import Home from "./components/pages/Home";
 import VenuesOverview from "./components/pages/VenuesOverview";
+import ArtistsOverview from "./components/pages/ArtistsOverview";
 import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import About from "./components/pages/About";
