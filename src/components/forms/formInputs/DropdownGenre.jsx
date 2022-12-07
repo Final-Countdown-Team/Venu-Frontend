@@ -8,8 +8,8 @@ function DropdownGenre({ thin }) {
           Genre:
         </label>
       </div>
-      <select className="input dropdown" name="genre">
-        <option value="" disabled selected>
+      <select className="input dropdown" name="genre" defaultValue={"DEFAULT"}>
+        <option value="" disabled>
           Select one of the following genres:
         </option>
         <option value="Alternative">Alternative</option>

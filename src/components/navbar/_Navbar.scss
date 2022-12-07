@@ -48,7 +48,7 @@
         content: "";
         display: inline-block;
         left: 0;
-        height: 3px;
+        height: 2px;
         width: 100%;
         background-color: $color-venu-primary;
         position: absolute;
@@ -74,6 +74,7 @@
     height: 2.8rem;
     width: 3rem;
     position: relative;
+    margin-right: 1rem;
     z-index: 100;
 
     @include respond(medium) {

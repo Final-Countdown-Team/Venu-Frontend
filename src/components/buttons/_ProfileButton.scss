@@ -1,0 +1,30 @@
+@import "../../Utilities";
+
+.profile-button {
+  border: none;
+  color: $color-text-white;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  padding: 1.5rem 2.5rem;
+  cursor: pointer;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.profile-button--update {
+  background-color: $color-profile-button--update;
+
+  &:hover {
+    background-color: darken($color-profile-button--update, $amount: 8);
+  }
+}
+
+.profile-button--delete {
+  background-color: $color-profile-button--delete;
+
+  &:hover {
+    background-color: darken($color-profile-button--delete, $amount: 8);
+  }
+}
