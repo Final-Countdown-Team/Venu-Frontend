@@ -1,4 +1,5 @@
 import React from "react";
+import { CardButton } from "../buttons/CardButton";
 import "./_Preview-card.scss";
 
 export default function PreviewCard(props) {
@@ -10,6 +11,7 @@ export default function PreviewCard(props) {
           <div class="card">
             <div class="card-title">{props.name}</div>
             <div class="card-desc">{props.description}</div>
+            <div className="button"><CardButton /></div>
           </div>
         </div>
       </div>

@@ -1,0 +1,22 @@
+@import "../../Utilities";
+
+
+
+.card-button{
+    float: right;
+    background-color:#111111;
+    border-radius: 30px;
+    width: 35%;
+    text-align: center;
+    padding: 2px;
+    
+}
+
+button {
+    font-size: x-small;
+    color: $color-artist-primary;
+    background-color: transparent;
+    border: none;
+    
+   
+}
