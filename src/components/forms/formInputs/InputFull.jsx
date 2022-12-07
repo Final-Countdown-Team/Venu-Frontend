@@ -1,20 +1,28 @@
 import { Field, ErrorMessage, useField, useFormikContext } from "formik";
+import { useContext } from "react";
+import { MainContext } from "../../contexts/MainContext";
 
 function InputFull(props) {
   const [field, meta] = useField(props);
   const formikContext = useFormikContext(props);
+  const context = useContext(MainContext);
 
-  const { name, label, type, required, placeholder, thin } = props;
+  const { name, label, type, required, placeholder, thin, canBeDisabled } =
+    props;
 
   const focusHandler = (e) => {
+    // Prefix URL fields with https:// when focuses field
     if (type === "url") {
       const prefix = "https://";
       formikContext.setFieldValue(name, prefix);
     }
+    // Activate new password and confrim password field on focus
+    if (name === "currentPassword") context.setIsDisabled(false);
     return;
   };
 
   const changeHandler = (e) => {
+    // Prefix the formField input with https://
     if (type === "url") {
       const prefix = "https://";
       const input = e.target.value;
@@ -25,12 +33,17 @@ function InputFull(props) {
 
   const blurHandler = (e) => {
     const input = e.target.value;
+    // If user leaves URL field and field only contains prefix, delete prefix
     if (type === "url" && input === "https://") {
       e.target.value = "";
       return formikContext.setFieldValue(name, e.target.value);
     }
     field.onBlur(e);
   };
+
+  // Set class to fields that can be disabled
+  const ifDisabled =
+    canBeDisabled && context.isDisabled ? "input-disabled" : "";
 
   return (
     <div className="form-input-full">
@@ -46,7 +59,10 @@ function InputFull(props) {
       </div>
       <Field
         {...field}
-        className={`input ${meta.error && meta.touched ? "input-error" : ""}`}
+        disabled={canBeDisabled ? context.isDisabled : false}
+        className={`input ${
+          meta.error && meta.touched ? "input-error" : ""
+        } ${ifDisabled}`}
         type={type ? type : "text"}
         name={name}
         placeholder={placeholder}

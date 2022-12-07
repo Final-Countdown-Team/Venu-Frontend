@@ -1,11 +1,11 @@
-import React from "react";
+import PreviewCard from "../cards/PreviewCard";
 import SearchBar from "../search/SearchBar";
 
 function ArtistsOverview() {
   return (
     <div>
       <SearchBar />
-      VenuesOverview
+      <PreviewCard />
     </div>
   );
 }
