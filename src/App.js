@@ -14,7 +14,6 @@ import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import About from "./components/pages/About";
 import ContactForm from "./components/contactForm/ContactForm";
-import ArtistsOverview from "./components/pages/ArtistsOverview";
 
 function App() {
   const { showSidebar } = useContext(MainContext);
