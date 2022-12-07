@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { MainContext } from "./components/contexts/MainContext";
+import { useContext } from "react";
+import { useEffect } from "react";
 
 import "./App.scss";
-
-
 
 import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/navbar/NavbarLayout";
@@ -10,40 +11,19 @@ import Home from "./components/pages/Home";
 import VenuesOverview from "./components/pages/VenuesOverview";
 import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
-import { MainContext } from "./components/contexts/MainContext";
-import { useContext } from "react";
-import { useEffect } from "react";
-
-import Heading from "./components/heading/Heading.jsx";
-
-import ReuseButton from "./components/buttons/Reusable_BB";
 import About from "./components/pages/About";
-import Footer from "./components/footer/Footer";
-import PreviewCard from "./components/cards/PreviewCard";
+import ContactForm from "./components/contactForm/ContactForm";
 
 function App() {
+  const { showSidebar } = useContext(MainContext);
+
+  useEffect(() => {
+    showSidebar
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [showSidebar]);
 
   return (
-    <Router>
-      <div className="wrapper">
-        <Routes>
-          <Route path="/venues/signup" element={<Signup type={"venues"} />} />
-          <Route path="/artists/signup" element={<Signup type={"artists"} />} />
-        </Routes>
-        <Footer/>
-      </div> 
-    </Router>)
-
-	const { showSidebar } = useContext(MainContext);
-
-
-	useEffect(() => {
-		showSidebar
-			? (document.body.style.overflow = "hidden")
-			: (document.body.style.overflow = "unset");
-	}, [showSidebar]);
-
-	return (
     <Router>
       <div
         className="wrapper"
@@ -70,15 +50,10 @@ function App() {
             path="/artists/signup"
             element={<Signup userType={"artists"} />}
           />
+          <Route path="/preview" element={<ContactForm />} />
         </Routes>
-
-        <Heading />
       </div>
-      <PreviewCard />
-
       {/* <ReuseButton /> */}
-
-      <Footer />
     </Router>
   );
 }
