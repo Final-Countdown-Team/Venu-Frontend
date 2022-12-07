@@ -22,6 +22,7 @@
 
   .content-container {
     min-height: calc(100vh - 16rem);
+    overflow-x: hidden;
   }
 }
 
