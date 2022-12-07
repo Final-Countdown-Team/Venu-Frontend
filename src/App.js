@@ -74,7 +74,7 @@ function App() {
 
         <Heading />
       </div>
-      <PreviewCard />
+      {/* <PreviewCard /> */}
 
       {/* <ReuseButton /> */}
 
