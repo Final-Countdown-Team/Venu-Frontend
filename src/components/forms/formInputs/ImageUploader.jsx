@@ -1,24 +1,24 @@
-import { useState } from "react";
+import { useFormikContext } from "formik";
+import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdCloudUpload } from "react-icons/md";
-import "./_FormInputs.scss";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 
-function ImageUploader() {
+function ImageUploader(props) {
+  const formikContext = useFormikContext(props);
+
   const [files, setFiles] = useState([]);
 
   const onDrop = (acceptedFiles) => {
     setFiles((prev) => {
       if (files.length + 1 > 3) return [...files];
-      return [
-        ...prev,
-        acceptedFiles.map((file, i) =>
-          Object.assign(file, {
-            imageId: `${file.name}-${i}`,
-            preview: URL.createObjectURL(file),
-          })
-        ),
-      ].flat();
+      const processFiles = acceptedFiles.map((file, i) =>
+        Object.assign(file, {
+          imageId: `${file.name}-${i}`,
+          preview: URL.createObjectURL(file),
+        })
+      );
+      return [...prev, processFiles].flat();
     });
   };
 
@@ -32,7 +32,11 @@ function ImageUploader() {
     );
   };
 
-  console.log(files);
+  useEffect(() => {
+    console.log(files);
+    formikContext.setFieldValue("images", files);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [files]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {

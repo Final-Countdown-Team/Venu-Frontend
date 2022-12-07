@@ -1,20 +1,44 @@
 import { Formik, Form } from "formik";
 import "../signupForm/_SignupForm.scss";
-import { signUpSchema, signupInitialValues } from "../signupForm/signUpSchema";
-import defaultUser from "../../../img/default_user_small.png";
+import "./_EditForm.scss";
 import InputHalf from "../formInputs/InputHalf";
 import InputFull from "../formInputs/InputFull";
 import Textbox from "../formInputs/Textbox";
 import DropdownGenre from "../formInputs/DropdownGenre";
 import DateSelector from "../formInputs/DateSelector";
-import ButtonSecondary from "../../buttons/ButtonSecondary";
 import ImageUploader from "../formInputs/ImageUploader";
+import ProfileImageUploader from "../formInputs/ProfileImageUploader";
+import ChangePasswordForm from "../changePasswordForm/ChangePasswordForm";
+import ProfileButton from "../../buttons/ProfileButton";
 
 function EditForm({ userType }) {
+  const profileInititalValues = {
+    name: "Max",
+    email: "max_sommereld@web.de",
+    address: {
+      street: "Torgauer Straße 50",
+      city: "Leipzig",
+      zipcode: "04315",
+    },
+    profileImage: "",
+    images: "",
+    description: "test",
+    genre: "",
+    facebookUrl: "",
+    instagramTag: "@test",
+    twitterTag: "@test",
+    websiteUrl: "",
+    capacity: "",
+    members: "5",
+    dates: "",
+    password: "test1234",
+    passwordConfirm: "test1234",
+  };
+
   return (
     <Formik
-      initialValues={signupInitialValues}
-      validationSchema={signUpSchema}
+      initialValues={profileInititalValues}
+      // validationSchema={signUpSchema}
       onSubmit={(values, actions) => console.log(values)}
     >
       <Form noValidate className="signup-form edit-form">
@@ -33,7 +57,7 @@ function EditForm({ userType }) {
           </div>
 
           <div className="form-top-group--image">
-            <img src={defaultUser} alt="default user profileImage" />
+            <ProfileImageUploader />
           </div>
         </div>
         <div className="form-group-bg">
@@ -64,7 +88,7 @@ function EditForm({ userType }) {
             name="description"
             placeholder="Add a description what your venue offers"
           />
-          {userType === "artists" && <DropdownGenre thin={true} />}
+          {userType !== "venues" && <DropdownGenre thin={true} />}
           <InputFull
             name="facebookUrl"
             label="Facebook"
@@ -107,6 +131,7 @@ function EditForm({ userType }) {
             />
           )}
         </div>
+        {/* Date Selector Group */}
         <div className="form-group-bg">
           <DateSelector
             label="Available Dates"
@@ -114,26 +139,23 @@ function EditForm({ userType }) {
             placeholder="Click to open date picker"
           />
         </div>
+        {/* Image Uploader Group */}
         <div className="form-group-transparent">
           <ImageUploader />
         </div>
-
-        <div className="form-group-bg edit-form-group-password">
-          <InputFull
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="Your password needs to be min. 8 characters long"
-          />
-          <InputFull
-            type="password"
-            name="passwordConfirm"
-            label="Password Confirm"
-            placeholder="Please confirm your password"
-          />
-          <div className="form-group-button">
-            <ButtonSecondary text="Sign Up" submit={true} userType={userType} />
+        <div className="profile-button-container">
+          <ProfileButton text="Update" />
+        </div>
+        {/* Change Password Group */}
+        <ChangePasswordForm />
+        {/* Delete Group */}
+        <div className="form-group-delete">
+          <div className="form-group-heading--delete">
+            <div className="delete-bar--left"></div>
+            <span>Delete Your Account</span>
+            <div className="delete-bar--right"></div>
           </div>
+          <ProfileButton text="Delete account" purpose="delete" />
         </div>
       </Form>
     </Formik>

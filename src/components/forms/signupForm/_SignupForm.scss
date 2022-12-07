@@ -13,6 +13,7 @@
   .form-top-group {
     padding: 1.5rem;
     position: relative;
+
     &--image {
       position: absolute;
       top: 50%;
@@ -20,7 +21,10 @@
       padding: 1.5rem;
       transform: translateY(-50%);
       img {
-        width: 11rem;
+        object-fit: cover;
+        border-radius: 50%;
+        width: 12rem;
+        height: 12rem;
       }
     }
     &--inputs {
