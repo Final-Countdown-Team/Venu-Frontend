@@ -11,7 +11,7 @@ export default function PreviewCard(props) {
           <div class="card">
             <div class="card-title">{props.name}</div>
             <div class="card-desc">{props.description}</div>
-            <div className="button"><CardButton /></div>
+            <div className="profile-button"><CardButton /></div>
           </div>
         </div>
       </div>

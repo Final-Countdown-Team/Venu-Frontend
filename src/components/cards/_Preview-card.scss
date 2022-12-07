@@ -1,54 +1,38 @@
 @import "../../Utilities.scss";
-@import "../buttons/ButtonSecondary.scss"; 
+@import "../buttons/ButtonSecondary.scss";
 
 .card-container {
-   display: flex;
-   width: 90%;
-   height: 25%;
-   margin: 3rem 2rem;
-   padding: 3%;
-   background-color: rgb(34, 34, 35);
-   border-radius: 10px;
-}
+  display: flex;
+  width: 90%;
+  height: 25%;
+  margin: 3rem 2rem;
+  padding: 3%;
+  background-color: rgb(34, 34, 35);
+  border-radius: 10px;
 
-.card-image img {
+  .card-image img {
     width: 20%;
     height: auto;
     float: left;
     border-radius: 10px;
     margin-right: 1rem;
-}
+  }
 
-.card {
-    display: flex ;
+  .card {
+    display: flex;
     flex-direction: column;
     text-align: start;
-    
-}
-.card-title {
+  }
+  .card-title {
     position: relative;
     float: left;
     padding-bottom: 0.5rem;
     font-size: large;
     font-weight: bold;
-   
-}
+  }
 
-.card-desc{
+  .card-desc {
     font-size: small;
     font-weight: lighter;
-    
+  }
 }
-
-
-
-
-
-// /* Phone Devices Query */
-// @media only screen and (max-width: 37.5em) {
-// div.card-image img {
-// width: 100%;
-// height: auto;
-// }}
-
- 

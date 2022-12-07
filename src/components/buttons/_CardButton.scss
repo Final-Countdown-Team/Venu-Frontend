@@ -3,20 +3,28 @@
 
 
 .card-button{
+    position: relative;
     float: right;
     background-color:#111111;
     border-radius: 30px;
     width: 35%;
     text-align: center;
-    padding: 2px;
-    
-}
-
-button {
+    margin-top: 2rem;
+  
+    button {
     font-size: x-small;
     color: $color-artist-primary;
     background-color: transparent;
     border: none;
-    
-   
+    align-items: center;
+    padding: 2px;
+    margin-bottom: 2px;
 }
+    
+}
+
+.fa-arrow-right{
+    color:#AAAAAA ;
+    padding-left: 5px;
+}
+
