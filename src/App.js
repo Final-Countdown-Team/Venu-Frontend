@@ -14,6 +14,7 @@ import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import About from "./components/pages/About";
 import ContactForm from "./components/contactForm/ContactForm";
+import { FourOhFour } from "./components/pages/FourOhFour";
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -52,6 +53,9 @@ function App() {
             element={<Signup userType={"artists"} />}
           />
           <Route path="/preview" element={<ContactForm />} />
+          <Route
+            path="/404"
+            element= {<FourOhFour/>} />
         </Routes>
       </div>
     </Router>

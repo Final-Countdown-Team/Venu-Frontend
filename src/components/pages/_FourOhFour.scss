@@ -1,0 +1,19 @@
+@import "../../_Utilities.scss";
+
+.page-error{
+
+    position: absolute;
+    max-width: 45%;
+    max-height: 45%;
+    top: 50%;
+    left: 50%;
+    overflow: visible;
+}
+
+img.error{
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: -50%;
+    margin-left: -50%;
+}
