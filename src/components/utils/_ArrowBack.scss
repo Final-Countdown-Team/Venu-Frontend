@@ -3,7 +3,7 @@
 .arrow-container {
   font-size: 4rem;
   margin: auto;
-  max-width: 60rem;
+  // max-width: 60rem;
 
   .arrow-back {
     padding: 1rem 0;
@@ -20,10 +20,10 @@
       margin-top: 5rem;
     }
   }
-  .arrow-back-venues:hover {
+  .arrow-back--venues:hover {
     color: $color-venu-primary;
   }
-  .arrow-back-artists:hover {
+  .arrow-back--artists:hover {
     color: $color-artist-primary;
   }
 }

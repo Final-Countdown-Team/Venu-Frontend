@@ -1,19 +1,14 @@
-import React from 'react';
+import React from "react";
 import "../buttons/_CardButton.scss";
-import {BsArrowRightCircle} from 'react-icons/bs';
+import { HiArrowRight as ArrowRight } from "react-icons/hi";
 
-
-
-
-export const CardButton = () => {
+export const CardButton = ({ userType }) => {
   return (
-    <div className="card-button">
-      <button>
-        Visit Profile
-        <div className='button-arrow'>
-          <BsArrowRightCircle />
-        </div>
-      </button>
-    </div>
+    <button className={`card-button card-button--${userType}`}>
+      <span>Visit Profile</span>
+      <div className="button-arrow">
+        <ArrowRight />
+      </div>
+    </button>
   );
-}
+};
