@@ -6,10 +6,6 @@
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@uvarov.frontend/vanilla-calendar": "^2.2.5",
-    "axios": "^1.2.1",
-    "bootstrap": "^5.2.3",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.19",
     "react": "^18.2.0",
