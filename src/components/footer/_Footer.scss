@@ -1,16 +1,18 @@
 @import "../../Utilities";
 
 .main-footer {
-  color: $color-text-white;
-  background-color: $color-bg-black;
-  padding: 2rem;
+  background-color: rgba(20, 20, 20, 0.701);
   position: absolute;
-  bottom: 0;
+  height: 8rem;
   width: 100%;
-  font-family: $font-main;
+  padding-inline: 3vw;
 
   .footer-content {
+    color: rgba(255, 255, 255, 0.273);
+    height: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 1rem;
   }
 }

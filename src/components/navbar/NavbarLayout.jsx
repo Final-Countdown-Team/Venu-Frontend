@@ -11,7 +11,11 @@ function NavbarLayout() {
   return (
     <div>
       <Navbar />
-      <div className={showSidebar ? "blur-wrapper" : "false"}>
+      <div
+        className={`content-container ${
+          showSidebar ? "blur-wrapper" : "false"
+        }`}
+      >
         <Outlet />
       </div>
       <Footer />

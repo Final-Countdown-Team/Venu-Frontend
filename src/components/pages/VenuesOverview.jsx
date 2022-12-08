@@ -1,10 +1,10 @@
 import React from "react";
-import SearchBar from "../search/SearchBar";
+import SearchBar from "../searchbar/SearchBar";
 
 function VenuesOverview() {
   return (
     <div>
-      <SearchBar />
+      <SearchBar userType="venues" />
       VenuesOverview
     </div>
   );
