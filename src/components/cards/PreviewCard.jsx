@@ -2,19 +2,15 @@ import React from "react";
 import { CardButton } from "../buttons/CardButton";
 import "./_Preview-card.scss";
 
-export default function PreviewCard(props) {
+export default function PreviewCard({ img, name, description, userType }) {
   return (
     <div className="card-container">
-      <div className="float-layout">
-        <div className="card-image">
-          <img src={props.img} alt="profile pic"></img>
-          <div className="card">
-            <div className="card-title">{props.name}</div>
-            <div className="card-desc">{props.description}</div>
-            <div className="profile-button">
-              <CardButton />
-            </div>
-          </div>
+      <img className="preview-userImage" src={img} alt="profile pic"></img>
+      <div className="card-text-content">
+        <div className="card-title">{name}</div>
+        <div className="card-desc">{description}</div>
+        <div className="card-profile-button">
+          <CardButton userType={userType} />
         </div>
       </div>
     </div>
