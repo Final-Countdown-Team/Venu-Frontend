@@ -1,8 +1,30 @@
 @import "../../Utilities.scss";
 
-.header{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+.styled-heading {
+  //   margin: 2rem;
+  height: 12rem;
+  position: relative;
+
+  h1 {
+    font-family: $font-special;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-49%, -54%);
+    opacity: 0.1;
+    z-index: 1;
+    margin: 2rem 0;
+    font-size: clamp(1rem, 21vw, 11rem);
+  }
+  .heading-svg {
+    height: 8rem;
+    margin: 2rem 0;
+    position: absolute;
+    width: 60%;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 0 10px rgba(255, 127, 225, 0.2));
+  }
 }

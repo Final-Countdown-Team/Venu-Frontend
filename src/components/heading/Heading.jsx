@@ -1,18 +1,15 @@
 import React from "react";
 import "./_Heading.scss";
-import venu from "../../img/venu.png";
-
+// import venu from "../../img/venu.png";
+import VenueHeadingComponent from "./svg/VenueHeadingComponent";
 
 function Heading() {
- 
   return (
-    <div className="header">
-
-        <img src={venu} alt="venu-header"  width="150" height="50"/>
-
+    <div className="styled-heading">
+      <h1>Venu</h1>
+      <VenueHeadingComponent />
     </div>
-  )
+  );
 }
 
-export default Heading
-
+export default Heading;

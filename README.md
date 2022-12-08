@@ -7,8 +7,3 @@ Please make sure to use the variables provided in the \_Utilities.scss file when
 ```scss
 @import "<path to Utilites.scss file>";
 ```
-
-
-Test - nana branch
-
-

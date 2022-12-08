@@ -4,14 +4,16 @@ import "./_Preview-card.scss";
 
 export default function PreviewCard(props) {
   return (
-    <div class="card-container">
-      <div class="float-layout">
-        <div class="card-image">
+    <div className="card-container">
+      <div className="float-layout">
+        <div className="card-image">
           <img src={props.img} alt="profile pic"></img>
-          <div class="card">
-            <div class="card-title">{props.name}</div>
-            <div class="card-desc">{props.description}</div>
-            <div className="profile-button"><CardButton /></div>
+          <div className="card">
+            <div className="card-title">{props.name}</div>
+            <div className="card-desc">{props.description}</div>
+            <div className="profile-button">
+              <CardButton />
+            </div>
           </div>
         </div>
       </div>

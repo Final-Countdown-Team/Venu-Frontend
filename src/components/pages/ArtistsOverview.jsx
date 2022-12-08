@@ -1,5 +1,5 @@
 import PreviewCard from "../cards/PreviewCard";
-import SearchBar from "../search/SearchBar";
+import SearchBar from "../searchbar/SearchBar";
 import photo from "../../img/dancing.gif"
 
 function ArtistsOverview() {
