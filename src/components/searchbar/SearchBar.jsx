@@ -11,7 +11,7 @@ export default function SearchBar({ userType }) {
   const [searchText, setSearchText] = useState("");
   const [sort, setSort] = useState("");
   const [radius, setRadius] = useState("");
-  const [dates, setDates] = useState();
+  const [dates, setDates] = useState("");
   const [latLng, setLatLng] = useState("");
 
   // console.log(typeof new Date(dates));
@@ -30,8 +30,8 @@ export default function SearchBar({ userType }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Creat query string for fetching previews
-    // &fields=name,description,profileImage
-    const URL = `/${userType}?name=${searchText}&sort=${sort}&dates=${dates}&distance=${radius}&center=${latLng}`;
+
+    const URL = `/${userType}?name=${searchText}&fields=name,description,profileImage&sort=${sort}&dates=${dates}&distance=${radius}&center=${latLng}`;
     const res = await fetch(URL);
     const data = await res.json();
     context.setFetchedPreviews(data);
@@ -63,7 +63,9 @@ export default function SearchBar({ userType }) {
   return (
     <form onSubmit={handleSubmit} className="searchbar">
       <input
-        className="searchbar--input"
+        className={`searchbar--input ${
+          userType === "venues" ? "input-focus-venues" : "input-focus-artists"
+        }`}
         onChange={handleSearch}
         type="search"
         value={searchText}
