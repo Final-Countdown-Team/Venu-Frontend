@@ -14,6 +14,7 @@ import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import About from "./components/pages/About";
 import ContactForm from "./components/contactForm/ContactForm";
+import Calendar from "./components/calendar/Calendar";
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -26,10 +27,7 @@ function App() {
 
   return (
     <Router>
-      <div
-        className="wrapper"
-        style={{ overflow: showSidebar ? "hidden" : "" }}
-      >
+      <div className="wrapper" style={{ overflow: showSidebar ? "hidden" : "" }}>
         <Routes>
           <Route path="/" element={<NavbarLayout />}>
             <Route index element={<Home />} />
@@ -37,20 +35,12 @@ function App() {
             <Route path="/venues" element={<VenuesOverview />} />
             <Route path="/artists" element={<ArtistsOverview />} />
             <Route path="/me/profile" element={<ProfileEdit />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Route>
           <Route path="/venues/login" element={<Login userType={"venues"} />} />
-          <Route
-            path="/venues/signup"
-            element={<Signup userType={"venues"} />}
-          />
-          <Route
-            path="/artists/login"
-            element={<Login userType={"artists"} />}
-          />
-          <Route
-            path="/artists/signup"
-            element={<Signup userType={"artists"} />}
-          />
+          <Route path="/venues/signup" element={<Signup userType={"venues"} />} />
+          <Route path="/artists/login" element={<Login userType={"artists"} />} />
+          <Route path="/artists/signup" element={<Signup userType={"artists"} />} />
           <Route path="/preview" element={<ContactForm />} />
         </Routes>
       </div>
@@ -59,5 +49,3 @@ function App() {
 }
 
 export default App;
-
-

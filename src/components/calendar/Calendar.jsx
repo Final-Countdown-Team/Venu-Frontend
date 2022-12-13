@@ -1,35 +1,29 @@
-import React, { useState } from 'react'
-import './_Calendar.scss'
-import { render } from 'react-dom'
-import VanillaCalendar from '@uvarov.frontend/vanilla-calendar';
+import React, { useRef, useEffect } from "react";
+import "./_Calendar.scss";
+import VanillaCalendar from "@uvarov.frontend/vanilla-calendar";
+import "@uvarov.frontend/vanilla-calendar/build/vanilla-calendar.min.css";
 
 export default function Calendar() {
+  const calendarEl = useRef(null);
 
-    const calendar = new VanillaCalendar({
-    HTMLElement: document.querySelector('.vanilla-calendar'),
-    settings: {
-      range: {
-        min: '2022-05-01',
-        max: '2022-05-13',
-        values: ['2022-05-16', '2022-05-17'],
+  useEffect(() => {
+    if (!calendarEl.current) return;
+
+    const calendar = new VanillaCalendar(calendarEl.current, {
+      settings: {
+        selected: {
+          dates: ["2022-12-10", "2022-12-12", "2022-12-13"],
+        },
+        lang: "en",
+        selection: {
+          time: false,
+        },
       },
-    },
-});
-calendar.init();
-   /*  const [date, setDate] = useState(new Date());
+    });
+    calendar.init();
+  }, [calendarEl]);
 
-    const onChange = (date) => {
-        setDate(date); */
-   
-
-  return (
-    <div class="vanilla-calendar">
-      <VanillaCalendar onChange={onChange} value={date} />
-    </div>
-  );
- }
-
-
+  return <div ref={calendarEl}>test</div>;
+}
 
 // render (<VanillaCalendar/>, document.querySelector('#root'));
-
