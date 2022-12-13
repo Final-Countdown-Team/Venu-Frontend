@@ -10,6 +10,7 @@ export default function SearchBar({ userType }) {
 
   const [searchText, setSearchText] = useState("");
   const [sort, setSort] = useState("");
+  const [zipcode, setZipcode] = useState("");
   const [radius, setRadius] = useState("");
   const [dates, setDates] = useState("");
   const [latLng, setLatLng] = useState("");
@@ -21,17 +22,17 @@ export default function SearchBar({ userType }) {
   const handleRadius = (e) => setRadius(e.target.value);
   const handleDates = (e) => setDates(e.target.value);
   const validateZipcode = (e) => {
-    console.log(e.target.value.length);
-    return (e.target.value = e.target.value
+    e.target.value = e.target.value
       .replace(/[^0-9.]/g, "")
-      .replace(/(\..*?)\..*/g, "$1"));
+      .replace(/(\..*?)\..*/g, "$1");
+    setZipcode(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Creat query string for fetching previews
 
-    const URL = `/${userType}?name=${searchText}&fields=name,description,profileImage&sort=${sort}&dates=${dates}&distance=${radius}&center=${latLng}`;
+    const URL = `/${userType}?name=${searchText}&fields=name,description,profileImage,location,address&sort=${sort}&dates=${dates}&zipcode=${zipcode}&distance=${radius}&center=${latLng}`;
     const res = await fetch(URL);
     const data = await res.json();
     context.setFetchedPreviews(data);
@@ -52,6 +53,8 @@ export default function SearchBar({ userType }) {
     };
     getUserLocation();
   }, []);
+
+  console.log(latLng);
 
   const addDays = (date, days) => {
     date.setDate(date.getDate() + days);

@@ -7,13 +7,16 @@ import ArrowBack from "../utils/ArrowBack";
 import { RxDoubleArrowDown } from "react-icons/rx";
 import NoResults from "../../img/no-results.gif";
 import { motion } from "framer-motion";
+import { containerVariantX } from "../animations/containerVariants";
 
 function Overview({ userType }) {
   const context = useContext(MainContext);
 
+  context.setUserType(userType);
+
   useEffect(() => {
     const fetchPreviews = async () => {
-      const URL = `/${userType}`;
+      const URL = `/${userType}?fields=name,description,profileImage,availability,dates`;
       const res = await fetch(URL);
       const data = await res.json();
       context.setFetchedPreviews(data);
@@ -21,52 +24,50 @@ function Overview({ userType }) {
     fetchPreviews();
   }, []);
 
-  const renderFetchedPreviews = context?.fetchedPreviews.data?.map(
-    (preview) => (
-      <PreviewCard
-        userType={userType}
-        key={preview._id}
-        description={preview.description}
-        name={preview.name}
-        img={preview.profileImage}
-      />
-    )
-  );
+  const renderFetchedPreviews = context?.fetchedPreviews.data?.map((preview) => (
+    <PreviewCard
+      userType={userType}
+      key={preview._id}
+      id={preview._id}
+      description={preview.description}
+      availability={preview.availability}
+      name={preview.name}
+      img={preview.profileImage}
+    />
+  ));
 
   return (
     <>
-      <div className={`navbar-box-shadow box-shadow--${userType}`} />
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        // transition={{ duration: 0.7 }}
+        variants={containerVariantX}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="margin-container"
       >
-        <div className="margin-container">
-          <SearchBar userType={userType} />
-          {renderFetchedPreviews?.length >= 1 ? (
-            <div className="preview-card-container">
-              {renderFetchedPreviews}
-              <div className={`double-arrow-down double-arrow--${userType}`}>
-                <RxDoubleArrowDown />
-              </div>
+        <SearchBar userType={userType} />
+        {renderFetchedPreviews?.length >= 1 ? (
+          <div className="preview-card-container">
+            {renderFetchedPreviews}
+            <div className={`double-arrow-down double-arrow--${userType}`}>
+              <RxDoubleArrowDown />
             </div>
-          ) : (
-            <div className="preview-card-container no-results-container">
-              <img
-                className="no-results-gif"
-                src={NoResults}
-                alt="no results animation"
-              />
-              <p className="no-results-text">
-                Sorry, we couldn't find what you are looking for...
-              </p>
-            </div>
-          )}
-
-          <div className="overview-arrow-wrapper">
-            <ArrowBack userType={userType} />
           </div>
+        ) : (
+          <div className="preview-card-container no-results-container">
+            <img
+              className="no-results-gif"
+              src={NoResults}
+              alt="no results animation"
+            />
+            <p className="no-results-text">
+              Sorry, we couldn't find what you are looking for...
+            </p>
+          </div>
+        )}
+
+        <div className="overview-arrow-wrapper">
+          <ArrowBack userType={userType} />
         </div>
       </motion.div>
     </>
