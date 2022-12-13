@@ -17,6 +17,7 @@ import { FourOhFour } from "./components/pages/FourOhFour";
 import Overview from "./components/pages/Overview";
 import SignupLogin from "./components/pages/SignupLogin";
 
+import Calendar from "./components/calendar/Calendar";
 
 function App() {
   const { showSidebar } = useContext(MainContext);
@@ -31,10 +32,7 @@ function App() {
 
   return (
     <AnimatePresence mode={"wait"}>
-      <div
-        className="wrapper"
-        style={{ overflow: showSidebar ? "hidden" : "" }}
-      >
+      <div className="wrapper" style={{ overflow: showSidebar ? "hidden" : "" }}>
         <Routes location={location} key={location.pathname}>
           {/* Routes with classic navbar and footer layout */}
           <Route path="/" element={<NavbarLayout />}>
@@ -54,18 +52,9 @@ function App() {
           {/* Routes without navbar and footer */}
           <Route path="/signup" element={<SignupLogin />} />
           <Route path="/venues/login" element={<Login userType={"venues"} />} />
-          <Route
-            path="/venues/signup"
-            element={<Signup userType={"venues"} />}
-          />
-          <Route
-            path="/artists/login"
-            element={<Login userType={"artists"} />}
-          />
-          <Route
-            path="/artists/signup"
-            element={<Signup userType={"artists"} />}
-          />
+          <Route path="/venues/signup" element={<Signup userType={"venues"} />} />
+          <Route path="/artists/login" element={<Login userType={"artists"} />} />
+          <Route path="/artists/signup" element={<Signup userType={"artists"} />} />
           <Route path="/preview" element={<ContactForm />} />
           <Route path="/404" element={<FourOhFour />} />
         </Routes>
