@@ -15,6 +15,7 @@ import About from "./components/pages/About";
 import ContactForm from "./components/contactForm/ContactForm";
 import { FourOhFour } from "./components/pages/FourOhFour";
 import Overview from "./components/pages/Overview";
+import SignupLogin from "./components/pages/SignupLogin";
 import UserProfile from "./components/pages/UserProfile";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           </Route>
 
           {/* Routes without navbar and footer */}
+          <Route path="/signup" element={<SignupLogin />} />
           <Route path="/venues/login" element={<Login userType={"venues"} />} />
           <Route path="/venues/signup" element={<Signup userType={"venues"} />} />
           <Route path="/artists/login" element={<Login userType={"artists"} />} />
