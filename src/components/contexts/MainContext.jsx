@@ -8,8 +8,7 @@ export const MainContextProvider = ({ children }) => {
   // Form Inputs
   const [isDisabled, setIsDisabled] = useState(true);
   // Fetched venues or artists previews
-  const [fetchedPreviews, setFetchedPreviews] = useState([]);
-
+  const [fetchedPreviews, setFetchedPreviews] = useState({});
   console.log(fetchedPreviews);
 
   return (

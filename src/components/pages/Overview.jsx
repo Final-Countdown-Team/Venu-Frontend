@@ -7,13 +7,14 @@ import ArrowBack from "../utils/ArrowBack";
 import { RxDoubleArrowDown } from "react-icons/rx";
 import NoResults from "../../img/no-results.gif";
 import { motion } from "framer-motion";
+import { Outlet } from "react-router-dom";
 
 function Overview({ userType }) {
   const context = useContext(MainContext);
 
   useEffect(() => {
     const fetchPreviews = async () => {
-      const URL = `/${userType}`;
+      const URL = `/${userType}?fields=name,description,profileImage`;
       const res = await fetch(URL);
       const data = await res.json();
       context.setFetchedPreviews(data);
@@ -26,6 +27,7 @@ function Overview({ userType }) {
       <PreviewCard
         userType={userType}
         key={preview._id}
+        id={preview._id}
         description={preview.description}
         name={preview.name}
         img={preview.profileImage}
