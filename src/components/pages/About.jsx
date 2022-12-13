@@ -21,8 +21,8 @@ function About() {
           happen!
           <br />
           Venu. When you wanna play!
-        </p>
-      </div>
+        </p>  
+      </div>  
     </div>
   );
 }
