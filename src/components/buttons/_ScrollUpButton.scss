@@ -1,12 +1,15 @@
 @import "../../_Utilities.scss";
 
 
-// Scroll Up Button
-
-// .scroll-to-top{
-//     border: solid 1px;
-//     width: 30px;
-//     height: 30px;
-//     border-radius: 50%;
-//     background-color: $color-venu-primary-transparent;
-// }
+button {
+    position: fixed; 
+   width: 100%;
+   left: 50%;
+   bottom: 40px;
+   height: 20px;
+   font-size: 3rem;
+   z-index: 1;
+   cursor: pointer;
+   color: green;
+   
+}

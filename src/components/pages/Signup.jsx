@@ -4,6 +4,7 @@ import "./_Signup.scss";
 import SignupForm from "../forms/signupForm/SignupForm";
 import ArrowBack from "../utils/ArrowBack";
 
+
 function Signup({ userType }) {
   return (
     <div className="signup-page">

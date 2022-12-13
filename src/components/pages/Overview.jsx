@@ -8,6 +8,7 @@ import { RxDoubleArrowDown } from "react-icons/rx";
 import NoResults from "../../img/no-results.gif";
 import { motion } from "framer-motion";
 
+
 function Overview({ userType }) {
   const context = useContext(MainContext);
 
@@ -67,6 +68,7 @@ function Overview({ userType }) {
           <div className="overview-arrow-wrapper">
             <ArrowBack userType={userType} />
           </div>
+          
         </div>
       </motion.div>
     </>
