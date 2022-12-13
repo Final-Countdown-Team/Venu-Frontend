@@ -2,37 +2,64 @@
 @import "../buttons/ButtonSecondary.scss";
 
 .card-container {
+  max-width: 50rem;
+  min-width: 20rem;
+  // width: 100%;
+  height: 40rem;
+  padding: 2rem;
+  margin: auto;
+  background-color: rgba($color: #d9d9d9, $alpha: 0.1);
+  border-radius: 15px;
   display: flex;
-  width: 90%;
-  height: 25%;
-  margin: 3rem 2rem;
-  padding: 3%;
-  background-color: rgb(34, 34, 35);
-  border-radius: 10px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  gap: 2rem;
+  flex-basis: 25%;
 
-  .card-image img {
-    width: 20%;
-    height: auto;
-    float: left;
-    border-radius: 10px;
-    margin-right: 1rem;
-  }
+  // @include respond(landscape) {
+  //   flex-wrap: nowrap;
+  // }
 
-  .card {
+  .card-text-content {
+    width: 100%;
+    height: 50%;
+    flex-grow: 1;
     display: flex;
+    text-align: left;
     flex-direction: column;
-    text-align: start;
-  }
-  .card-title {
     position: relative;
-    float: left;
-    padding-bottom: 0.5rem;
-    font-size: large;
-    font-weight: bold;
+    padding-bottom: 3rem;
+
+    .card-title {
+      position: relative;
+      padding-bottom: 0.5rem;
+      font-size: 1.9rem;
+      font-weight: bold;
+    }
+    .card-desc {
+      width: 100%;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
+      font-weight: 200;
+      font-size: 1.5rem;
+    }
+    .card-profile-button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      justify-content: flex-end;
+    }
   }
 
-  .card-desc {
-    font-size: small;
-    font-weight: lighter;
+  .preview-userImage {
+    object-fit: cover;
+    border-radius: 15px;
+    flex-grow: 1;
+    width: 100%;
+    height: 15rem;
+    // max-height: 15rem;
   }
 }

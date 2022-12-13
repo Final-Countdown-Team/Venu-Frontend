@@ -1,9 +1,10 @@
 @import "../../_Utilities.scss";
 
 .searchbar {
-  max-width: 80rem;
-  margin: 2rem auto;
-  padding: 2rem;
+  max-width: $container-max-width-lg;
+  width: 90%;
+  margin: auto;
+  padding: 2rem 0;
 
   &--input {
     width: 100%;
@@ -13,9 +14,16 @@
     z-index: 1;
     font-size: 1.6rem;
     background-color: rgba(255, 255, 255, 0.9);
-
+  }
+  .input-focus-venues {
     &:focus {
-      outline: 2px dotted $color-venu-primary;
+      outline: 2px solid $color-venu-primary;
+      outline-offset: 2px;
+    }
+  }
+  .input-focus-artists {
+    &:focus {
+      outline: 2px solid $color-artist-primary;
       outline-offset: 2px;
     }
   }
