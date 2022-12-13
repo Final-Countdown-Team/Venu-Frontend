@@ -18,6 +18,8 @@ import Overview from "./components/pages/Overview";
 import SignupLogin from "./components/pages/SignupLogin";
 import UserProfile from "./components/pages/UserProfile";
 
+import Calendar from "./components/calendar/Calendar";
+
 function App() {
   const { showSidebar } = useContext(MainContext);
 
