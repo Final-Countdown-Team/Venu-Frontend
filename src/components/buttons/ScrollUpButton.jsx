@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import "./_ScrollUpButton.scss"
 
-// ScrollUpButton component
-// Create a scroll up button that appears at the bottom of the page when the user scrolls down. Button automatically leads user to the top of page and disappears when user is at the top of the page.
 
 const ScrollUpButton = () => {
   const [visible, setVisible] = useState(false);
 
   const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 300) {
+    if (scrolled > 100) {
       setVisible(true);
-    } else if (scrolled <= 300) {
+    } else if (scrolled <= 100) {
       setVisible(false);
     }
   };
