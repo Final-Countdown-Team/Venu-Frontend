@@ -3,32 +3,22 @@
 .signup-container {
   font-family: $font-special;
 
-  .venues-container {
+  .userType-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 7rem auto;
-    width: 100%;
-    height: 100%;
-  }
-  .artist-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 7rem auto;
-    width: 100%;
-    height: 100%;
 
-    
+    align-items: center;
+    justify-content: center;
+    margin: 7rem auto;
+    width: 100%;
+    height: 100%;
   }
 
   .button-container {
-    width: 100%;
-      display: flex;
-      flex-direction: row;
-      margin: 2rem auto;
-      border: 2px solid red;
-    }
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 2rem auto;
+  }
 }
