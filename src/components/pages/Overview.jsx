@@ -36,9 +36,10 @@ function Overview({ userType }) {
     <>
       <div className={`navbar-box-shadow box-shadow--${userType}`} />
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0, x: "100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: "-100vw" }}
+        transition={{ type: "spring", stiffness: 100 }}
         // transition={{ duration: 0.7 }}
       >
         <div className="margin-container">
@@ -52,8 +53,14 @@ function Overview({ userType }) {
             </div>
           ) : (
             <div className="preview-card-container no-results-container">
-              <img className="no-results-gif" src={NoResults} alt="no results animation" />
-              <p className="no-results-text">Sorry, we couldn't find what you are looking for...</p>
+              <img
+                className="no-results-gif"
+                src={NoResults}
+                alt="no results animation"
+              />
+              <p className="no-results-text">
+                Sorry, we couldn't find what you are looking for...
+              </p>
             </div>
           )}
 

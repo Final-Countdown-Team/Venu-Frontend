@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 function Home() {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.7 }}
+      initial={{ opacity: 0, y: "-100vh" }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 50 }}
     >
       <Heading />
     </motion.div>

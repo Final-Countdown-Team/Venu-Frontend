@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { useInView } from "react-intersection-observer";
 import { Calendar } from "react-multi-date-picker";
-import "react-multi-date-picker/styles/colors/green.css";
+import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 
+import "react-multi-date-picker/styles/colors/green.css";
 import "./_UserProfile.scss";
 
 import {
@@ -17,7 +19,6 @@ import InputHalf from "../forms/formInputs/InputHalf";
 import Textbox from "../forms/formInputs/Textbox";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import Map from "../map/Map";
-import { useParams } from "react-router-dom";
 
 function UserProfile({ userType }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +58,13 @@ function UserProfile({ userType }) {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, x: "100vw" }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: "-100vw" }}
+      transition={{ type: "spring", stiffness: 100 }}
+      // transition={{ duration: 0.7 }}
+    >
       <div className="margin-container">
         <div className="preview-card-container user-profile-container">
           <div className="padding-group">
@@ -170,7 +177,7 @@ function UserProfile({ userType }) {
           </div>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }
 
