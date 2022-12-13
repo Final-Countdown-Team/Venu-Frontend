@@ -16,9 +16,10 @@ function SignupForm({ userType }) {
     <Formik
       initialValues={signupInitialValues}
       validationSchema={signUpSchema}
-      onSubmit={async (values, actions) =>
-        signupOnSubmit(values, actions, userType)
-      }
+      onSubmit={async (values, actions) => {
+        console.log(values);
+        signupOnSubmit(values, actions, userType);
+      }}
     >
       <Form noValidate className="signup-form">
         <div className="form-top-group">
@@ -144,9 +145,9 @@ function SignupForm({ userType }) {
 
         <div className="form-group-transparent">
           <p className="form-info-text">
-            You can complete your profile once you’ve registered. Please add
-            images and and a custom profile image. A complete profile helps you
-            to find the perfect match for your event.
+            You can complete your profile once you’ve registered. Please add images
+            and and a custom profile image. A complete profile helps you to find the
+            perfect match for your event.
           </p>
         </div>
       </Form>

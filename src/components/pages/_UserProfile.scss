@@ -1,9 +1,10 @@
 @import "../../Utilities";
 
 .user-profile-container {
-  max-width: 80rem;
+  max-width: 100rem;
   width: 90%;
-  padding: 0rem;
+  padding: 0;
+  margin: 4rem auto;
   flex-direction: column;
 
   h3 {
@@ -12,7 +13,7 @@
   }
 
   .padding-group {
-    padding: 2rem;
+    padding: 4rem;
   }
 
   .user-profile-image {
@@ -52,8 +53,9 @@
     max-width: 65rem;
     font-size: 3rem;
     display: flex;
-    margin: 2rem auto;
+    margin: 4rem auto 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 
@@ -102,10 +104,41 @@
   }
 
   .image-gallery {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @include respond(landscape) {
+      flex-direction: row;
+      height: 30rem;
+      gap: 0;
+    }
+
     img {
-      width: 33.3%;
-      height: 50%;
+      height: 18rem;
       object-fit: cover;
+
+      @include respond(landscape) {
+        height: 100%;
+        width: 33.3%;
+      }
+    }
+  }
+
+  .dates-group {
+    padding: 4rem 0;
+    .calendar {
+      margin-top: 2rem;
+      border-radius: 15px;
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+
+      span {
+        color: white;
+        box-shadow: none;
+      }
     }
   }
 

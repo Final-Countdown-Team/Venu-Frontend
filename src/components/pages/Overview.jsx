@@ -7,7 +7,6 @@ import ArrowBack from "../utils/ArrowBack";
 import { RxDoubleArrowDown } from "react-icons/rx";
 import NoResults from "../../img/no-results.gif";
 import { motion } from "framer-motion";
-import { Outlet } from "react-router-dom";
 
 function Overview({ userType }) {
   const context = useContext(MainContext);
@@ -22,18 +21,16 @@ function Overview({ userType }) {
     fetchPreviews();
   }, []);
 
-  const renderFetchedPreviews = context?.fetchedPreviews.data?.map(
-    (preview) => (
-      <PreviewCard
-        userType={userType}
-        key={preview._id}
-        id={preview._id}
-        description={preview.description}
-        name={preview.name}
-        img={preview.profileImage}
-      />
-    )
-  );
+  const renderFetchedPreviews = context?.fetchedPreviews.data?.map((preview) => (
+    <PreviewCard
+      userType={userType}
+      key={preview._id}
+      id={preview._id}
+      description={preview.description}
+      name={preview.name}
+      img={preview.profileImage}
+    />
+  ));
 
   return (
     <>
@@ -55,14 +52,8 @@ function Overview({ userType }) {
             </div>
           ) : (
             <div className="preview-card-container no-results-container">
-              <img
-                className="no-results-gif"
-                src={NoResults}
-                alt="no results animation"
-              />
-              <p className="no-results-text">
-                Sorry, we couldn't find what you are looking for...
-              </p>
+              <img className="no-results-gif" src={NoResults} alt="no results animation" />
+              <p className="no-results-text">Sorry, we couldn't find what you are looking for...</p>
             </div>
           )}
 

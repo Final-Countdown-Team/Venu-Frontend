@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { useInView } from "react-intersection-observer";
+import { Calendar } from "react-multi-date-picker";
+import "react-multi-date-picker/styles/colors/green.css";
+
 import "./_UserProfile.scss";
-import { AiFillFacebook as Facebook, AiOutlineInstagram as Instagram, AiOutlineTwitter as Twitter, AiFillYoutube as Youtube } from "react-icons/ai";
+
+import {
+  AiFillFacebook as Facebook,
+  AiOutlineInstagram as Instagram,
+  AiOutlineTwitter as Twitter,
+  AiFillYoutube as Youtube,
+} from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import InputHalf from "../forms/formInputs/InputHalf";
 import Textbox from "../forms/formInputs/Textbox";
@@ -13,10 +22,17 @@ import { useParams } from "react-router-dom";
 function UserProfile({ userType }) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth });
 
   const { id: userID } = useParams();
   console.log(user);
   const { ref } = useInView();
+
+  useEffect(() => {
+    const handleResize = () => setDimensions({ width: window.innerWidth });
+    window.addEventListener("resize", handleResize);
+    return (_) => window.removeEventListener("resize", handleResize);
+  });
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,7 +42,7 @@ function UserProfile({ userType }) {
       setIsLoading(false);
     };
     fetchUser();
-  }, []);
+  }, [userType, userID]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -45,7 +61,11 @@ function UserProfile({ userType }) {
       <div className="margin-container">
         <div className="preview-card-container user-profile-container">
           <div className="padding-group">
-            <img className="user-profile-image" src={user?.profileImage} alt="profile" />
+            <img
+              className="user-profile-image"
+              src={user?.profileImage}
+              alt="profile"
+            />
             <div className="user-heading">
               <h2>{user?.name}</h2>
               {/* availability button here */}
@@ -60,25 +80,18 @@ function UserProfile({ userType }) {
             </div>
 
             <div className="social-media-group">
-              {/* <a className="icon facebook-icon" href={user?.mediaLinks?.facebookUrl}>
-                <Facebook />
-              </a>
-              <a className="icon instagram-icon" href={user?.mediaLink?.instagramTag}>
-                <Instagram />
-              </a>
-              <a className="icon twitter-icon" href={user?.mediaLinks?.twitterTag}>
-                <Twitter />
-              </a>
-              <a className="icon youtube-icon" href={user?.mediaLinks?.youtubeUrl}>
-                <Youtube />
-              </a> */}
               {!isLoading &&
                 Object.entries(user.mediaLinks).map((link) => {
                   const type = link[0].slice(0, -3);
                   const Icon = icons[type];
                   return (
-                    <a className={`icon ${type}-icon`} href={link[1]}>
-                      {/* <Icon /> */}
+                    <a
+                      className={`icon ${type}-icon`}
+                      href={link[1]}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Icon />
                     </a>
                   );
                 })}
@@ -90,9 +103,27 @@ function UserProfile({ userType }) {
               return <img src={image} alt="gallery" />;
             })}
           </div>
-          {/* <div className="dates-group">
+          <div className="dates-group">
             <h3>Available Dates:</h3>
-          </div> */}
+            <Calendar
+              numberOfMonths={
+                dimensions.width >= 1150 ? 3 : dimensions.width >= 700 ? 2 : 1
+              }
+              multiple={true}
+              minDate={Date.now()}
+              mapDays={({ today, date, currentMonth, isSameDate }) => {
+                let props = {};
+                if (isSameDate(date, today))
+                  props.style = {
+                    backgroundColor: "#666",
+                  };
+                return props;
+              }}
+              className="calendar"
+              value={user?.dates.sort()}
+              readOnly={true}
+            />
+          </div>
           <div className="padding-group members-group">
             <h3>Members:</h3>
             <div className="member-count">
@@ -112,11 +143,28 @@ function UserProfile({ userType }) {
             <Formik>
               <Form>
                 <div className="input-row">
-                  <InputHalf name="name" label="Name" placeholder="Enter your name" />
-                  <InputHalf name="email" label="Email" placeholder="Enter your email" />
+                  <InputHalf
+                    name="name"
+                    label="Name"
+                    placeholder="Enter your name"
+                  />
+                  <InputHalf
+                    name="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                  />
                 </div>
-                <Textbox name="message" placeholder="Write me a message :)" label="Your message:" customClass="textbox-user-profile" />
-                <ButtonSecondary text="Send your message" submit={true} userType={userType} />
+                <Textbox
+                  name="message"
+                  placeholder="Write me a message :)"
+                  label="Your message:"
+                  customClass="textbox-user-profile"
+                />
+                <ButtonSecondary
+                  text="Send your message"
+                  submit={true}
+                  userType={userType}
+                />
               </Form>
             </Formik>
           </div>
