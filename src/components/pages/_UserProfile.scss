@@ -16,17 +16,30 @@
     padding: 4rem;
   }
 
-  .user-profile-image {
-    border-radius: 15px;
+  .user-profile-image-container {
+    position: relative;
     width: 100%;
-    max-height: 30rem;
-    object-fit: cover;
+
+    .user-profile-image {
+      border-radius: 15px;
+      width: 100%;
+      max-height: 30rem;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+    .available-button--position {
+      position: absolute;
+      right: 0;
+      bottom: -0.5rem;
+      transform: scale(1);
+    }
   }
 
   .user-heading {
     h2 {
+      width: fit-content;
       font-size: 4rem;
-      margin: 2rem 0;
+      margin: 2rem auto;
     }
   }
   .user-description-group {
@@ -101,6 +114,15 @@
         color: darken($color: #ff0000, $amount: 10);
       }
     }
+
+    .website-icon {
+      font-size: 2.5rem;
+      color: rgba(255, 255, 255, 0.372);
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
   }
 
   .image-gallery {
@@ -121,6 +143,7 @@
 
       @include respond(landscape) {
         height: 100%;
+        max-height: 25rem;
         width: 33.3%;
       }
     }

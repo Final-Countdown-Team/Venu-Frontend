@@ -1,13 +1,16 @@
 import React from "react";
 import { useContext } from "react";
+import { MainContext } from "../contexts/MainContext";
 import { Link, useLocation } from "react-router-dom";
-import Sidebar from "../navbar/Sidebar";
+
 import "./_Navbar.scss";
 import venuLogo from "../../img/venu-logo.png";
-import { MainContext } from "../contexts/MainContext";
+import Sidebar from "../navbar/Sidebar";
 
 export default function Navbar() {
   const { showSidebar, setShowSidebar } = useContext(MainContext);
+
+  const context = useContext(MainContext);
 
   const location = useLocation();
 
@@ -30,11 +33,11 @@ export default function Navbar() {
     },
     {
       name: "login",
-      path: "/login",
+      path: "/signupLogin",
     },
     {
       name: "sign up",
-      path: "/signup",
+      path: "/signupLogin",
     },
   ];
 
@@ -44,7 +47,15 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar">
+      <div
+        className={`navbar ${
+          context.userType === "artists"
+            ? "navbar--artists"
+            : context.userType === "venues"
+            ? "navbar--venues"
+            : "null"
+        }`}
+      >
         <Link to="/" className={`logo ${showSidebar && "logo-active"}`}>
           <img
             src={venuLogo}
@@ -55,7 +66,7 @@ export default function Navbar() {
           />
           <span>Venu</span>
         </Link>
-        <div className="nav-links">
+        <div className={`nav-links`}>
           {links.map((link) => (
             <Link
               className={location.pathname === link.path ? "active" : ""}
@@ -63,6 +74,11 @@ export default function Navbar() {
               key={link.name}
             >
               {link.name}
+              <span
+                className={`nav-links--underline ${
+                  context.userType === "artists" && "nav-links--artists"
+                }`}
+              />
             </Link>
           ))}
         </div>
