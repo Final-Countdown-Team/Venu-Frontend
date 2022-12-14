@@ -37,24 +37,6 @@
     flex-wrap: wrap;
     gap: 1.5rem;
 
-    .dropdown--input {
-      font-family: inherit;
-      color: $color-text-placeholder;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: none;
-      border-radius: 5px;
-      padding: 1rem;
-      width: 7rem;
-      font-size: 1.3rem;
-      flex-basis: 10%;
-      flex-grow: 1;
-      //   flex-shrink: 2;
-      //   height: 4rem;
-      &::selection {
-        color: red;
-      }
-    }
-
     .search-input-zipcode::placeholder {
       color: $color-text-placeholder;
       opacity: 1;
