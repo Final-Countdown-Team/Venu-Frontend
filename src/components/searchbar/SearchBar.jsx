@@ -4,6 +4,7 @@ import ButtonSecondary from "../buttons/ButtonSecondary";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
+import CustomDropdown from "./CustomDropdown";
 
 export default function SearchBar({ userType }) {
   const context = useContext(MainContext);
