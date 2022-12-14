@@ -22,8 +22,14 @@ const Map = ({ users }) => {
     // Create default markers
 
     users.forEach((user) => {
+      let color =
+        user.type === "artist"
+          ? "#0168b5"
+          : user.type === "venue"
+          ? "#b02476"
+          : "#000";
       const coords = user.location.coordinates;
-      new mapboxgl.Marker().setLngLat(coords).addTo(map);
+      new mapboxgl.Marker({ color }).setLngLat(coords).addTo(map);
       bounds.extend(coords);
     });
 
