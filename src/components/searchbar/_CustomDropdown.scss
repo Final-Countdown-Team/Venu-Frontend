@@ -1,0 +1,67 @@
+@import "../../_Utilities.scss";
+
+.dropdown--input {
+  font-family: inherit;
+  color: $color-text-placeholder;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 1rem 0.7rem;
+  width: 11rem;
+  font-size: 1.3rem;
+  // flex-basis: 10%;
+  flex-grow: 1;
+  flex-shrink: 2;
+  cursor: pointer;
+  transition: border-radius 0.3s;
+
+  .dropdown-arrow {
+    font-size: 1.6rem;
+    display: flex;
+    align-self: flex-end;
+    transition: all 0.3s;
+  }
+
+  .custom-dropdown-list {
+    visibility: hidden;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    border-radius: 0;
+    text-align: left;
+    z-index: 10;
+    transition: border-radius 0.3s;
+
+    li {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      list-style-type: none;
+    }
+    li:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    .artists-list-item:hover {
+      background-color: $color-artist-primary;
+      color: $color-text-white;
+    }
+    .venues-list-item:hover {
+      background-color: $color-venu-primary;
+      color: $color-text-white;
+    }
+  }
+
+  .dropdown-visible {
+    visibility: visible;
+  }
+}
+
+.input--no-bottom-borders {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
