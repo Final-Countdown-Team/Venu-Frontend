@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
-import "./_ScrollUpButton.scss"
-
+import "./_ScrollUpButton.scss";
 
 const ScrollUpButton = () => {
   const [visible, setVisible] = useState(false);
@@ -22,14 +21,19 @@ const ScrollUpButton = () => {
     });
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", toggleVisible);
+
+    return () => {
+      window.removeEventListener("scroll", toggleVisible);
+    };
+  }, []);
+
   window.addEventListener("scroll", toggleVisible);
 
   return (
-    <button>
-      <FaArrowCircleUp
-        onClick={scrollToTop}
-        style={{ display: visible ? "inline" : "none" }}
-      />
+    <button onClick={scrollToTop} style={{ display: visible ? "inline" : "none" }}>
+      <FaArrowCircleUp />
     </button>
   );
 };
