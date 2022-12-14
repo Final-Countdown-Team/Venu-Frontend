@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { containerVariantX } from "../animations/containerVariants";
 import { useParams } from "react-router-dom";
 
-import "react-multi-date-picker/styles/colors/green.css";
 import "./_UserProfile.scss";
 
 import {
@@ -25,14 +24,13 @@ import AvailableButton from "../buttons/AvailableButton";
 
 function UserProfile({ userType }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
 
   // Get user ID from URL
   const { id: userID } = useParams();
-  console.log(user);
   // Load map only if it is visible in viewport for animation
-  const { ref } = useInView();
+  const { ref } = useInView({ triggerOnce: true });
 
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
@@ -50,7 +48,8 @@ function UserProfile({ userType }) {
       setIsLoading(false);
     };
     fetchUser();
-  }, [userType, userID]);
+    console.log(user);
+  }, []);
 
   // Show loading spinner while fetching from backend
   if (isLoading) {
@@ -119,7 +118,7 @@ function UserProfile({ userType }) {
           </div>
         </div>
 
-        {user.images.length > 0 && (
+        {user?.images?.length > 0 && (
           <div className="image-gallery">
             {user?.images?.map((image) => {
               return <img src={image} alt="gallery" />;
@@ -144,7 +143,7 @@ function UserProfile({ userType }) {
               return props;
             }}
             className="calendar"
-            value={user?.dates.sort()}
+            value={user?.dates?.sort()}
             readOnly={true}
           />
         </div>
@@ -160,7 +159,11 @@ function UserProfile({ userType }) {
         <div className="location-group">
           <h3>Location:</h3>
           <p className="location-address">{`${user?.address?.street}, ${user?.address?.city} ${user?.address?.zipcode}`}</p>
-          {!isLoading && <div ref={ref}>{/* <Map user={user} /> */}</div>}
+          {!isLoading && (
+            <div ref={ref}>
+              <Map users={[user]} />
+            </div>
+          )}
         </div>
 
         <div className="padding-group contact-group">

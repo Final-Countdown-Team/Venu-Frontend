@@ -11,7 +11,6 @@ import NavbarLayout from "./components/utils/outlets/NavbarLayout";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import ProfileEdit from "./components/pages/ProfileEdit";
-import About from "./components/pages/About";
 import { FourOhFour } from "./components/pages/FourOhFour";
 import Overview from "./components/pages/Overview";
 import SignupLogin from "./components/pages/SignupLogin";
@@ -36,7 +35,6 @@ function App() {
           {/* Routes with classic navbar and footer layout */}
           <Route path="/" element={<NavbarLayout />}>
             <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
 
             <Route path="/venues" element={<Outlet />}>
               <Route index element={<Overview userType={"venues"} />} />

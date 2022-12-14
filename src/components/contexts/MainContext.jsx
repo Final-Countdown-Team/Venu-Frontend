@@ -7,9 +7,9 @@ export const MainContextProvider = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   // Form Inputs
   const [isDisabled, setIsDisabled] = useState(true);
-  // Fetched venues or artists previews
+  // Fetched venues or artists previews overview
   const [fetchedPreviews, setFetchedPreviews] = useState({});
-  console.log(fetchedPreviews);
+
   // Sets current global userType
   const [userType, setUserType] = useState(null);
 

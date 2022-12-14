@@ -1,0 +1,15 @@
+@import "../../_Utilities.scss";
+
+.scroll-up-container {
+  color: $color-off-white;
+  background-color: black;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  bottom: 20px;
+  right: 45vw;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}

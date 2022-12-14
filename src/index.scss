@@ -6,6 +6,20 @@
 html {
   font-size: 62.5%;
   overflow-x: hidden;
+
+  @include respond(landscape) {
+    font-size: 66%;
+  }
+
+  @include respond(medium) {
+    font-size: 72%;
+  }
+  @include respond(desktop-lg) {
+    font-size: 78%;
+  }
+  @include respond(desktop-xl) {
+    font-size: 84%;
+  }
 }
 
 * {

@@ -28,10 +28,6 @@ export default function Navbar() {
       path: "/venues",
     },
     {
-      name: "about",
-      path: "/about",
-    },
-    {
       name: "login",
       path: "/signupLogin",
     },
