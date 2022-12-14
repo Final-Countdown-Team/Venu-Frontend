@@ -1,0 +1,67 @@
+@import "../../Utilities";
+
+.home-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4rem;
+
+  .about-text {
+    color: $color-text-white;
+    font-weight: 300;
+    line-height: 1.7;
+    text-align: justify;
+    padding: 1rem 2rem;
+    max-width: 65rem;
+    margin: auto;
+    // border: 1px solid;
+
+    .bold-text {
+      font-weight: 500;
+    }
+
+    .special-font {
+      font-family: $font-special;
+    }
+
+    p {
+      padding: 1vmax 0;
+    }
+  }
+
+  .slogan {
+    // border: 1px solid;
+    display: block;
+    padding: 0 2rem;
+    text-align: center;
+    font-family: $font-special;
+    font-size: 2.8rem;
+    font-weight: 200;
+  }
+
+  .home-button-container {
+    // border: 1px solid;
+    width: 100%;
+    padding: 2rem 0;
+    max-width: 65rem;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .home-map-container {
+    width: 100%;
+    padding: 2rem 0;
+
+    .map-container {
+      border-radius: 15px;
+      opacity: 0.9;
+      width: 100%;
+      min-height: 50rem;
+    }
+  }
+}

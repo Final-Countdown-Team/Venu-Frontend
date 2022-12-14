@@ -44,13 +44,6 @@ function SignupLogin() {
             <ReuseButton text="Log In" purpose="link to login" userType="artists" />
           </Link>
         </div>
-        =======
-        <Link to="/artists/signup" className="button-link">
-          <ReuseButton text="Sign Up" purpose="link to signup" userType="artists" />
-        </Link>
-        <Link to="/artists/login" className="button-link">
-          <ReuseButton text="Log In" purpose="link to login" userType="artists" />
-        </Link>
       </div>
     </motion.div>
   );
