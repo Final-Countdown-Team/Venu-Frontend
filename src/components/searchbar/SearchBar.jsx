@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
+import CustomDropdown from "./CustomDropdown";
 
 import "./_SearchBar.scss";
 
