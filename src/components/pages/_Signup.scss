@@ -1,11 +1,12 @@
 @import "../../Utilities";
 
 .signup-page {
+  padding: 2rem 0;
   .signup-heading {
     font-family: $font-special;
     padding: 1rem 2rem 3rem;
 
-    h1 {
+    h2 {
       padding: 1rem;
       font-size: 4rem;
     }

@@ -1,25 +1,21 @@
 @import "../../_Utilities.scss";
 
-@function getAnimationDuration($duration: number) {
-  @return calc($duration * var(--animation-speed));
-}
-
 .navbar {
   height: 8rem;
   background-color: rgba(20, 20, 20, 0.701);
+  color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  width: 100%;
   padding-inline: 3vw;
   transition: all 0.7s;
-  // box-shadow: 0 0px 30px rgba($color: #0168b5, $alpha: 0.35);
-  // box-shadow: 0 0px 30px rgba($color: #b02476, $alpha: 0.35);
+  box-shadow: 0 0 20px #000;
 
   .logo {
     margin-left: 1rem;
     font-family: $font-special;
+    color: $color-text-white;
     font-size: 2rem;
     display: flex;
     justify-content: center;
@@ -46,22 +42,23 @@
       font-weight: 300;
       margin-right: 0.7em;
 
-      &::before {
-        content: "";
+      .nav-links--underline {
         display: inline-block;
         left: 0;
         height: 2px;
         width: 100%;
-        background-color: $color-venu-primary;
         position: absolute;
+        background-color: $color-venu-primary;
         bottom: -5px;
         transform: scaleX(0);
-        transition: all 0.2s 0.2s;
+        transition: all 0.3s 0.2s;
       }
-      &:hover {
-        &::before {
-          transform: scaleX(1);
-        }
+
+      .nav-links--artists {
+        background-color: $color-artist-primary;
+      }
+      &:hover .nav-links--underline {
+        transform: scaleX(1);
       }
       &.active {
         // color: $color-venu-primary;
@@ -78,6 +75,7 @@
     position: relative;
     margin-right: 1rem;
     z-index: 100;
+    cursor: pointer;
 
     @include respond(medium) {
       display: none;
@@ -117,6 +115,15 @@
       }
     }
   }
+}
+
+.navbar--artists {
+  transition: all 1s;
+  box-shadow: 0 0 30px rgba($color: #0168b5, $alpha: 0.35);
+}
+.navbar--venues {
+  transition: all 1s;
+  box-shadow: 0 0 30px rgba($color: #b02476, $alpha: 0.35);
 }
 
 .sidebar {

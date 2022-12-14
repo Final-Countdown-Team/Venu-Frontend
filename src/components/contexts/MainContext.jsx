@@ -8,9 +8,10 @@ export const MainContextProvider = ({ children }) => {
   // Form Inputs
   const [isDisabled, setIsDisabled] = useState(true);
   // Fetched venues or artists previews
-  const [fetchedPreviews, setFetchedPreviews] = useState([]);
-
+  const [fetchedPreviews, setFetchedPreviews] = useState({});
   console.log(fetchedPreviews);
+  // Sets current global userType
+  const [userType, setUserType] = useState(null);
 
   return (
     <MainContext.Provider
@@ -21,6 +22,8 @@ export const MainContextProvider = ({ children }) => {
         setIsDisabled,
         fetchedPreviews,
         setFetchedPreviews,
+        userType,
+        setUserType,
       }}
     >
       {children}

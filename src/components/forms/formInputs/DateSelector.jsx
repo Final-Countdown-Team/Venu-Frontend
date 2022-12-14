@@ -24,6 +24,7 @@ function DateSelector(props) {
         <DatePicker
           multiple
           name={name}
+          minDate={Date.now()}
           className="datepicker"
           inputClass="input datepicker-input"
           containerClassName="datepicker-container"

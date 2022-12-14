@@ -2,6 +2,7 @@
 
 .button-secondary {
   width: 100%;
+  height: clamp(5rem, 8vw, 7rem);
   padding: 1rem;
   border: none;
   border-radius: 8px;
@@ -9,6 +10,9 @@
   cursor: pointer;
   font-weight: 600;
   font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   transition: all 0.3s;
   transition-property: color, background-color, border;

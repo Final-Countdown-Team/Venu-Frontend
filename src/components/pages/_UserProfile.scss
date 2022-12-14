@@ -1,0 +1,215 @@
+@import "../../Utilities";
+
+.user-profile-container {
+  max-width: 100rem;
+  width: 90%;
+  padding: 0;
+  margin: 4rem auto;
+  flex-direction: column;
+
+  h3 {
+    font-size: 3rem;
+    margin: 1rem 0;
+  }
+
+  .padding-group {
+    padding: 4rem;
+  }
+
+  .user-profile-image-container {
+    position: relative;
+    width: 100%;
+
+    .user-profile-image {
+      border-radius: 15px;
+      width: 100%;
+      max-height: 30rem;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+    .available-button--position {
+      position: absolute;
+      right: 0;
+      bottom: -0.5rem;
+      transform: scale(1);
+    }
+  }
+
+  .user-heading {
+    h2 {
+      width: fit-content;
+      font-size: 4rem;
+      margin: 2rem auto;
+    }
+  }
+  .user-description-group {
+    max-width: 65rem;
+    text-align: left;
+    font-weight: 300;
+    font-size: 1.6rem;
+    line-height: 1.6;
+
+    .genre {
+      // font-size: 2rem;
+      margin: 2rem 0;
+
+      .bold {
+        font-weight: 600;
+      }
+    }
+    .description {
+      text-align: left;
+    }
+  }
+
+  .social-media-group {
+    max-width: 65rem;
+    font-size: 3rem;
+    display: flex;
+    margin: 4rem auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    .icon {
+      display: flex;
+      cursor: pointer;
+    }
+
+    .facebook-icon {
+      color: #4267b2;
+
+      &:hover {
+        color: darken($color: #4267b2, $amount: 10);
+      }
+    }
+    .instagram-icon {
+      font-size: 2.6rem;
+      border-radius: 5px;
+      background: radial-gradient(
+        circle at 30% 107%,
+        #fdf497 0%,
+        #fdf497 5%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285aeb 90%
+      );
+
+      &:hover {
+        filter: brightness(80%);
+      }
+    }
+    .twitter-icon {
+      color: #00acee;
+
+      &:hover {
+        color: darken($color: #00acee, $amount: 10);
+      }
+    }
+    .youtube-icon {
+      color: #ff0000;
+
+      &:hover {
+        color: darken($color: #ff0000, $amount: 10);
+      }
+    }
+
+    .website-icon {
+      font-size: 2.5rem;
+      color: rgba(255, 255, 255, 0.372);
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
+
+  .image-gallery {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @include respond(landscape) {
+      flex-direction: row;
+      height: 30rem;
+      gap: 0;
+    }
+
+    img {
+      height: 18rem;
+      object-fit: cover;
+
+      @include respond(landscape) {
+        height: 100%;
+        max-height: 25rem;
+        width: 33.3%;
+      }
+    }
+  }
+
+  .dates-group {
+    padding: 4rem 0;
+    .calendar {
+      margin-top: 2rem;
+      border-radius: 15px;
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+
+      span {
+        color: white;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .members-group {
+    .member-count {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+
+      .members-icon {
+        margin-left: 1rem;
+        opacity: 0.2;
+      }
+    }
+  }
+
+  .location-group {
+    width: 100%;
+
+    .location-address {
+      padding-bottom: 2rem;
+    }
+
+    .map-container {
+      opacity: 0.9;
+      width: 100%;
+      height: 20rem;
+    }
+  }
+
+  .contact-group {
+    border-radius: inherit;
+    width: 100%;
+    max-width: 65rem;
+    margin-bottom: 2rem;
+
+    .input-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+
+      @include respond(landscape) {
+        flex-wrap: nowrap;
+        gap: 2rem;
+      }
+    }
+  }
+}

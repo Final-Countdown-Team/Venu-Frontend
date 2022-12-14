@@ -1,15 +1,18 @@
 import { Field } from "formik";
 
 function Textbox(props) {
-  const { name, placeholder } = props;
+  const { name, placeholder, label, customClass } = props;
 
   return (
-    <Field
-      as="textarea"
-      className="textbox"
-      name={name}
-      placeholder={placeholder}
-    />
+    <div className="textbox-group">
+      {label && <label htmlFor="message">{label}</label>}
+      <Field
+        as="textarea"
+        className={`textbox ${customClass}`}
+        name={name}
+        placeholder={placeholder}
+      />
+    </div>
   );
 }
 
