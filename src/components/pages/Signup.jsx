@@ -5,6 +5,7 @@ import { containerVariantY } from "../animations/containerVariants";
 import "./_Signup.scss";
 import SignupForm from "../forms/signupForm/SignupForm";
 import ArrowBack from "../utils/ArrowBack";
+import ScrollUpButton from "../buttons/ScrollUpButton";
 
 function Signup({ userType }) {
   return (
@@ -23,6 +24,7 @@ function Signup({ userType }) {
       <div className="arrow-wrapper">
         <ArrowBack userType={userType} />
       </div>
+      <ScrollUpButton />
     </motion.div>
   );
 }
