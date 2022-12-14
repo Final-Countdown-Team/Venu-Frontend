@@ -7,7 +7,6 @@ import CustomDropdown from "./CustomDropdown";
 import "./_SearchBar.scss";
 
 import ButtonSecondary from "../buttons/ButtonSecondary";
-import CustomDropdown from "./CustomDropdown";
 import {
   sortOptions,
   radiusOptions,
