@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { containerVariantPosAbs } from "../animations/containerVariants";
 import ReuseButton from "../../components/buttons/Reusable_BB";
+
 import ArrowBack from "../utils/ArrowBack";
 import "./_SignupLogin.scss";
 
@@ -43,6 +44,13 @@ function SignupLogin() {
             <ReuseButton text="Log In" purpose="link to login" userType="artists" />
           </Link>
         </div>
+        =======
+        <Link to="/artists/signup" className="button-link">
+          <ReuseButton text="Sign Up" purpose="link to signup" userType="artists" />
+        </Link>
+        <Link to="/artists/login" className="button-link">
+          <ReuseButton text="Log In" purpose="link to login" userType="artists" />
+        </Link>
       </div>
     </motion.div>
   );
