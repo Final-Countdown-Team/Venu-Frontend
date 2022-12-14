@@ -42,6 +42,12 @@ $drop-black-lg: 4px 15px 20px #111;
 $container-max-width-lg: 80rem;
 $container-max-width-md: 65rem;
 
+// Utility Classes
+.button-link {
+  flex-basis: 45%;
+  flex-grow: 1;
+}
+
 // ----- Media Queries Utility -----
 @mixin respond($breakpoint) {
   @if $breakpoint == phone-xs {

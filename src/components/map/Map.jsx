@@ -5,7 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZHJ1Y2ttYXgiLCJhIjoiY2xia253Z25iMDA2YTNxbW1vaTVoa3hyeiJ9.mqCHJuNW2TYEN4HPM7_7zA";
 
-const Map = ({ user }) => {
+const Map = ({ users }) => {
   const mapContainerRef = useRef(null);
 
   // Initialize map when component mounts
@@ -20,18 +20,23 @@ const Map = ({ user }) => {
     });
     const bounds = new mapboxgl.LngLatBounds();
     // Create default markers
-    const coords = user.location.coordinates;
-    new mapboxgl.Marker().setLngLat(coords).addTo(map);
-    bounds.extend(coords);
+
+    users.forEach((user) => {
+      const coords = user.location.coordinates;
+      new mapboxgl.Marker().setLngLat(coords).addTo(map);
+      bounds.extend(coords);
+    });
+
     map.fitBounds(bounds, {
       padding: {
         top: 50,
         bottom: 50,
       },
     });
+
     // Clean up on unmount
     return () => map.remove();
-  }, [user]);
+  }, [users]);
 
   return <div className="map-container" ref={mapContainerRef} />;
 };
