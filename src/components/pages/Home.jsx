@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MainContext } from "../contexts/MainContext";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
-import { containerVariantY } from "../animations/containerVariants";
+import { containerVariantX } from "../animations/containerVariants";
 import Heading from "../heading/Heading";
 
 import "./_Home.scss";
@@ -10,6 +11,10 @@ import Map from "../map/Map";
 import ReuseButton from "../buttons/Reusable_BB";
 
 function Home() {
+  const context = useContext(MainContext);
+
+  context.setUserType(null);
+
   const [isLoading, setIsLoading] = useState(true);
   // Fetch venues and artists locations for map on /home
   const [fetchedLocations, setFetchedLocations] = useState([]);
@@ -39,8 +44,8 @@ function Home() {
 
   return (
     <motion.div
-      // variants={containerVariantY}
-      initial="hidden"
+      variants={containerVariantX}
+      initial="exit"
       animate="visible"
       exit="hidden"
       className="margin-container home-container"

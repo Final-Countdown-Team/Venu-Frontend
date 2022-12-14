@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { containerVariantX } from "../animations/containerVariants";
 import { useParams } from "react-router-dom";
 
-import "react-multi-date-picker/styles/colors/green.css";
 import "./_UserProfile.scss";
 
 import {
@@ -48,7 +47,6 @@ function UserProfile({ userType }) {
       setUser(data.data);
       setIsLoading(false);
     };
-    if (user) return;
     fetchUser();
     console.log(user);
   }, []);
