@@ -1,9 +1,18 @@
 import React, { useState } from "react";
-import "./_SearchBar.scss";
-import ButtonSecondary from "../buttons/ButtonSecondary";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
+
+import "./_SearchBar.scss";
+
+import ButtonSecondary from "../buttons/ButtonSecondary";
+import CustomDropdown from "./CustomDropdown";
+import {
+  sortOptions,
+  radiusOptions,
+  dateOptions,
+  genreOptions,
+} from "./dropdownOptions";
 
 export default function SearchBar({ userType }) {
   const context = useContext(MainContext);
@@ -13,14 +22,18 @@ export default function SearchBar({ userType }) {
   const [zipcode, setZipcode] = useState("");
   const [radius, setRadius] = useState("");
   const [dates, setDates] = useState("");
+  const [genre, setGenre] = useState("");
   const [latLng, setLatLng] = useState("");
 
-  // console.log(typeof new Date(dates));
+  console.log(genre);
 
-  const handleSearch = (e) => setSearchText(e.target.value);
-  const handleSort = (e) => setSort(e.target.value);
-  const handleRadius = (e) => setRadius(e.target.value);
-  const handleDates = (e) => setDates(e.target.value);
+  const dateHandler = (days) => {
+    if (!days) return setDates("");
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    setDates(date);
+  };
+
   const validateZipcode = (e) => {
     e.target.value = e.target.value
       .replace(/[^0-9.]/g, "")
@@ -31,8 +44,7 @@ export default function SearchBar({ userType }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Creat query string for fetching previews
-
-    const URL = `/${userType}?name=${searchText}&fields=name,description,profileImage,location,address&sort=${sort}&dates=${dates}&zipcode=${zipcode}&distance=${radius}&center=${latLng}`;
+    const URL = `/${userType}?name=${searchText}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&zipcode=${zipcode}&distance=${radius}&center=${latLng}`;
     const res = await fetch(URL);
     const data = await res.json();
     context.setFetchedPreviews(data);
@@ -54,13 +66,6 @@ export default function SearchBar({ userType }) {
     getUserLocation();
   }, []);
 
-  console.log(latLng);
-
-  const addDays = (date, days) => {
-    date.setDate(date.getDate() + days);
-    return date;
-  };
-
   const today = new Date();
 
   return (
@@ -69,57 +74,38 @@ export default function SearchBar({ userType }) {
         className={`searchbar--input ${
           userType === "venues" ? "input-focus-venues" : "input-focus-artists"
         }`}
-        onChange={handleSearch}
+        onChange={(e) => setSearchText(e.target.value)}
         type="search"
         value={searchText}
         placeholder={`Search for ${userType}`}
       />
       <div className="dropdown-group">
-        <select
-          onChange={handleSort}
-          defaultValue=""
-          className="dropdown--input"
-          name="sort"
-        >
-          <option value="">Sort</option>
-          <option value="name">Name: A-Z</option>
-          <option value="-name">Name: Z-A</option>
-          <option value="-createdAt">Newest</option>
-          <option value="capacity">Capacity asc.</option>
-          <option value="-capacity">Capacity desc.</option>
-        </select>
-        <select
-          onChange={handleRadius}
-          defaultValue=""
-          className="dropdown--input"
-          name="radius"
-        >
-          <option value="">Radius</option>
-          <option value="5">5km</option>
-          <option value="10">10km</option>
-          <option value="20">20km</option>
-          <option value="50">50km</option>
-          <option value="100">100km</option>
-          <option value="200">200km</option>
-          <option value="500">500km</option>
-        </select>
-        <select
-          onChange={handleDates}
-          defaultValue=""
-          className="dropdown--input"
-          name="dates"
-        >
-          <option value="">Dates</option>
-          <option value={today}>Today</option>
-          <option value={addDays(new Date(), 7)}>Within one week</option>
-          <option value={addDays(new Date(), 14)}>Within two weeks</option>
-          <option value={addDays(new Date(), 31)}>Within a month</option>
-          <option value={addDays(new Date(), 91)}>Within a quarter</option>
-          <option value={addDays(new Date(), 182.5)}>
-            Within a half a year
-          </option>
-          <option value={addDays(new Date(), 365)}>Within a year</option>
-        </select>
+        <CustomDropdown
+          state={sort}
+          onChange={setSort}
+          options={sortOptions}
+          type="Sort"
+        />
+        <CustomDropdown
+          state={radius}
+          onChange={setRadius}
+          options={radiusOptions}
+          type="Radius"
+        />
+        <CustomDropdown
+          state={dates}
+          onChange={dateHandler}
+          options={dateOptions}
+          type="Available"
+        />
+        {userType === "artists" && (
+          <CustomDropdown
+            state={genre}
+            onChange={setGenre}
+            options={genreOptions}
+            type="Genre"
+          />
+        )}
         <input
           onChange={(e) => validateZipcode(e)}
           maxLength="5"
