@@ -41,7 +41,7 @@ const NavbarDropdown = () => {
                 <Link to="/artists/signup">Artist</Link>
                 <Link to="/venues/signup">Venue</Link>
                 </div>
-            )}
+            )} 
             </div>
         </div>
         </div>
