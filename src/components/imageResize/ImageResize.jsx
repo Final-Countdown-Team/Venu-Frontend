@@ -32,7 +32,7 @@ function ImageResize(props) {
 			console.log(image);
 		} catch (err) {
 			console.log(err);
-			
+			//test
 		}
 	};
 	
