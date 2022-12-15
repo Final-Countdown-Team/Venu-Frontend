@@ -2,14 +2,23 @@
 
 .scroll-up-container {
   color: $color-off-white;
-  background-color: black;
-  position: fixed;
-  align-items: center;
-  justify-content: center;
-  bottom: 20px;
-  right: 45vw;
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
+  border: none;
+  border-radius: 100%;
   cursor: pointer;
+  width: 4.5rem;
+  height: 4.5rem;
+  opacity: 0.4;
+  transition: all 0.15s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  span {
+    font-size: 4.5rem;
+  }
 }

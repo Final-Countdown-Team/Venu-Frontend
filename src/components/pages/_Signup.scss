@@ -15,6 +15,11 @@
     }
   }
   .arrow-wrapper {
+    max-width: 65rem;
+    margin: auto;
     padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }

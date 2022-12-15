@@ -47,6 +47,18 @@ $container-max-width-md: 65rem;
   flex-basis: 45%;
   flex-grow: 1;
 }
+.color--artists {
+  color: $color-artist-primary;
+}
+.color--venues {
+  color: $color-venu-primary;
+}
+.bgColor--artists {
+  background-color: $color-artist-primary;
+}
+.bgColor--venues {
+  background-color: $color-venu-primary;
+}
 
 // ----- Media Queries Utility -----
 @mixin respond($breakpoint) {
