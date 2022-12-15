@@ -1,6 +1,7 @@
 @import "../../Utilities";
 
 .button-secondary {
+  min-width: 18rem;
   width: 100%;
   height: clamp(5rem, 8vw, 7rem);
   padding: 1rem;
