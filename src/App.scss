@@ -21,6 +21,13 @@
     animation: transition 1s;
   }
 
+  .loading-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .content-container {
     min-height: calc(100vh - 16rem);
     overflow-x: hidden;

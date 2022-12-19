@@ -25,8 +25,6 @@ export default function SearchBar({ userType }) {
   const [genre, setGenre] = useState("");
   const [latLng, setLatLng] = useState("");
 
-  console.log(genre);
-
   const dateHandler = (days) => {
     if (!days) return setDates("");
     const date = new Date();

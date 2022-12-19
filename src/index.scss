@@ -12,13 +12,13 @@ html {
   }
 
   @include respond(medium) {
-    font-size: 72%;
+    font-size: 70%;
   }
   @include respond(desktop-lg) {
-    font-size: 78%;
+    font-size: 75%;
   }
   @include respond(desktop-xl) {
-    font-size: 84%;
+    font-size: 80%;
   }
 }
 

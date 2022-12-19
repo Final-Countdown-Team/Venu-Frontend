@@ -29,6 +29,7 @@ function VenueHeadingComponent() {
         fill="white"
         fillOpacity="0.4"
       />
+      <text dy="1rem">Venu</text>
       <defs>
         <linearGradient
           id="paint0_linear_325_74"
