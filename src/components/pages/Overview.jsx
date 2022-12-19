@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import "./_Overview.scss";
 import SearchBar from "../searchbar/SearchBar";
@@ -7,12 +7,17 @@ import ArrowBack from "../utils/ArrowBack";
 import { RxDoubleArrowDown } from "react-icons/rx";
 import NoResults from "../../img/no-results.gif";
 import { motion } from "framer-motion";
-import { containerVariantX } from "../animations/containerVariants";
+import {
+  containerVariantX,
+  containerVariantY,
+} from "../animations/containerVariants";
+import { ScaleLoader } from "react-spinners";
 
 function Overview({ userType }) {
   const context = useContext(MainContext);
-
   context.setUserType(userType);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPreviews = async () => {
@@ -20,6 +25,9 @@ function Overview({ userType }) {
       const res = await fetch(URL);
       const data = await res.json();
       context.setFetchedPreviews(data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     };
     fetchPreviews();
   }, []);
@@ -36,41 +44,56 @@ function Overview({ userType }) {
     />
   ));
 
-  return (
-    <>
-      <motion.div
-        variants={containerVariantX}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        className="margin-container"
-      >
-        <SearchBar userType={userType} />
-        {renderFetchedPreviews?.length >= 1 ? (
-          <div className="preview-card-container">
-            {renderFetchedPreviews}
-            <div className={`double-arrow-down double-arrow--${userType}`}>
-              <RxDoubleArrowDown />
-            </div>
-          </div>
-        ) : (
-          <div className="preview-card-container no-results-container">
-            <img
-              className="no-results-gif"
-              src={NoResults}
-              alt="no results animation"
-            />
-            <p className="no-results-text">
-              Sorry, we couldn't find what you are looking for...
-            </p>
-          </div>
-        )}
+  const spinnerOverride = {
+    margin: "10rem 20rem",
+    transform: "scale(2)",
+  };
 
-        <div className="overview-arrow-wrapper">
-          <ArrowBack userType={userType} />
+  return (
+    <motion.div
+      variants={containerVariantX}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="margin-container"
+    >
+      <SearchBar userType={userType} />
+      {isLoading ? (
+        <div className="preview-card-container">
+          <ScaleLoader
+            cssOverride={spinnerOverride}
+            color={userType === "artists" ? "#0168b5" : "#b02476"}
+            aria-label="Loading Spinner"
+          />
         </div>
-      </motion.div>
-    </>
+      ) : renderFetchedPreviews?.length >= 1 ? (
+        <motion.div
+          variants={containerVariantY}
+          initial="exit"
+          animate="visible"
+          className="preview-card-container"
+        >
+          {renderFetchedPreviews}
+          <div className={`double-arrow-down double-arrow--${userType}`}>
+            <RxDoubleArrowDown />
+          </div>
+        </motion.div>
+      ) : (
+        <div className="preview-card-container no-results-container">
+          <img
+            className="no-results-gif"
+            src={NoResults}
+            alt="no results animation"
+          />
+          <p className="no-results-text">
+            Sorry, we couldn't find what you are looking for...
+          </p>
+        </div>
+      )}
+      <div className="overview-arrow-wrapper">
+        <ArrowBack userType={userType} />
+      </div>
+    </motion.div>
   );
 }
 

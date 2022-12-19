@@ -21,6 +21,7 @@ import Textbox from "../forms/formInputs/Textbox";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import Map from "../map/Map";
 import AvailableButton from "../buttons/AvailableButton";
+import LazyLoadImageComp from "../utils/LazyLoadImageComp";
 
 function UserProfile({ userType }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -76,7 +77,7 @@ function UserProfile({ userType }) {
       <div className="preview-card-container user-profile-container">
         <div className="padding-group">
           <div className="user-profile-image-container">
-            <img
+            <LazyLoadImageComp
               className="user-profile-image"
               src={user?.profileImage}
               alt="profile"
@@ -121,7 +122,14 @@ function UserProfile({ userType }) {
         {user?.images?.length > 0 && (
           <div className="image-gallery">
             {user?.images?.map((image) => {
-              return <img src={image} alt="gallery" />;
+              return (
+                <LazyLoadImageComp
+                  src={image}
+                  alt="gallery"
+                  wrapperClassName="image-gallery-lazy-wrapper"
+                  className={"image-gallery--image"}
+                />
+              );
             })}
           </div>
         )}
