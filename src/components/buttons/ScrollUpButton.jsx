@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowCircleUp } from "react-icons/fa";
+import { MdKeyboardArrowUp } from "react-icons/md";
 import "./_ScrollUpButton.scss";
 
-const ScrollUpButton = () => {
-  const [visible, setVisible] = useState(false);
+const ScrollUpButton = ({ userType }) => {
+  //   const [visible, setVisible] = useState(false);
 
-  const toggleVisible = () => {
-    const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 100) {
-      setVisible(true);
-    } else if (scrolled <= 100) {
-      setVisible(false);
-    }
-  };
+  // const toggleVisible = () => {
+  //   const scrolled = document.documentElement.scrollTop;
+  //   if (scrolled > 100) {
+  //     setVisible(true);
+  //   } else if (scrolled <= 100) {
+  //     setVisible(false);
+  //   }
+  // };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -21,23 +21,25 @@ const ScrollUpButton = () => {
     });
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", toggleVisible);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", toggleVisible);
 
-    return () => {
-      window.removeEventListener("scroll", toggleVisible);
-    };
-  }, []);
-
-  window.addEventListener("scroll", toggleVisible);
+  //   return () => {
+  //     window.removeEventListener("scroll", toggleVisible);
+  //   };
+  // }, []);
 
   return (
     <button
-      className="scroll-up-container"
+      className={`scroll-up-container ${
+        userType === "artists" ? "bgColor--artists" : "bgColor--venues"
+      }`}
       onClick={scrollToTop}
-      style={{ display: visible ? "inline" : "none" }}
+      // style={{ visibility: visible ? "visible" : "hidden" }}
     >
-      <FaArrowCircleUp />
+      <span>
+        <MdKeyboardArrowUp />
+      </span>
     </button>
   );
 };

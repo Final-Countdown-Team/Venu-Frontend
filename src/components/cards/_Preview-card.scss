@@ -66,10 +66,11 @@
       height: 15rem;
       // max-height: 15rem;
     }
+
     .preview-available-button--position {
       position: absolute;
       right: 0;
-      top: 0;
+      top: -3px;
     }
   }
 }

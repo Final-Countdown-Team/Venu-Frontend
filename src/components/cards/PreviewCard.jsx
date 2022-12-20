@@ -1,20 +1,19 @@
 import React from "react";
 import AvailableButton from "../buttons/AvailableButton";
 import { CardButton } from "../buttons/CardButton";
+import LazyLoadImageComp from "../utils/LazyLoadImageComp";
+
 import "./_Preview-card.scss";
 
-export default function PreviewCard({
-  img,
-  name,
-  description,
-  userType,
-  id,
-  availability,
-}) {
+function PreviewCard({ img, name, description, userType, id, availability }) {
   return (
     <div className="card-container">
       <div className="userImage-container">
-        <img className="preview-userImage" src={img} alt="profile pic" />
+        <LazyLoadImageComp
+          src={img}
+          alt="profile preview"
+          className="preview-userImage"
+        />
         <div className="preview-available-button--position">
           <AvailableButton available={availability} />
         </div>
@@ -29,3 +28,5 @@ export default function PreviewCard({
     </div>
   );
 }
+
+export default PreviewCard;

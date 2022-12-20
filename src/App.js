@@ -1,20 +1,20 @@
 import { Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { MainContext } from "./components/contexts/MainContext";
-import { useContext } from "react";
-import { useEffect } from "react";
+import { useContext, useEffect, lazy } from "react";
 import { AnimatePresence } from "framer-motion";
 
 import "./App.scss";
 
-import Signup from "./components/pages/Signup";
 import NavbarLayout from "./components/utils/outlets/NavbarLayout";
-import Home from "./components/pages/Home";
-import Login from "./components/pages/Login";
-import ProfileEdit from "./components/pages/ProfileEdit";
-import { FourOhFour } from "./components/pages/FourOhFour";
 import Overview from "./components/pages/Overview";
-import SignupLogin from "./components/pages/SignupLogin";
-import UserProfile from "./components/pages/UserProfile";
+
+const Home = lazy(() => import("./components/pages/Home"));
+const ProfileEdit = lazy(() => import("./components/pages/ProfileEdit"));
+const SignupLogin = lazy(() => import("./components/pages/SignupLogin"));
+const UserProfile = lazy(() => import("./components/pages/UserProfile"));
+const Signup = lazy(() => import("./components/pages/Signup"));
+const Login = lazy(() => import("./components/pages/Login"));
+const FourOhFour = lazy(() => import("./components/pages/FourOhFour"));
 
 function App() {
   const { showSidebar } = useContext(MainContext);

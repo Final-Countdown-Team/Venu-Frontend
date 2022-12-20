@@ -39,13 +39,35 @@ $drop-black-md: 2px 10px 10px #111;
 $drop-black-lg: 4px 15px 20px #111;
 
 // Width
-$container-max-width-lg: 80rem;
+$container-max-width-lg: 100rem;
 $container-max-width-md: 65rem;
 
 // Utility Classes
 .button-link {
   flex-basis: 45%;
   flex-grow: 1;
+}
+.color--artists {
+  color: $color-artist-primary;
+}
+.color--venues {
+  color: $color-venu-primary;
+}
+.bgColor--artists {
+  background-color: $color-artist-primary;
+}
+.bgColor--venues {
+  background-color: $color-venu-primary;
+}
+
+.preview-image-wrapper {
+  display: flex;
+  background-size: cover !important;
+  background-position: center;
+  width: 100%;
+}
+.image-gallery-lazy-wrapper {
+  width: 100%;
 }
 
 // ----- Media Queries Utility -----

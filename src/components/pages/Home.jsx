@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 import { containerVariantX } from "../animations/containerVariants";
+import { ScaleLoader } from "react-spinners";
 import Heading from "../heading/Heading";
 
 import "./_Home.scss";
@@ -42,6 +43,11 @@ function Home() {
     fetchData();
   }, []);
 
+  const spinnerOverride = {
+    margin: "10rem 20rem",
+    transform: "scale(2)",
+  };
+
   return (
     <motion.div
       variants={containerVariantX}
@@ -77,11 +83,17 @@ function Home() {
         </Link>
       </div>
       <div className="home-map-container">
-        {!isLoading && (
+        {/* {!isLoading ? (
           <div ref={ref}>
             <Map users={fetchedLocations} />
           </div>
-        )}
+        ) : (
+          <ScaleLoader
+            cssOverride={spinnerOverride}
+            color={"#b02476"}
+            aria-label="Loading Spinner"
+          />
+        )} */}
       </div>
     </motion.div>
   );
