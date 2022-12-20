@@ -17,6 +17,9 @@ function Signup({ userType }) {
         exit="hidden"
       >
         <div className="signup-page">
+          <div className="arrow-wrapper arrow-wrapper-top">
+            <ArrowBack userType={userType} />
+          </div>
           <div className="signup-heading">
             {userType === "venues" ? <h1>Venues</h1> : <h1>Artists</h1>}
             <h2>Sign Up</h2>

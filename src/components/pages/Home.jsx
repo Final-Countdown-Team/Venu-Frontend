@@ -22,7 +22,7 @@ function Home() {
 
   const { ref, inView } = useInView();
 
-  console.log(inView);
+  // console.log(inView);
 
   useEffect(() => {
     const fetchData = async () => {

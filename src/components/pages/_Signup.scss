@@ -2,10 +2,11 @@
 
 .signup-page {
   padding: 2rem 0;
+  position: relative;
+
   .signup-heading {
     font-family: $font-special;
     padding: 1rem 2rem 3rem;
-
     h2 {
       padding: 1rem;
       font-size: 4rem;
@@ -21,5 +22,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .arrow-wrapper-top {
+    padding: 0 2rem;
   }
 }
