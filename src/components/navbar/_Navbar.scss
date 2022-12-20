@@ -31,7 +31,8 @@
   }
   .nav-links {
     display: none;
-    a {
+
+    .navbar-link {
       position: relative;
       width: 8rem;
       margin-left: 1rem;
@@ -173,6 +174,44 @@
     &.active {
       color: $color-venu-primary;
       font-weight: bold;
+    }
+  }
+}
+
+.navbar-dropdown {
+  position: relative;
+  width: 10rem;
+
+  .dropdown-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: filter 0.2s;
+
+    .icon {
+      font-size: 1.6rem;
+      display: flex;
+      transition: transform 0.2s linear;
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 0%;
+    border-radius: 10px;
+    z-index: 2;
+    display: block;
+    padding: 1rem 0;
+    list-style: none;
+    background: linear-gradient(
+      0deg,
+      #222 0%,
+      rgba($color: #222, $alpha: 0.6) 60%,
+      rgba(17, 17, 17, 0) 100%
+    );
+
+    li {
+      padding: 1.5rem 0;
     }
   }
 }
