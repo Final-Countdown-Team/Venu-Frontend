@@ -20,24 +20,20 @@ export const signUpSchema = yup.object().shape({
     city: yup.string().required("This field is required"),
     zipcode: yup.string().required("This field is required"),
   }),
+  description: yup.string(),
+  genre: yup.string(),
   facebookUrl: yup.string().url("Please enter a valid URL"),
   instagramTag: yup
     .string()
     .matches(/^@/, "Your instagram tag must start with an @"),
-  twitterTag: yup
-    .string()
-    .matches(/^@/, "Your twitter tag must start with an @"),
+  twitterTag: yup.string().matches(/^@/, "Your twitter tag must start with an @"),
   websiteUrl: yup.string().url("Please enter a valid URL"),
   capacity: yup
     .number()
     .typeError("Please insert a valid number")
     .min(1)
     .max(1000000),
-  members: yup
-    .number()
-    .typeError("Please insert a valid number")
-    .min(1)
-    .max(1000),
+  members: yup.number().typeError("Please insert a valid number").min(1).max(1000),
 
   password: yup
     .string()

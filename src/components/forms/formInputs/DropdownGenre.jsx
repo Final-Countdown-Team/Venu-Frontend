@@ -1,14 +1,25 @@
+import { useFormikContext } from "formik";
 import React from "react";
 
-function DropdownGenre({ thin }) {
+function DropdownGenre(props) {
+  const formikContext = useFormikContext(props);
+  const handleChange = (e) => {
+    formikContext.setFieldValue("genre", e.target.value);
+  };
+
   return (
     <div className="form-input-full">
       <div className="required-label">
-        <label className={thin && "label-thin"} htmlFor="genre">
+        <label className={props.thin && "label-thin"} htmlFor="genre">
           Genre:
         </label>
       </div>
-      <select className="input dropdown" name="genre" defaultValue={"DEFAULT"}>
+      <select
+        onChange={(e) => handleChange(e)}
+        className="input dropdown"
+        name="genre"
+        defaultValue={"DEFAULT"}
+      >
         <option value="" disabled>
           Select one of the following genres:
         </option>
