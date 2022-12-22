@@ -17,4 +17,17 @@
   .login-button {
     margin-top: 1.5rem;
   }
+
+  .forgot-password-text {
+    opacity: 0.5;
+    padding-top: 1rem;
+    font-weight: 300;
+    text-align: left;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
