@@ -1,12 +1,12 @@
 import "./_LoginForm.scss";
+import "../formInputs/_FormInputs.scss";
 
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import InputFull from "../formInputs/InputFull";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
 
-function LoginForm({ userType }) {
-  console.log(userType);
+function LoginForm({ userType, setShowModal }) {
   return (
     <Formik
       initialValues={{
@@ -32,7 +32,8 @@ function LoginForm({ userType }) {
           });
           const res = await req.json();
           console.log(res);
-          if (res.status === "fail") throw new Error(res.message);
+          if (res.status === "fail" || res.status === "error")
+            throw new Error(res.message);
 
           actions.resetForm();
         } catch (err) {
@@ -61,6 +62,9 @@ function LoginForm({ userType }) {
             userType={userType}
           />
         </div>
+        <p onClick={() => setShowModal(true)} className="forgot-password-text">
+          Forgot your password?
+        </p>
       </Form>
     </Formik>
   );
