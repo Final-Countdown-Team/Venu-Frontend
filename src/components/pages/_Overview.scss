@@ -16,7 +16,9 @@
   border-radius: 15px;
 
   .double-arrow-down {
-    position: absolute;
+    width: 100%;
+    justify-self: center;
+    align-self: flex-end;
     bottom: 0;
     font-size: 5rem;
     cursor: pointer;

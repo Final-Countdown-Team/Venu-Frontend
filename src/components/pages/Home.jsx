@@ -14,15 +14,11 @@ import ReuseButton from "../buttons/Reusable_BB";
 function Home() {
   const context = useContext(MainContext);
 
-  context.setUserType(null);
-
   const [isLoading, setIsLoading] = useState(true);
   // Fetch venues and artists locations for map on /home
   const [fetchedLocations, setFetchedLocations] = useState([]);
 
-  const { ref, inView } = useInView();
-
-  // console.log(inView);
+  const { ref } = useInView();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +36,9 @@ function Home() {
       setFetchedLocations(joinedData);
       setIsLoading(false);
     };
-    fetchData();
+    context.setUserType(null);
+    setTimeout(() => fetchData(), 1500);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const spinnerOverride = {
@@ -83,7 +81,7 @@ function Home() {
         </Link>
       </div>
       <div className="home-map-container">
-        {/* {!isLoading ? (
+        {!isLoading ? (
           <div ref={ref}>
             <Map users={fetchedLocations} />
           </div>
@@ -93,7 +91,7 @@ function Home() {
             color={"#b02476"}
             aria-label="Loading Spinner"
           />
-        )} */}
+        )}
       </div>
     </motion.div>
   );

@@ -57,6 +57,18 @@
     padding: 2rem 1.5rem;
   }
 
+  .from-group-dropdown {
+    padding: 2rem 2rem;
+    box-shadow: 0 0px 10px #111;
+    border-radius: 15px;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 10px #111;
+    }
+  }
+
   .signup-form-group-password {
     padding-bottom: 0rem;
   }
@@ -77,6 +89,6 @@
 
   .form-group-heading {
     text-align: left;
-    padding-bottom: 0.5rem;
+    padding: 0.5rem 0;
   }
 }

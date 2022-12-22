@@ -24,7 +24,11 @@ export const signupOnSubmit = async (values, actions, userType) => {
       ...values,
       location: { coordinates: [12.75597, 51.372651] },
     };
-    console.log(newValues);
+    // Filtering out keys with empty values
+    const filteredValues = Object.fromEntries(
+      Object.entries(newValues).filter(([_, value]) => value !== "")
+    );
+    console.log(filteredValues);
     // Sending POST request to backend
     const req = await fetch(`/${userType}/signup`, {
       method: "POST",
@@ -32,21 +36,22 @@ export const signupOnSubmit = async (values, actions, userType) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newValues),
+      body: JSON.stringify(filteredValues),
     });
     const res = await req.json();
     // Throw error when failed
-    if (res.status === "fail") {
+    if (res.status === "fail" || res.status === "error") {
       const error = new Error(res.message);
       error.code = res.code;
       throw error;
     }
-    actions.resetForm();
+    // actions.resetForm();
   } catch (err) {
     console.error(err);
     if (err.code === 11000) {
       const [name, message] = err.message.split(":");
-      actions.setFieldError(name, message);
+      return actions.setFieldError(name, message);
     }
+    console.error(err);
   }
 };

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Formik, Form } from "formik";
 
 import "./_SignupForm.scss";
@@ -10,8 +11,11 @@ import DropdownGenre from "../formInputs/DropdownGenre";
 import DateSelector from "../formInputs/DateSelector";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
 import { signupOnSubmit } from "./signupOnSubmit";
+import ScrollDownAnimation from "../../animations/ScrollDownAnimation";
 
 function SignupForm({ userType }) {
+  const [showDropdown, setShowDropdown] = useState(false);
+
   return (
     <Formik
       initialValues={signupInitialValues}
@@ -68,61 +72,79 @@ function SignupForm({ userType }) {
           />
         </div>
         <div className="form-group-transparent">
-          <p className="form-group-heading">Description:</p>
-          <Textbox
-            name="description"
-            placeholder="Add a description what your venue offers"
-          />
-          {userType === "artists" && <DropdownGenre thin={true} />}
-          <InputFull
-            name="facebookUrl"
-            label="Facebook"
-            type="url"
-            placeholder="Link to your facebook page"
-            thin={true}
-          />
-          <InputFull
-            name="instagramTag"
-            label="Instagram Tag"
-            placeholder="Pass in your instagram tag like this: @tag"
-            thin={true}
-          />
-          <InputFull
-            name="twitterTag"
-            label="Twitter Tag"
-            placeholder="Pass in your twitter tag like this: @tag"
-            thin={true}
-          />
-          <InputFull
-            name="websiteUrl"
-            label="Website"
-            type="url"
-            placeholder="Link to your venue's website"
-            thin={true}
-          />
-          {userType === "venues" ? (
-            <InputFull
-              label="Capcity"
-              name="capacity"
-              placeholder="What's the capacity of your venue?"
-              thin={true}
-            />
-          ) : (
-            <InputFull
-              label="Members"
-              name="members"
-              placeholder="How many members do you have?"
-              thin={true}
-            />
-          )}
+          <div
+            className="from-group-dropdown"
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            <ScrollDownAnimation showDropdown={showDropdown} />
+          </div>
         </div>
-        <div className="form-group-bg">
-          <DateSelector
-            label="Available Dates"
-            name="dates"
-            placeholder="Click to open date picker"
-          />
-        </div>
+
+        {showDropdown && (
+          <>
+            <div className="form-group-transparent">
+              <div className="form-group-heading">
+                <p>Description:</p>
+              </div>
+
+              <div className="dropdown-collapse">
+                <Textbox
+                  name="description"
+                  placeholder="Add a description what your venue offers"
+                />
+                {userType === "artists" && <DropdownGenre thin={true} />}
+                <InputFull
+                  name="facebookUrl"
+                  label="Facebook"
+                  type="url"
+                  placeholder="Link to your facebook page"
+                  thin={true}
+                />
+                <InputFull
+                  name="instagramTag"
+                  label="Instagram Tag"
+                  placeholder="Pass in your instagram tag like this: @tag"
+                  thin={true}
+                />
+                <InputFull
+                  name="twitterTag"
+                  label="Twitter Tag"
+                  placeholder="Pass in your twitter tag like this: @tag"
+                  thin={true}
+                />
+                <InputFull
+                  name="websiteUrl"
+                  label="Website"
+                  type="url"
+                  placeholder="Link to your venue's website"
+                  thin={true}
+                />
+                {userType === "venues" ? (
+                  <InputFull
+                    label="Capcity"
+                    name="capacity"
+                    placeholder="What's the capacity of your venue?"
+                    thin={true}
+                  />
+                ) : (
+                  <InputFull
+                    label="Members"
+                    name="members"
+                    placeholder="How many members do you have?"
+                    thin={true}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="form-group-bg">
+              <DateSelector
+                label="Available Dates"
+                name="dates"
+                placeholder="Click to open date picker"
+              />
+            </div>
+          </>
+        )}
         <div className="form-group-transparent signup-form-group-password">
           <InputFull
             name="password"

@@ -1,0 +1,51 @@
+@import "../../Utilities";
+
+.scroll-down-animation-wrapper {
+  // position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  .unfold-text {
+    border: none;
+    border-radius: 5px;
+    background-color: rgba($color: #000, $alpha: 0.2);
+    font-size: 1.2rem;
+    padding: 1rem;
+
+    &:hover {
+      background-color: lighten($color: rgba(0, 0, 0, 0.2), $amount: 50);
+    }
+  }
+
+  .arrow {
+    position: relative;
+    font-size: 3rem;
+    top: 0.5rem;
+  }
+
+  .bounce {
+    -moz-animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-8px);
+    }
+    60% {
+      transform: translateY(-6px);
+    }
+  }
+}

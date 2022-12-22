@@ -50,6 +50,7 @@ function UserProfile({ userType }) {
     };
     fetchUser();
     console.log(user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Show loading spinner while fetching from backend
@@ -108,6 +109,7 @@ function UserProfile({ userType }) {
                 return (
                   <a
                     className={`icon ${type}-icon`}
+                    key={link[0]}
                     href={link[1]}
                     target="_blank"
                     rel="noreferrer"

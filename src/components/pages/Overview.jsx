@@ -15,9 +15,13 @@ import { ScaleLoader } from "react-spinners";
 
 function Overview({ userType }) {
   const context = useContext(MainContext);
-  context.setUserType(userType);
-
+  // Fetched venues or artists previews overview
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    context.setUserType(userType);
+    console.log("rendering Overview...");
+  }, [userType, context]);
 
   useEffect(() => {
     const fetchPreviews = async () => {
@@ -30,6 +34,7 @@ function Overview({ userType }) {
       }, 1000);
     };
     fetchPreviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderFetchedPreviews = context?.fetchedPreviews.data?.map((preview) => (

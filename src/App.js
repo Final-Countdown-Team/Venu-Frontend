@@ -20,7 +20,6 @@ function App() {
   const { showSidebar } = useContext(MainContext);
 
   const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
     showSidebar
