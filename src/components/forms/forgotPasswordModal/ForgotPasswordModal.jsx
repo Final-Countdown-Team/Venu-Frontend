@@ -7,11 +7,14 @@ import ButtonSecondary from "../../buttons/ButtonSecondary";
 import { MdClose } from "react-icons/md";
 import { MainContext } from "../../contexts/MainContext";
 import HandleClickOutside from "../../utils/HandleClickOutside";
+import { useState } from "react";
+import { ScaleLoader } from "react-spinners";
 
 function ForgotPasswordModal({ setShowModal }) {
   const context = useContext(MainContext);
   const userType = context.userType;
   const ref = useRef(null);
+  const [isPending, setIsPending] = useState(false);
 
   HandleClickOutside(ref, setShowModal);
 
@@ -26,6 +29,7 @@ function ForgotPasswordModal({ setShowModal }) {
       })}
       onSubmit={async (values, actions) => {
         try {
+          setIsPending(true);
           console.log(values);
           const req = await fetch(`/${userType}/forgotPassword`, {
             method: "POST",
@@ -39,11 +43,13 @@ function ForgotPasswordModal({ setShowModal }) {
           if (res.status === "fail" || res.status === "error")
             throw new Error(res.message);
 
+          setIsPending(false);
           actions.resetForm();
           setShowModal(false);
         } catch (err) {
           console.error(err);
           actions.setErrors({ email: err.message });
+          setIsPending(false);
         }
       }}
     >
@@ -67,7 +73,14 @@ function ForgotPasswordModal({ setShowModal }) {
           </p>
           <InputFull name="email" placeholder={"Please enter your email"} />
           <div className="padding">
-            <ButtonSecondary submit={true} text={"Send reset link"} />
+            {!isPending ? (
+              <ButtonSecondary submit={true} text={"Send reset link"} />
+            ) : (
+              <ScaleLoader
+                color={userType === "artists" ? "#0168b5" : "#b02476"}
+                aria-label="Loading Spinner"
+              />
+            )}
           </div>
         </div>
       </Form>
