@@ -69,6 +69,12 @@ $container-max-width-md: 65rem;
 .image-gallery-lazy-wrapper {
   width: 100%;
 }
+.padding {
+  padding: 2rem 0;
+}
+.text-left {
+  text-align: left;
+}
 
 // ----- Media Queries Utility -----
 @mixin respond($breakpoint) {

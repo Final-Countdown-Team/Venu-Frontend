@@ -7,6 +7,7 @@ import "./App.scss";
 
 import NavbarLayout from "./components/utils/outlets/NavbarLayout";
 import Overview from "./components/pages/Overview";
+import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 
 const Home = lazy(() => import("./components/pages/Home"));
 const ProfileEdit = lazy(() => import("./components/pages/ProfileEdit"));
@@ -61,6 +62,10 @@ function App() {
           <Route path="/venues/signup" element={<Signup userType={"venues"} />} />
           <Route path="/artists/login" element={<Login userType={"artists"} />} />
           <Route path="/artists/signup" element={<Signup userType={"artists"} />} />
+          <Route
+            path="/:userType/resetPassword/:resetToken"
+            element={<ResetPasswordPage />}
+          />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
       </AnimatePresence>
