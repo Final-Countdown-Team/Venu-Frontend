@@ -50,5 +50,20 @@
         flex-basis: auto;
       }
     }
+
+    .autocomplete-input {
+      font-size: inherit;
+      &::placeholder {
+        color: $color-text-placeholder;
+        opacity: 1;
+      }
+    }
+    .geoapify-autocomplete-items  {
+      width: 100%;
+      flex-grow: 1;
+    }
+    .geoapify-close-button {
+      display: none;
+    }
   }
 }

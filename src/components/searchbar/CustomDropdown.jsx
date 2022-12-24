@@ -1,4 +1,3 @@
-
 import React, { useContext, useRef, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import HandleClickOutside from "../utils/HandleClickOutside";
@@ -6,13 +5,24 @@ import "./_CustomDropdown.scss";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-const CustomDropdown = ({ state, onChange, options, type }) => {
+const CustomDropdown = ({
+  state,
+  onChange,
+  options,
+  type,
+  autocomplete,
+  userInput,
+  setUserInput,
+  setLatLng,
+}) => {
   const context = useContext(MainContext);
   const [isOpen, setIsOpen] = useState(false);
   const [displayLabel, setDisplayLabel] = useState("");
 
+  // Set ref to dropdown list
   const ref = useRef(null);
 
+  // Close dropdown when user clicks outside of dropdown list
   HandleClickOutside(ref, setIsOpen);
 
   return (
@@ -20,7 +30,17 @@ const CustomDropdown = ({ state, onChange, options, type }) => {
       className={`dropdown--input ${isOpen ? "input--no-bottom-borders" : null}`}
       onClick={() => setIsOpen(!isOpen)}
     >
-      <span>{displayLabel ? displayLabel : type}</span>
+      {!autocomplete ? (
+        <span>{displayLabel ? displayLabel : type}</span>
+      ) : (
+        <input
+          className="autocomplete-input"
+          onChange={(e) => setUserInput(e.target.value)}
+          value={userInput}
+          type="text"
+          placeholder="Enter City"
+        />
+      )}
       <span
         className="dropdown-arrow"
         style={{ transform: isOpen && "rotate(-180deg)" }}
@@ -42,22 +62,24 @@ const CustomDropdown = ({ state, onChange, options, type }) => {
           onClick={() => {
             onChange("");
             setDisplayLabel("");
+            setUserInput("");
           }}
         >
           ---
         </li>
-        {options.map((option) => (
+        {options.map((option, i) => (
           <li
             className={
               context.userType === "artists"
                 ? "artists-list-item"
                 : "venues-list-item"
             }
-            key={option.label}
+            key={`${option.label}-${i}`}
             value={option.value}
             onClick={() => {
               onChange(option.value);
               setDisplayLabel(option.label);
+              if (autocomplete) setLatLng(option.coordinates);
             }}
           >
             {option.label}
