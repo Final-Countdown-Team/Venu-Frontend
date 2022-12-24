@@ -13,25 +13,25 @@ const spinnerOverride = {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <MainContextProvider>
-      <Router>
-        <Suspense
-          fallback={
-            <div className="wrapper">
-              <div className="loading-wrapper">
-                <ScaleLoader
-                  cssOverride={spinnerOverride}
-                  color={"#b02476"}
-                  aria-label="Loading Spinner"
-                />
-              </div>
+  // <React.StrictMode>
+  <MainContextProvider>
+    <Router>
+      <Suspense
+        fallback={
+          <div className="wrapper">
+            <div className="loading-wrapper">
+              <ScaleLoader
+                cssOverride={spinnerOverride}
+                color={"#b02476"}
+                aria-label="Loading Spinner"
+              />
             </div>
-          }
-        >
-          <App />
-        </Suspense>
-      </Router>
-    </MainContextProvider>
-  </React.StrictMode>
+          </div>
+        }
+      >
+        <App />
+      </Suspense>
+    </Router>
+  </MainContextProvider>
+  // </React.StrictMode>
 );

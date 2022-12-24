@@ -7,7 +7,6 @@
     "@emotion/react": "^11.10.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@uvarov.frontend/vanilla-calendar": "^2.2.5",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.19",
     "mapbox-gl": "^2.11.1",
