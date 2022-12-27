@@ -13,12 +13,12 @@
     position: fixed;
     left: 0;
     top: 0;
-    background: url(./img/background.jpg) no-repeat left center/cover;
+    background: url(./img/background_colorMatch.jpg) no-repeat left center/cover;
     background-attachment: fixed;
     opacity: 0.5;
-    filter: grayscale(1);
+    filter: saturate(0) blur(2px);
     z-index: -1;
-    animation: transition 1s;
+    transition: all 1s;
   }
 
   .loading-wrapper {
@@ -40,16 +40,13 @@
   }
 }
 
+.wrapper--loginState {
+  &::before {
+    filter: saturate(0.8) blur(8px);
+  }
+}
+
 .blur-wrapper {
   filter: blur(4px);
   transition: filter 0.7s;
-}
-
-@keyframes transition {
-  0% {
-    filter: grayscale(1);
-  }
-  100% {
-    filter: grayscale(0);
-  }
 }
