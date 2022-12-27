@@ -5,8 +5,14 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import InputFull from "../formInputs/InputFull";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { MainContext } from "../../contexts/MainContext";
 
 function LoginForm({ userType, setShowModal }) {
+  const { setIsLoggedIn } = useContext(MainContext);
+  const navigate = useNavigate();
+
   return (
     <Formik
       initialValues={{
@@ -36,6 +42,8 @@ function LoginForm({ userType, setShowModal }) {
             throw new Error(res.message);
 
           actions.resetForm();
+          setIsLoggedIn(true);
+          setTimeout(() => navigate(`/${userType}/profile/${res.data._id}`), 1000);
         } catch (err) {
           console.error(err);
           actions.setErrors({ email: err.message, password: err.message });

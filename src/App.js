@@ -18,10 +18,12 @@ const Login = lazy(() => import("./components/pages/Login"));
 const FourOhFour = lazy(() => import("./components/pages/FourOhFour"));
 
 function App() {
-  const { showSidebar } = useContext(MainContext);
+  const { showSidebar, isLoggedIn } = useContext(MainContext);
+  console.log(isLoggedIn);
 
   const location = useLocation();
 
+  // Set overflow of body based on whether navbar overlay is showing or not
   useEffect(() => {
     showSidebar
       ? (document.body.style.overflow = "hidden")
@@ -29,7 +31,10 @@ function App() {
   }, [showSidebar]);
 
   return (
-    <div className="wrapper" style={{ overflow: showSidebar ? "hidden" : "" }}>
+    <div
+      className={`wrapper ${isLoggedIn && "wrapper--loginState"}`}
+      style={{ overflow: showSidebar ? "hidden" : "" }}
+    >
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {/* Routes with classic navbar and footer layout */}
