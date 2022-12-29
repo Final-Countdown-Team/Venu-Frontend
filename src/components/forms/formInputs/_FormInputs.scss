@@ -5,11 +5,10 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 0;
 
   .label-thin {
     font-weight: 100;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
   .required-flag {
@@ -18,27 +17,26 @@
   }
 }
 
-.form-input-half {
-  width: 100%;
+.form-input-full {
+  margin-bottom: 1.5rem;
 }
 
 .input {
+  font-size: 1.5rem;
   background-color: #d9d9d9;
   width: 100%;
-  padding: 1.2rem 1rem;
-  margin-bottom: 0.5rem;
-  border-radius: 8px;
+  padding: 1.6rem 1rem;
+  margin: 1rem 0;
   border: none;
   outline-offset: 2px;
-  position: relative;
 
   &:focus {
     outline: 2px solid $color-artist-primary;
   }
 
   &::placeholder {
-    font-size: 1.1rem;
     color: $color-text-placeholder;
+    font-size: inherit;
     opacity: 1;
   }
 
@@ -51,27 +49,49 @@
   opacity: 0.5;
 }
 
+.edit-button {
+  padding: 0.5rem 1rem;
+  position: absolute;
+  bottom: 5px;
+  border: 1px solid rgba($color: #fff, $alpha: 0.5);
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  display: flex;
+  align-items: center;
+  transition: all 0.1s;
+
+  &:hover {
+    border: 1px solid rgba($color: #fff, $alpha: 0.8);
+    background-color: rgba($color: #000000, $alpha: 0.8);
+  }
+  .edit-icon {
+    margin-right: 0.5rem;
+  }
+  .edit-input {
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+  }
+}
+
 .textbox {
+  font-size: 1.4rem;
+  font-family: $font-main;
   background-color: #d9d9d9;
   width: 100%;
   min-height: 10rem;
   padding: 1rem 0.7rem;
   margin: 1rem 0;
-  border-radius: 5px;
   resize: vertical;
   border: none;
 
   &::placeholder {
-    font-size: 1.1rem;
-    font-family: $font-main;
     color: $color-text-placeholder;
     opacity: 1;
   }
 }
 
 .textbox-group {
-  padding: 1rem 0;
-
   label {
     display: inline-block;
     width: 100%;
@@ -85,7 +105,6 @@
 }
 
 .dropdown {
-  font-size: 1.1rem;
   color: $color-text-placeholder;
 }
 
@@ -96,7 +115,6 @@
   }
   .datepicker-input {
     cursor: pointer;
-    font-size: 1.1rem;
   }
 
   .datepicker-icon {
@@ -124,7 +142,6 @@
   }
 
   &-text {
-    font-size: 1.5rem;
     padding: 0.5rem;
 
     &--thin {

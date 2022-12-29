@@ -23,7 +23,7 @@ $color-text-placeholder: #555;
 $color-bg-black: #111;
 // $color-bg-grey-opa: #b0247624;
 $color-bg-white: #fff;
-$color-bg-form: rgba(31, 38, 47, 0.8);
+$color-bg-form: rgba(31, 38, 47, 0.5);
 
 $color-shadow-black: #00000033;
 
@@ -54,26 +54,33 @@ $container-max-width-md: 65rem;
   color: $color-venu-primary;
 }
 .bgColor--artists {
-  background-color: $color-artist-primary;
+  background-color: rgba($color-artist-primary, $alpha: 0.5);
+  &:hover {
+    background-color: rgba($color-artist-primary, $alpha: 0.8);
+  }
 }
 .bgColor--venues {
-  background-color: $color-venu-primary;
-}
+  background-color: rgba($color-venu-primary, $alpha: 0.5);
+  transition: all 0.2s;
 
-.preview-image-wrapper {
-  display: flex;
-  background-size: cover !important;
-  background-position: center;
-  width: 100%;
-}
-.image-gallery-lazy-wrapper {
-  width: 100%;
+  &:hover {
+    background-color: rgba($color-venu-primary, $alpha: 0.8);
+  }
 }
 .padding {
   padding: 2rem 0;
 }
 .text-left {
   text-align: left;
+}
+.brad-sm {
+  border-radius: 5px;
+}
+.brad-md {
+  border-radius: 10px;
+}
+.brad-lg {
+  border-radius: 15px;
 }
 
 // ----- Media Queries Utility -----

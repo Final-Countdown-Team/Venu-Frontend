@@ -26,7 +26,7 @@ function DateSelector(props) {
           name={name}
           minDate={Date.now()}
           className="datepicker"
-          inputClass="input datepicker-input"
+          inputClass="brad-sm input datepicker-input"
           containerClassName="datepicker-container"
           placeholder={placeholder}
           onChange={(e) => handelDatePicker(e)}

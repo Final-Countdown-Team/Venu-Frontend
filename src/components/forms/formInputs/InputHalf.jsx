@@ -17,7 +17,9 @@ export default function InputHalf(props) {
       </div>
       <Field
         {...field}
-        className={`input ${meta.error && meta.touched ? "input-error" : ""}`}
+        className={`brad-sm input ${
+          meta.error && meta.touched ? "input-error" : ""
+        }`}
         name={name}
         placeholder={placeholder}
       />

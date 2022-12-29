@@ -29,9 +29,6 @@ export default function SearchBar({ userType }) {
   const [genre, setGenre] = useState("");
   const [latLng, setLatLng] = useState("");
 
-  console.log(latLng);
-  console.log(city);
-
   const dateHandler = (days) => {
     if (!days) return setDates("");
     const date = new Date();
@@ -74,7 +71,7 @@ export default function SearchBar({ userType }) {
   return (
     <form onSubmit={handleSubmit} className="searchbar">
       <input
-        className={`searchbar--input ${
+        className={`brad-md searchbar--input ${
           userType === "venues" ? "input-focus-venues" : "input-focus-artists"
         }`}
         onChange={(e) => setSearchText(e.target.value)}

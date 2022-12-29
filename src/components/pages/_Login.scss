@@ -12,7 +12,7 @@
 
   h1 {
     font-family: $font-special;
-    font-size: 5rem;
+    font-size: clamp(3.5rem, 10vmin, 5rem);
     padding: 1rem;
   }
 }

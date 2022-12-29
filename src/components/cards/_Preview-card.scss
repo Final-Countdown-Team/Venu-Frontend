@@ -4,22 +4,16 @@
 .card-container {
   max-width: 50rem;
   min-width: 20rem;
-  // width: 100%;
   height: 40rem;
   padding: 2rem;
   margin: auto;
   background-color: rgba($color: #d9d9d9, $alpha: 0.1);
-  border-radius: 15px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   flex-grow: 1;
   gap: 2rem;
   flex-basis: 25%;
-
-  // @include respond(landscape) {
-  //   flex-wrap: nowrap;
-  // }
 
   .card-text-content {
     width: 100%;
@@ -60,11 +54,9 @@
 
     .preview-userImage {
       object-fit: cover;
-      border-radius: 15px;
       flex-grow: 1;
       width: 100%;
       height: 15rem;
-      // max-height: 15rem;
     }
 
     .preview-available-button--position {

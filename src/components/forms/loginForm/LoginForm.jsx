@@ -42,8 +42,12 @@ function LoginForm({ userType, setShowModal }) {
             throw new Error(res.message);
 
           actions.resetForm();
-          setIsLoggedIn(true);
-          setTimeout(() => navigate(`/${userType}/profile/${res.data._id}`), 1000);
+          setIsLoggedIn({
+            status: true,
+            userType,
+            id: res.data._id,
+          });
+          setTimeout(() => navigate("/"), 1000);
         } catch (err) {
           console.error(err);
           actions.setErrors({ email: err.message, password: err.message });

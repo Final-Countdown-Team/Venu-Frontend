@@ -19,7 +19,7 @@ function Overview({ userType }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    context.setUserType(userType);
+    context.setGlobalUserType(userType);
     console.log("rendering Overview...");
   }, [userType, context]);
 

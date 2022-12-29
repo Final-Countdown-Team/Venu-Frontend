@@ -36,7 +36,7 @@ function Home() {
       setFetchedLocations(joinedData);
       setIsLoading(false);
     };
-    context.setUserType(null);
+    context.setGlobalUserType(null);
     setTimeout(() => fetchData(), 1500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

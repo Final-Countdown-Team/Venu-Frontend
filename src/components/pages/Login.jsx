@@ -1,19 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { containerVariantPosAbs } from "../animations/containerVariants";
 import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
 import ForgotPasswordModal from "../forms/forgotPasswordModal/ForgotPasswordModal";
-import { MainContext } from "../contexts/MainContext";
 
 function Login({ userType }) {
   const [showModal, setShowModal] = useState(false);
-  const context = useContext(MainContext);
-
-  useEffect(() => {
-    context.setUserType(userType);
-  });
 
   return (
     <motion.div
