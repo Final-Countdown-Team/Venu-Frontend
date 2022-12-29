@@ -4,11 +4,11 @@ function Textbox(props) {
   const { name, placeholder, label, customClass } = props;
 
   return (
-    <div className="textbox-group">
+    <div className="form-input-full textbox-group">
       {label && <label htmlFor="message">{label}</label>}
       <Field
         as="textarea"
-        className={`textbox ${customClass}`}
+        className={`brad-sm textbox ${customClass}`}
         name={name}
         placeholder={placeholder}
       />

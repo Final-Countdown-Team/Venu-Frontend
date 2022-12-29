@@ -20,7 +20,7 @@ function ProfileImageUploader(props) {
   return (
     <>
       <img src={curProfileImage} alt="default user profileImage" />
-      <div className="edit-button">
+      <div className="brad-sm edit-button">
         <MdEdit className="edit-icon" />
         Edit
         <input

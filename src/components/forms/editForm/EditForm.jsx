@@ -44,12 +44,12 @@ function EditForm({ userType }) {
       <Form noValidate className="signup-form edit-form">
         <div className="form-top-group">
           <div className="form-top-group--inputs">
-            <InputHalf
+            <InputFull
               name="name"
               label="Name"
               placeholder="Enter the name of your venue"
             />
-            <InputHalf
+            <InputFull
               name="email"
               label="Email"
               placeholder="Enter your email address"

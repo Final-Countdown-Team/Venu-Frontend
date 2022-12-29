@@ -13,7 +13,7 @@ function ProfileEdit({ userType }) {
       </div>
       <EditForm userType={userType} />
       <div className="arrow-wrapper">
-        <ArrowBack userType={userType} />
+        <ArrowBack userType={userType} to={"/me"} />
       </div>
     </div>
   );

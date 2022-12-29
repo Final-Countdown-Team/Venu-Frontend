@@ -4,7 +4,6 @@ import { Formik, Form } from "formik";
 import "./_SignupForm.scss";
 import { signUpSchema, signupInitialValues } from "./signUpSchema";
 import defaultUser from "../../../img/default_user_small.png";
-import InputHalf from "../formInputs/InputHalf";
 import InputFull from "../formInputs/InputFull";
 import Textbox from "../formInputs/Textbox";
 import DropdownGenre from "../formInputs/DropdownGenre";
@@ -25,16 +24,16 @@ function SignupForm({ userType }) {
         signupOnSubmit(values, actions, userType);
       }}
     >
-      <Form noValidate className="signup-form">
+      <Form noValidate className="brad-lg signup-form">
         <div className="form-top-group">
           <div className="form-top-group--inputs">
-            <InputHalf
+            <InputFull
               name="name"
               label="Name"
               placeholder="Enter the name of your venue"
               required={true}
             />
-            <InputHalf
+            <InputFull
               name="email"
               label="Email"
               placeholder="Enter your email address"
@@ -73,7 +72,7 @@ function SignupForm({ userType }) {
         </div>
         <div className="form-group-transparent">
           <div
-            className="from-group-dropdown"
+            className="brad-lg from-group-dropdown"
             onClick={() => setShowDropdown(!showDropdown)}
           >
             <ScrollDownAnimation showDropdown={showDropdown} />

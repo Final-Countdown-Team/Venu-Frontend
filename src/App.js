@@ -19,7 +19,6 @@ const FourOhFour = lazy(() => import("./components/pages/FourOhFour"));
 
 function App() {
   const { showSidebar, isLoggedIn } = useContext(MainContext);
-  console.log(isLoggedIn);
 
   const location = useLocation();
 
@@ -53,12 +52,22 @@ function App() {
               <Route index element={<Overview userType={"artists"} />} />
               <Route
                 path="profile/:id"
+                exact
                 element={<UserProfile userType="artists" />}
               />
             </Route>
 
-            <Route path="/me/profile" element={<ProfileEdit />} />
-            <Route path="/user/:id" element={<UserProfile />} />
+            <Route
+              path="/me"
+              element={
+                <UserProfile
+                  userType={isLoggedIn.userType}
+                  id={isLoggedIn.id}
+                  editable={true}
+                />
+              }
+            />
+            <Route path="/me/editProfile" element={<ProfileEdit />} />
           </Route>
 
           {/* Routes without navbar and footer */}

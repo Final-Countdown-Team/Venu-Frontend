@@ -60,7 +60,7 @@ function InputFull(props) {
       <Field
         {...field}
         disabled={canBeDisabled ? context.isDisabled : false}
-        className={`input ${
+        className={`brad-sm input ${
           meta.error && meta.touched ? "input-error" : ""
         } ${ifDisabled}`}
         type={type ? type : "text"}

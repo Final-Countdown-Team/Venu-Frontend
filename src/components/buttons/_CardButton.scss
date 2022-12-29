@@ -2,8 +2,7 @@
 
 .card-button {
   border: none;
-  border-radius: 1rem;
-  width: 11rem;
+  min-width: 11rem;
   align-items: center;
   position: relative;
   display: flex;
@@ -13,7 +12,7 @@
   background-color: rgba(17, 17, 17, 0.703);
   border: none;
   font-size: 1.2rem;
-  padding: 0.8rem 0.6rem;
+  padding: 0.8rem 1.2rem;
   cursor: pointer;
 
   span {

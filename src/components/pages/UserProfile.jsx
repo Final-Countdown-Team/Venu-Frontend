@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import { Formik, Form } from "formik";
+import { useContext, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { Calendar } from "react-multi-date-picker";
 import { motion } from "framer-motion";
 import { containerVariantX } from "../animations/containerVariants";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import "./_UserProfile.scss";
 
@@ -16,47 +15,53 @@ import {
 } from "react-icons/ai";
 import { BsFillPeopleFill, BsGlobe2 as Website } from "react-icons/bs";
 
-import InputHalf from "../forms/formInputs/InputHalf";
-import Textbox from "../forms/formInputs/Textbox";
-import ButtonSecondary from "../buttons/ButtonSecondary";
 import Map from "../map/Map";
 import AvailableButton from "../buttons/AvailableButton";
 import LazyLoadImageComp from "../utils/LazyLoadImageComp";
+import { MainContext } from "../contexts/MainContext";
+import ContactForm from "../forms/contactForm/ContactForm";
+import ButtonSecondary from "../buttons/ButtonSecondary";
 
-function UserProfile({ userType }) {
+function UserProfile({ userType, id, editable }) {
+  const context = useContext(MainContext);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState([]);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
 
   // Get user ID from URL
   const { id: userID } = useParams();
+  // If the id is not passed in props, take the id from the URL. id prop is passed when user is logged in and accesses the profile via the /me route
+  const currUserID = !id ? userID : id;
+
   // Load map only if it is visible in viewport for animation
   const { ref } = useInView({ triggerOnce: true });
+
+  // Set global user type for navbar boxshadow
+  useEffect(() => {
+    context.setGlobalUserType(userType);
+  }, [userType, context]);
 
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
     const handleResize = () => setDimensions({ width: window.innerWidth });
     window.addEventListener("resize", handleResize);
+    console.log("Renders resize...");
     return (_) => window.removeEventListener("resize", handleResize);
-  });
+  }, []);
 
   // Get data from backend
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch(`/${userType}/${userID}`);
+      const res = await fetch(`/${userType}/${currUserID}`);
       const data = await res.json();
       setUser(data.data);
       setIsLoading(false);
     };
+    setIsLoading(true);
     fetchUser();
     console.log(user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Show loading spinner while fetching from backend
-  if (isLoading) {
-    return null;
-  }
 
   // Object of Icons for social media icon mapping
   const icons = {
@@ -66,6 +71,11 @@ function UserProfile({ userType }) {
     youtube: Youtube,
     website: Website,
   };
+
+  // Show loading spinner while fetching from backend
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -77,15 +87,23 @@ function UserProfile({ userType }) {
     >
       <div className="preview-card-container user-profile-container">
         <div className="padding-group">
-          <div className="user-profile-image-container">
+          <div className="user-profile-image-container brad-md">
             <LazyLoadImageComp
-              className="user-profile-image"
+              className="user-profile-image brad-md"
               src={user?.profileImage}
               alt="profile"
             />
             <div className="available-button--position">
               <AvailableButton available={user?.availability} />
             </div>
+            {editable && (
+              <Link
+                className={`edit-profile-btn bgColor--${userType} brad-md`}
+                to={"/me/editProfile"}
+              >
+                Edit Profile
+              </Link>
+            )}
           </div>
 
           <div className="user-heading">
@@ -108,7 +126,7 @@ function UserProfile({ userType }) {
                 const Icon = icons[type];
                 return (
                   <a
-                    className={`icon ${type}-icon`}
+                    className={`icon ${type}-icon brad-sm`}
                     key={link[0]}
                     href={link[1]}
                     target="_blank"
@@ -136,7 +154,7 @@ function UserProfile({ userType }) {
           </div>
         )}
 
-        <div className="dates-group">
+        <div className="dates-group brad-lg">
           <h3>Available Dates:</h3>
           <Calendar
             numberOfMonths={
@@ -144,7 +162,7 @@ function UserProfile({ userType }) {
             }
             multiple={true}
             minDate={Date.now()}
-            mapDays={({ today, date, currentMonth, isSameDate }) => {
+            mapDays={({ today, date, isSameDate }) => {
               let props = {};
               if (isSameDate(date, today))
                 props.style = {
@@ -177,30 +195,16 @@ function UserProfile({ userType }) {
         </div>
 
         <div className="padding-group contact-group">
-          <h3>Contact:</h3>
-          <Formik>
-            <Form>
-              <div className="input-row">
-                <InputHalf name="name" label="Name" placeholder="Enter your name" />
-                <InputHalf
-                  name="email"
-                  label="Email"
-                  placeholder="Enter your email"
-                />
-              </div>
-              <Textbox
-                name="message"
-                placeholder="Write me a message :)"
-                label="Your message:"
-                customClass="textbox-user-profile"
-              />
-              <ButtonSecondary
-                text="Send your message"
-                submit={true}
-                userType={userType}
-              />
-            </Form>
-          </Formik>
+          <h3>{!editable && "Contact:"}</h3>
+          {!editable ? (
+            <ContactForm userType={userType} />
+          ) : (
+            <ButtonSecondary
+              userType={userType}
+              text="Edit Profile"
+              redirectTo={"/me/editProfile"}
+            />
+          )}
         </div>
       </div>
     </motion.div>

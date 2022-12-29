@@ -5,7 +5,7 @@ import "./_FourOhFour.scss";
 const FourOhFour = () => {
   return (
     <div className="page-error">
-      <img class="error" src={ErrorPage} alt="404 error" />
+      <img className="error" src={ErrorPage} alt="404 error" />
     </div>
   );
 };

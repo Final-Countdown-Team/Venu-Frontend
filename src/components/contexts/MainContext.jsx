@@ -12,11 +12,10 @@ export const MainContextProvider = ({ children }) => {
   const [fetchedPreviews, setFetchedPreviews] = useState({});
 
   // Sets current global userType
-  const [userType, setUserType] = useState(null);
+  const [globalUserType, setGlobalUserType] = useState(null);
 
   // Use custom hook to get or set information about login state from localStorage
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
-  console.log(isLoggedIn);
 
   return (
     <MainContext.Provider
@@ -27,8 +26,8 @@ export const MainContextProvider = ({ children }) => {
         setIsDisabled,
         fetchedPreviews,
         setFetchedPreviews,
-        userType,
-        setUserType,
+        globalUserType,
+        setGlobalUserType,
         isLoggedIn,
         setIsLoggedIn,
       }}

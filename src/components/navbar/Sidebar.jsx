@@ -1,34 +1,10 @@
 import { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { MainContext } from "../contexts/MainContext";
+import LogoutLink from "./LogoutLink";
+import NavbarLink from "./NavbarLink";
 
 export default function Sidebar({ close }) {
-  const { showSidebar } = useContext(MainContext);
-
-  const location = useLocation();
-
-  const links = [
-    {
-      name: "Home",
-      path: "/",
-    },
-    {
-      name: "artists",
-      path: "/artists",
-    },
-    {
-      name: "Venues",
-      path: "/venues",
-    },
-    {
-      name: "login",
-      path: "#",
-    },
-    {
-      name: "sign up",
-      path: "#",
-    },
-  ];
+  const { showSidebar, isLoggedIn } = useContext(MainContext);
 
   return (
     <div
@@ -44,17 +20,21 @@ export default function Sidebar({ close }) {
           : {}
       }
     >
-      {links.map((link) => (
-        <Link
-          to={link.path}
-          className={
-            location.pathname === link.path ? "sidebar-link active" : "sidebar-link"
-          }
-          key={link.name}
-        >
-          {link.name}
-        </Link>
-      ))}
+      <NavbarLink path="/" name="Home" sidebar={true} />
+      <NavbarLink path="/artists" name="Artists" sidebar={true} />
+      <NavbarLink path="/venues" name="Venues" sidebar={true} />
+      {isLoggedIn?.status ? (
+        <>
+          <NavbarLink path={`/me`} name="Profile" sidebar={true} />
+          <NavbarLink path={`/me/editProfile`} name="Edit Profile" sidebar={true} />
+          <LogoutLink name="Logout" sidebar={true} />
+        </>
+      ) : (
+        <>
+          <NavbarLink path={"/signupLogin"} name={"Login"} sidebar={true} />
+          <NavbarLink path={"/signupLogin"} name={"Signup"} sidebar={true} />
+        </>
+      )}
     </div>
   );
 }

@@ -3,11 +3,7 @@ import "./_Reusable_BB.scss";
 
 function ReuseButton({ text, userType }) {
   return (
-    <button
-      className={`button-reuse ${
-        userType === "venues" ? "button-reuse--venue" : "button-reuse--artist"
-      }`}
-    >
+    <button className={`brad-md button-reuse button-reuse--${userType}`}>
       {text}
     </button>
   );

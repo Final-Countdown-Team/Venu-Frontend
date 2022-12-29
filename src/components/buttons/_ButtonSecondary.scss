@@ -6,7 +6,6 @@
   height: clamp(5rem, 8vw, 6rem);
   padding: 1rem;
   border: none;
-  border-radius: 8px;
   background-color: transparent;
   cursor: pointer;
   font-weight: 600;
@@ -15,14 +14,14 @@
   align-items: center;
   justify-content: center;
 
-  transition: all 0.3s;
+  transition: all 0.2s;
   transition-property: color, background-color, border;
 
   &:active {
-    transform: translateY(1px);
+    transform: translateY(3px);
   }
 
-  &--venue {
+  &--venues {
     color: $color-venu-primary;
     background-color: rgba(176, 36, 118, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -34,7 +33,7 @@
     }
   }
 
-  &--artist {
+  &--artists {
     position: relative;
     color: $color-artist-primary;
     background-color: rgba(1, 103, 181, 0.2);

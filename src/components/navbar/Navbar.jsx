@@ -1,30 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./_Navbar.scss";
 import venuLogo from "../../img/venu-logo.png";
 import Sidebar from "../navbar/Sidebar";
 import NavbarLink from "./NavbarLink";
 import NavbarDropdown from "./NavbarDropdown";
+import LogoutLink from "./LogoutLink";
 
 export default function Navbar() {
-  const { showSidebar, setShowSidebar } = useContext(MainContext);
-
-  const context = useContext(MainContext);
+  const { showSidebar, setShowSidebar, isLoggedIn, globalUserType } =
+    useContext(MainContext);
 
   function closeSidebar() {
     setShowSidebar(false);
   }
+  console.log(globalUserType);
 
   return (
     <>
       <div
         className={`navbar ${
-          context.userType === "artists"
+          globalUserType === "artists"
             ? "navbar--artists"
-            : context.userType === "venues"
+            : globalUserType === "venues"
             ? "navbar--venues"
             : "null"
         }`}
@@ -43,8 +44,18 @@ export default function Navbar() {
           <NavbarLink path="/" name="Home" />
           <NavbarLink path="/artists" name="Artists" />
           <NavbarLink path="/venues" name="Venues" />
-          <NavbarDropdown type="login" />
-          <NavbarDropdown type="signup" />
+          {isLoggedIn?.status ? (
+            <>
+              <NavbarLink path={`/me`} name="Profile" />
+              <NavbarLink path={`/me/editProfile`} name="Edit" />
+              <LogoutLink name="Logout" />
+            </>
+          ) : (
+            <>
+              <NavbarDropdown type="login" />
+              <NavbarDropdown type="signup" />
+            </>
+          )}
         </div>
         <div
           onClick={() => setShowSidebar(!showSidebar)}

@@ -5,7 +5,7 @@ const AvailableButton = ({ available }) => {
   return (
     <button
       type="button"
-      className={`available-button ${
+      className={`brad-md available-button ${
         available ? "available-button--available" : "available-button--unavailable"
       }`}
     >

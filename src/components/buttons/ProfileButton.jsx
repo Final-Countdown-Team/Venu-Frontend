@@ -5,7 +5,7 @@ function ProfileButton({ text, type, purpose }) {
     purpose === "delete" ? "profile-button--delete" : "profile-button--update";
 
   return (
-    <button type="submit" className={`profile-button ${purposeClass}`}>
+    <button type="submit" className={`brad-sm profile-button ${purposeClass}`}>
       {text}
     </button>
   );

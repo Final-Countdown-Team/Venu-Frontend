@@ -16,7 +16,7 @@ function DropdownGenre(props) {
       </div>
       <select
         onChange={(e) => handleChange(e)}
-        className="input dropdown"
+        className="brad-sm input dropdown"
         name="genre"
         defaultValue={"DEFAULT"}
       >

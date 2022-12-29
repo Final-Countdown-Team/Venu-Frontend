@@ -7,8 +7,6 @@ function AutocompleteLocation({ state, onChange, setLatLng }) {
   const [finalQuery, setFinalQuery] = useState("");
   const [autoSuggestions, setAutoSuggestions] = useState([]);
 
-  console.log(autoSuggestions);
-
   // Delaying the user input to not trigger fetch on every onChange
   useEffect(() => {
     const timeoutID = setTimeout(() => setFinalQuery(userInput), 1000);
