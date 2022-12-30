@@ -2,6 +2,7 @@ import { Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { MainContext } from "./components/contexts/MainContext";
 import { useContext, useEffect, lazy } from "react";
 import { AnimatePresence } from "framer-motion";
+import { Toaster } from "react-hot-toast";
 
 import "./App.scss";
 
@@ -34,6 +35,7 @@ function App() {
       className={`wrapper ${isLoggedIn && "wrapper--loginState"}`}
       style={{ overflow: showSidebar ? "hidden" : "" }}
     >
+      <Toaster position="top-center" />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {/* Routes with classic navbar and footer layout */}

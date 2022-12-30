@@ -1,6 +1,6 @@
 import "./_ProfileButton.scss";
 
-function ProfileButton({ text, type, purpose }) {
+function ProfileButton({ text, purpose }) {
   const purposeClass =
     purpose === "delete" ? "profile-button--delete" : "profile-button--update";
 

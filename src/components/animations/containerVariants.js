@@ -10,6 +10,7 @@ export const containerVariantX = {
       type: "tween",
       duration: 0.5,
     },
+    overflow: "hidden",
   },
   exit: {
     opacity: 0,

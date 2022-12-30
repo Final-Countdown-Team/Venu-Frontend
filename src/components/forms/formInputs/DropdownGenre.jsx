@@ -1,8 +1,10 @@
-import { useFormikContext } from "formik";
+import { Field, useField, useFormikContext, ErrorMessage } from "formik";
 import React from "react";
 
 function DropdownGenre(props) {
+  const [field, meta] = useField(props);
   const formikContext = useFormikContext(props);
+
   const handleChange = (e) => {
     formikContext.setFieldValue("genre", e.target.value);
   };
@@ -14,15 +16,17 @@ function DropdownGenre(props) {
           Genre:
         </label>
       </div>
-      <select
+      <Field
+        {...field}
+        as="select"
         onChange={(e) => handleChange(e)}
-        className="brad-sm input dropdown"
+        className={`brad-sm input dropdown ${
+          meta.error && meta.touched ? "input-error" : ""
+        }`}
         name="genre"
-        defaultValue={"DEFAULT"}
+        // defaultValue={"DEFAULT"}
       >
-        <option value="" disabled>
-          Select one of the following genres:
-        </option>
+        <option defaultValue>Select one of the following genres:</option>
         <option value="Alternative">Alternative</option>
         <option value="Classic">Classic</option>
         <option value="Country">Country</option>
@@ -35,7 +39,8 @@ function DropdownGenre(props) {
         <option value="Rock">Rock</option>
         <option value="Schlager">Schlager</option>
         <option value="Singer-Songwriter">Singer-Songwriter</option>
-      </select>
+      </Field>
+      <ErrorMessage name={props.name} component="div" className="error" />
     </div>
   );
 }

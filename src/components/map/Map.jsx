@@ -23,9 +23,9 @@ const Map = ({ users }) => {
 
     users.forEach((user) => {
       let color =
-        user.type === "artist"
+        user.type === "artists"
           ? "#0168b5"
-          : user.type === "venue"
+          : user.type === "venues"
           ? "#b02476"
           : "#000";
       const coords = user.location.coordinates;

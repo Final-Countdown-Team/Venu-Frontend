@@ -1,7 +1,6 @@
 import { Formik, Form } from "formik";
 import "../signupForm/_SignupForm.scss";
 import "./_EditForm.scss";
-import InputHalf from "../formInputs/InputHalf";
 import InputFull from "../formInputs/InputFull";
 import Textbox from "../formInputs/Textbox";
 import DropdownGenre from "../formInputs/DropdownGenre";
@@ -10,38 +9,59 @@ import ImageUploader from "../formInputs/ImageUploader";
 import ProfileImageUploader from "../formInputs/ProfileImageUploader";
 import ChangePasswordForm from "../changePasswordForm/ChangePasswordForm";
 import ProfileButton from "../../buttons/ProfileButton";
+import { signupOnSubmit } from "../signupForm/signupOnSubmit";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function EditForm({ userType }) {
-  const profileInititalValues = {
-    name: "Max",
-    email: "max_sommereld@web.de",
+function EditForm({ user }) {
+  const { type: userType } = user;
+  console.log(user);
+
+  const [isPending, setIsPending] = useState(false);
+  const navigate = useNavigate();
+
+  const initialValues = {
+    name: user.name,
+    email: user.email,
     address: {
-      street: "Torgauer Straße 50",
-      city: "Leipzig",
-      zipcode: "04315",
+      street: user.address.street,
+      city: user.address.city,
+      zipcode: user.address.zipcode,
     },
-    profileImage: "",
-    images: "",
-    description: "test",
-    genre: "",
-    facebookUrl: "",
-    instagramTag: "@test",
-    twitterTag: "@test",
-    websiteUrl: "",
-    capacity: "",
-    members: "5",
-    dates: "",
-    password: "test1234",
-    passwordConfirm: "test1234",
+    profileImage: user.profileImage,
+    images: user.images,
+    description: user.description,
+    genre: user.genre,
+    mediaLinks: {
+      facebookUrl: user.mediaLinks.facebookUrl,
+      instagramTag: user.mediaLinks.instagramTag,
+      twitterTag: user.mediaLinks.twitterTag,
+      youtubeUrl: user.mediaLinks.youtubeUrl,
+      websiteUrl: user.mediaLinks.websiteUrl,
+    },
+    capacity: user.capacity,
+    members: user.members,
+    dates: user.dates,
   };
 
   return (
     <Formik
-      initialValues={profileInititalValues}
+      initialValues={initialValues}
       // validationSchema={signUpSchema}
-      onSubmit={(values, actions) => console.log(values)}
+      onSubmit={(values, actions) => {
+        console.log(values);
+        signupOnSubmit(
+          values,
+          actions,
+          userType,
+          setIsPending,
+          undefined,
+          navigate,
+          true
+        );
+      }}
     >
-      <Form noValidate className="signup-form edit-form">
+      <Form noValidate className="brad-lg signup-form edit-form">
         <div className="form-top-group">
           <div className="form-top-group--inputs">
             <InputFull
@@ -86,49 +106,60 @@ function EditForm({ userType }) {
           <p className="form-group-heading">Description:</p>
           <Textbox
             name="description"
-            placeholder="Add a description what your venue offers"
+            placeholder="Add a description about you and what you can offer"
           />
-          {userType !== "venues" && <DropdownGenre thin={true} />}
+          {userType !== "venues" && <DropdownGenre name={"genre"} thin={true} />}
           <InputFull
-            name="facebookUrl"
+            name="mediaLinks.facebookUrl"
             label="Facebook"
             type="url"
             placeholder="Link to your facebook page"
             thin={true}
           />
           <InputFull
-            name="instagramTag"
+            name="mediaLinks.instagramTag"
             label="Instagram Tag"
             placeholder="Pass in your instagram tag like this: @tag"
             thin={true}
           />
           <InputFull
-            name="twitterTag"
+            name="mediaLinks.twitterTag"
             label="Twitter Tag"
             placeholder="Pass in your twitter tag like this: @tag"
             thin={true}
           />
-          <InputFull
-            name="websiteUrl"
-            label="Website"
-            type="url"
-            placeholder="Link to your venue's website"
-            thin={true}
-          />
           {userType === "venues" ? (
-            <InputFull
-              label="Capcity"
-              name="capacity"
-              placeholder="What's the capacity of your venue?"
-              thin={true}
-            />
+            <>
+              <InputFull
+                name="mediaLinks.websiteUrl"
+                label="Website"
+                type="url"
+                placeholder="Link to your venue's website"
+                thin={true}
+              />
+              <InputFull
+                label="Capcity"
+                name="capacity"
+                placeholder="What's the capacity of your venue?"
+                thin={true}
+              />
+            </>
           ) : (
-            <InputFull
-              label="Members"
-              name="members"
-              placeholder="How many members do you have?"
-              thin={true}
-            />
+            <>
+              <InputFull
+                name="mediaLinks.youtubeUrl"
+                label="Youtube"
+                type="url"
+                placeholder="Link to your youtube account"
+                thin={true}
+              />
+              <InputFull
+                label="Members"
+                name="members"
+                placeholder="How many members do you have?"
+                thin={true}
+              />
+            </>
           )}
         </div>
         {/* Date Selector Group */}
@@ -144,7 +175,7 @@ function EditForm({ userType }) {
           <ImageUploader />
         </div>
         <div className="profile-button-container">
-          <ProfileButton text="Update" />
+          <ProfileButton text={!isPending ? "Update" : "Is Updating..."} />
         </div>
         {/* Change Password Group */}
         <ChangePasswordForm />
@@ -155,7 +186,7 @@ function EditForm({ userType }) {
             <span>Delete Your Account</span>
             <div className="delete-bar--right"></div>
           </div>
-          <ProfileButton text="Delete account" purpose="delete" />
+          {/* <ProfileButton text="Delete account" purpose="delete" /> */}
         </div>
       </Form>
     </Formik>

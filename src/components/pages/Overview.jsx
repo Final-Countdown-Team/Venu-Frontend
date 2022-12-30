@@ -64,13 +64,11 @@ function Overview({ userType }) {
     >
       <SearchBar userType={userType} />
       {isLoading ? (
-        <div className="preview-card-container">
-          <ScaleLoader
-            cssOverride={spinnerOverride}
-            color={userType === "artists" ? "#0168b5" : "#b02476"}
-            aria-label="Loading Spinner"
-          />
-        </div>
+        <ScaleLoader
+          cssOverride={spinnerOverride}
+          color={userType === "artists" ? "#0168b5" : "#b02476"}
+          aria-label="Loading Spinner"
+        />
       ) : renderFetchedPreviews?.length >= 1 ? (
         <motion.div
           variants={containerVariantY}
