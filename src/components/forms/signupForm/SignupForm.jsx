@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Formik, Form } from "formik";
 
 import "./_SignupForm.scss";
@@ -11,9 +11,16 @@ import DateSelector from "../formInputs/DateSelector";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
 import { signupOnSubmit } from "./signupOnSubmit";
 import ScrollDownAnimation from "../../animations/ScrollDownAnimation";
+import { MainContext } from "../../contexts/MainContext";
+import { useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 
 function SignupForm({ userType }) {
+  const { setIsLoggedIn } = useContext(MainContext);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <Formik
@@ -21,7 +28,14 @@ function SignupForm({ userType }) {
       validationSchema={signUpSchema}
       onSubmit={async (values, actions) => {
         console.log(values);
-        signupOnSubmit(values, actions, userType);
+        signupOnSubmit(
+          values,
+          actions,
+          userType,
+          setIsPending,
+          setIsLoggedIn,
+          navigate
+        );
       }}
     >
       <Form noValidate className="brad-lg signup-form">
@@ -91,47 +105,60 @@ function SignupForm({ userType }) {
                   name="description"
                   placeholder="Add a description what your venue offers"
                 />
-                {userType === "artists" && <DropdownGenre thin={true} />}
+                {userType === "artists" && (
+                  <DropdownGenre name={"genre"} thin={true} />
+                )}
                 <InputFull
-                  name="facebookUrl"
+                  name="mediaLinks.facebookUrl"
                   label="Facebook"
                   type="url"
                   placeholder="Link to your facebook page"
                   thin={true}
                 />
                 <InputFull
-                  name="instagramTag"
+                  name="mediaLinks.instagramTag"
                   label="Instagram Tag"
                   placeholder="Pass in your instagram tag like this: @tag"
                   thin={true}
                 />
                 <InputFull
-                  name="twitterTag"
+                  name="mediaLinks.twitterTag"
                   label="Twitter Tag"
                   placeholder="Pass in your twitter tag like this: @tag"
                   thin={true}
                 />
-                <InputFull
-                  name="websiteUrl"
-                  label="Website"
-                  type="url"
-                  placeholder="Link to your venue's website"
-                  thin={true}
-                />
                 {userType === "venues" ? (
-                  <InputFull
-                    label="Capcity"
-                    name="capacity"
-                    placeholder="What's the capacity of your venue?"
-                    thin={true}
-                  />
+                  <>
+                    <InputFull
+                      name="mediaLinks.websiteUrl"
+                      label="Website"
+                      type="url"
+                      placeholder="Link to your venue's website"
+                      thin={true}
+                    />
+                    <InputFull
+                      label="Capcity"
+                      name="capacity"
+                      placeholder="What's the capacity of your venue?"
+                      thin={true}
+                    />
+                  </>
                 ) : (
-                  <InputFull
-                    label="Members"
-                    name="members"
-                    placeholder="How many members do you have?"
-                    thin={true}
-                  />
+                  <>
+                    <InputFull
+                      label="Members"
+                      name="members"
+                      placeholder="How many members do you have?"
+                      thin={true}
+                    />
+                    <InputFull
+                      name="mediaLinks.youtubeUrl"
+                      label="Youtube"
+                      type="url"
+                      placeholder="Link to your youtube account"
+                      thin={true}
+                    />
+                  </>
                 )}
               </div>
             </div>
@@ -160,7 +187,17 @@ function SignupForm({ userType }) {
             required={true}
           />
           <div className="form-group-button">
-            <ButtonSecondary text="Sign Up" submit={true} userType={userType} />
+            {!isPending ? (
+              <ButtonSecondary text="Sign Up" submit={true} userType={userType} />
+            ) : (
+              <ScaleLoader
+                color={userType === "artists" ? "#0168b5" : "#b02476"}
+                cssOverride={{
+                  transform: "scale(1.5)",
+                }}
+                aria-label="Loading Spinner"
+              />
+            )}
           </div>
         </div>
 

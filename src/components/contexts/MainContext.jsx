@@ -16,6 +16,7 @@ export const MainContextProvider = ({ children }) => {
 
   // Use custom hook to get or set information about login state from localStorage
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
+  console.log(isLoggedIn);
 
   return (
     <MainContext.Provider

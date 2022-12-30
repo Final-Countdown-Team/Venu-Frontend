@@ -22,12 +22,15 @@ export const signUpSchema = yup.object().shape({
   }),
   description: yup.string(),
   genre: yup.string(),
-  facebookUrl: yup.string().url("Please enter a valid URL"),
-  instagramTag: yup
-    .string()
-    .matches(/^@/, "Your instagram tag must start with an @"),
-  twitterTag: yup.string().matches(/^@/, "Your twitter tag must start with an @"),
-  websiteUrl: yup.string().url("Please enter a valid URL"),
+  mediaLink: yup.object().shape({
+    facebookUrl: yup.string().url("Please enter a valid URL"),
+    instagramTag: yup
+      .string()
+      .matches(/^@/, "Your instagram tag must start with an @"),
+    twitterTag: yup.string().matches(/^@/, "Your twitter tag must start with an @"),
+    youtubeUrl: yup.string().url("Please enter a valid URL"),
+    websiteUrl: yup.string().url("Please enter a valid URL"),
+  }),
   capacity: yup
     .number()
     .typeError("Please insert a valid number")
@@ -59,12 +62,15 @@ export const signupInitialValues = {
   },
   description: "",
   genre: "",
-  facebookUrl: "",
-  instagramTag: "",
-  twitterTag: "",
-  websiteUrl: "",
+  mediaLinks: {
+    facebookUrl: "",
+    instagramTag: "",
+    twitterTag: "",
+    youtubeUrl: "",
+    websiteUrl: "",
+  },
   capacity: "",
-  members: "",
+  members: null,
   dates: "",
   password: "",
   passwordConfirm: "",

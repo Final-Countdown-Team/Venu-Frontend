@@ -5,7 +5,10 @@
   margin: 2rem 0;
 
   .login-button {
-    margin-top: 1.5rem;
+    min-height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .forgot-password-text {

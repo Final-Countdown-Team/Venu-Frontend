@@ -21,11 +21,13 @@ import LazyLoadImageComp from "../utils/LazyLoadImageComp";
 import { MainContext } from "../contexts/MainContext";
 import ContactForm from "../forms/contactForm/ContactForm";
 import ButtonSecondary from "../buttons/ButtonSecondary";
+import toast from "react-hot-toast";
+import { ScaleLoader } from "react-spinners";
 
 function UserProfile({ userType, id, editable }) {
   const context = useContext(MainContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState();
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
 
   // Get user ID from URL
@@ -52,12 +54,19 @@ function UserProfile({ userType, id, editable }) {
   // Get data from backend
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch(`/${userType}/${currUserID}`);
-      const data = await res.json();
-      setUser(data.data);
-      setIsLoading(false);
+      setIsLoading(true);
+      try {
+        const res = await fetch(`/${userType}/${currUserID}`);
+        const data = await res.json();
+        console.log(data);
+        setUser(data.data);
+        // Signal end of loading process
+        setIsLoading(false);
+      } catch (err) {
+        console.err(err);
+        toast.error("Ups, something went wrong ☹️");
+      }
     };
-    setIsLoading(true);
     fetchUser();
     console.log(user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,9 +81,20 @@ function UserProfile({ userType, id, editable }) {
     website: Website,
   };
 
+  const spinnerOverride = {
+    margin: "10rem 20rem",
+    transform: "scale(2)",
+  };
+
   // Show loading spinner while fetching from backend
   if (isLoading) {
-    return null;
+    return (
+      <ScaleLoader
+        cssOverride={spinnerOverride}
+        color={userType === "artists" ? "#0168b5" : "#b02476"}
+        aria-label="Loading Spinner"
+      />
+    );
   }
 
   return (

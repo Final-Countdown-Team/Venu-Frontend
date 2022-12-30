@@ -17,8 +17,6 @@ export default function Navbar() {
   function closeSidebar() {
     setShowSidebar(false);
   }
-  console.log(globalUserType);
-
   return (
     <>
       <div

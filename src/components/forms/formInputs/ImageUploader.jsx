@@ -76,9 +76,7 @@ function ImageUploader(props) {
         <p className="image-uploader-text">
           Click or drag files to this area to upload
         </p>
-        <p className="image-uploader-text--thin">
-          You can upload up to 3 images
-        </p>
+        <p className="image-uploader-text--thin">You can upload up to 3 images</p>
       </div>
       <div className="preview-container">{imagePreview}</div>
     </>
