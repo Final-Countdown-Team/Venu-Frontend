@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Formik, Form } from "formik";
 
 import "./_SignupForm.scss";
-import { signUpSchema, signupInitialValues } from "./signUpSchema";
+import { signupInitialValues, schemaBuilder } from "./signUpSchema";
 import defaultUser from "../../../img/default_user_small.png";
 import InputFull from "../formInputs/InputFull";
 import Textbox from "../formInputs/Textbox";
@@ -25,8 +25,8 @@ function SignupForm({ userType }) {
   return (
     <Formik
       initialValues={signupInitialValues}
-      validationSchema={signUpSchema}
-      onSubmit={async (values, actions) => {
+      validationSchema={schemaBuilder("signup", userType)}
+      onSubmit={(values, actions) => {
         console.log(values);
         signupOnSubmit(
           values,

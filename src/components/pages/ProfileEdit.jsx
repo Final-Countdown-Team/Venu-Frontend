@@ -1,10 +1,14 @@
-import "./_ProfileEdit.scss";
-import EditForm from "../forms/editForm/EditForm";
-import ArrowBack from "../utils/ArrowBack";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
+import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { ScaleLoader } from "react-spinners";
+
+import "./_ProfileEdit.scss";
+
+import EditForm from "../forms/editForm/EditForm";
+import ArrowBack from "../utils/ArrowBack";
+import { containerVariantY } from "../animations/containerVariants";
 
 function ProfileEdit() {
   const {
@@ -43,25 +47,32 @@ function ProfileEdit() {
   };
 
   return (
-    <div className="profile-edit-page">
-      {isLoading ? (
-        <ScaleLoader
-          cssOverride={spinnerOverride}
-          color={userType === "artists" ? "#0168b5" : "#b02476"}
-          aria-label="Loading Spinner"
-        />
-      ) : (
-        <>
-          <div className="profile-edit-page--heading">
-            <h1>{`Welcome${user ? `, ${user.name}` : null}`}</h1>
-            <div className="astronaut-welcome" />
-          </div>
-          {user ? <EditForm user={user} /> : null}
-          <div className="arrow-wrapper">
-            <ArrowBack userType={userType} to={"/me"} />
-          </div>
-        </>
-      )}
+    <div className="profile-edit-page" key="profile-edit">
+      <motion.div
+        variants={containerVariantY}
+        initial="exit"
+        animate="visible"
+        exit="hidden"
+      >
+        {isLoading ? (
+          <ScaleLoader
+            cssOverride={spinnerOverride}
+            color={userType === "artists" ? "#0168b5" : "#b02476"}
+            aria-label="Loading Spinner"
+          />
+        ) : (
+          <>
+            <div className="profile-edit-page--heading">
+              <h1>{`Welcome${user ? `, ${user.name}` : null}`}</h1>
+              <div className="astronaut-welcome" />
+            </div>
+            {user ? <EditForm user={user} /> : null}
+            <div className="arrow-wrapper">
+              <ArrowBack userType={userType} to={"/me"} />
+            </div>
+          </>
+        )}
+      </motion.div>
     </div>
   );
 }

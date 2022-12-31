@@ -4,7 +4,7 @@ import * as yup from "yup";
 // const passwordRules =
 // /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-export const signUpSchema = yup.object().shape({
+const coreSchema = yup.object().shape({
   name: yup
     .string()
     .min(2, "Name needs to have min. 2 characters")
@@ -21,23 +21,9 @@ export const signUpSchema = yup.object().shape({
     zipcode: yup.string().required("This field is required"),
   }),
   description: yup.string(),
-  genre: yup.string(),
-  mediaLink: yup.object().shape({
-    facebookUrl: yup.string().url("Please enter a valid URL"),
-    instagramTag: yup
-      .string()
-      .matches(/^@/, "Your instagram tag must start with an @"),
-    twitterTag: yup.string().matches(/^@/, "Your twitter tag must start with an @"),
-    youtubeUrl: yup.string().url("Please enter a valid URL"),
-    websiteUrl: yup.string().url("Please enter a valid URL"),
-  }),
-  capacity: yup
-    .number()
-    .typeError("Please insert a valid number")
-    .min(1)
-    .max(1000000),
-  members: yup.number().typeError("Please insert a valid number").min(1).max(1000),
+});
 
+const passwordSchema = yup.object().shape({
   password: yup
     .string()
     .min(8)
@@ -52,6 +38,48 @@ export const signUpSchema = yup.object().shape({
     .required("This field is required"),
 });
 
+const mediaLinks = {
+  facebookUrl: yup.string().url("Please enter a valid URL"),
+  instagramTag: yup
+    .string()
+    .matches(/^@/, "Your instagram tag must start with an @"),
+  twitterTag: yup.string().matches(/^@/, "Your twitter tag must start with an @"),
+};
+
+const venueSchema = yup.object().shape({
+  capacity: yup
+    .number()
+    .typeError("Please insert a valid number")
+    .min(1)
+    .max(1000000),
+  mediaLinks: yup.object().shape({
+    ...mediaLinks,
+    websiteUrl: yup.string().url("Please enter a valid URL"),
+  }),
+});
+
+const artistSchema = yup.object().shape({
+  genre: yup.string(),
+  members: yup.number().typeError("Please insert a valid number").min(1).max(1000),
+  mediaLinks: yup.object().shape({
+    ...mediaLinks,
+    youtubeUrl: yup.string().url("Please enter a valid URL"),
+  }),
+});
+
+// Helper function that concats the coreSchema with the schema for each userType
+export const schemaBuilder = (purpose, userType) => {
+  const type = userType === "venues" ? venueSchema : artistSchema;
+
+  if (purpose === "edit") {
+    return coreSchema.concat(type);
+  }
+  if (purpose === "signup") {
+    return coreSchema.concat(passwordSchema).concat(type);
+  }
+  return;
+};
+
 export const signupInitialValues = {
   name: "",
   email: "",
@@ -61,16 +89,16 @@ export const signupInitialValues = {
     zipcode: "",
   },
   description: "",
-  genre: "",
+  // genre: "",
   mediaLinks: {
     facebookUrl: "",
     instagramTag: "",
     twitterTag: "",
-    youtubeUrl: "",
+    // youtubeUrl: "",
     websiteUrl: "",
   },
   capacity: "",
-  members: null,
+  // members: "",
   dates: "",
   password: "",
   passwordConfirm: "",

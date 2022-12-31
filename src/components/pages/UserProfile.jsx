@@ -29,6 +29,7 @@ function UserProfile({ userType, id, editable }) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState();
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
+  console.log(userType);
 
   // Get user ID from URL
   const { id: userID } = useParams();
@@ -56,6 +57,7 @@ function UserProfile({ userType, id, editable }) {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
+        console.log(`/${userType}/${currUserID}`);
         const res = await fetch(`/${userType}/${currUserID}`);
         const data = await res.json();
         console.log(data);
@@ -140,7 +142,7 @@ function UserProfile({ userType, id, editable }) {
 
           <div className="social-media-group">
             {!isLoading &&
-              user.mediaLinks &&
+              user?.mediaLinks &&
               Object.entries(user.mediaLinks).map((link) => {
                 const type = link[0].slice(0, -3);
                 const Icon = icons[type];
@@ -207,11 +209,7 @@ function UserProfile({ userType, id, editable }) {
         <div className="location-group">
           <h3>Location:</h3>
           <p className="location-address">{`${user?.address?.street}, ${user?.address?.city} ${user?.address?.zipcode}`}</p>
-          {!isLoading && (
-            <div ref={ref}>
-              <Map users={[user]} />
-            </div>
-          )}
+          {!isLoading && <div ref={ref}>{/* <Map users={[user]} /> */}</div>}
         </div>
 
         <div className="padding-group contact-group">

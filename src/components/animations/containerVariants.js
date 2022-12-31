@@ -10,7 +10,6 @@ export const containerVariantX = {
       type: "tween",
       duration: 0.5,
     },
-    overflow: "hidden",
   },
   exit: {
     opacity: 0,
@@ -22,12 +21,10 @@ export const containerVariantY = {
   hidden: {
     opacity: 0,
     y: "-100vh",
-    x: 0,
   },
   visible: {
     opacity: 1,
     y: 0,
-    x: 0,
     transition: {
       type: "tween",
       duration: 0.5,
@@ -36,7 +33,6 @@ export const containerVariantY = {
   exit: {
     opacity: 0,
     y: "100vh",
-    x: 0,
   },
 };
 

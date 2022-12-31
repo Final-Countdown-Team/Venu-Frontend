@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.19",
+    "lodash.merge": "^4.6.2",
     "mapbox-gl": "^2.11.1",
     "react": "^18.2.0",
     "react-calendar": "^4.0.0",

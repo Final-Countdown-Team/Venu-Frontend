@@ -58,7 +58,8 @@ function InputFull(props) {
         </div>
       )}
       <Field
-        value={meta.value}
+        {...field}
+        // value={meta.value}
         disabled={canBeDisabled ? context.isDisabled : false}
         className={`brad-sm input ${
           meta.error && meta.touched ? "input-error" : ""
@@ -70,6 +71,11 @@ function InputFull(props) {
         onChange={(e) => changeHandler(e)}
         onBlur={(e) => blurHandler(e)}
       />
+      {canBeDisabled && context.isDisabled && (
+        <div className="error tip">
+          To change this field, please enter your password
+        </div>
+      )}
       <ErrorMessage name={name} component="div" className="error" />
     </div>
   );

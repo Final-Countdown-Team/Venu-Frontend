@@ -10,18 +10,27 @@ import NavbarLayout from "./components/utils/outlets/NavbarLayout";
 import Overview from "./components/pages/Overview";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 
-const Home = lazy(() => import("./components/pages/Home"));
-const ProfileEdit = lazy(() => import("./components/pages/ProfileEdit"));
-const SignupLogin = lazy(() => import("./components/pages/SignupLogin"));
-const UserProfile = lazy(() => import("./components/pages/UserProfile"));
-const Signup = lazy(() => import("./components/pages/Signup"));
-const Login = lazy(() => import("./components/pages/Login"));
-const FourOhFour = lazy(() => import("./components/pages/FourOhFour"));
+// const Home = lazy(() => import("./components/pages/Home"));
+// const ProfileEdit = lazy(() => import("./components/pages/ProfileEdit"));
+// const SignupLogin = lazy(() => import("./components/pages/SignupLogin"));
+// const UserProfile = lazy(() => import("./components/pages/UserProfile"));
+// const Signup = lazy(() => import("./components/pages/Signup"));
+// const Login = lazy(() => import("./components/pages/Login"));
+// const FourOhFour = lazy(() => import("./components/pages/FourOhFour"));
+
+import Home from "./components/pages/Home";
+import ProfileEdit from "./components/pages/ProfileEdit";
+import SignupLogin from "./components/pages/SignupLogin";
+import UserProfile from "./components/pages/UserProfile";
+import Signup from "./components/pages/Signup";
+import Login from "./components/pages/Login";
+import FourOhFour from "./components/pages/FourOhFour";
 
 function App() {
   const { showSidebar, isLoggedIn } = useContext(MainContext);
 
   const location = useLocation();
+  console.log(location);
 
   // Set overflow of body based on whether navbar overlay is showing or not
   useEffect(() => {
