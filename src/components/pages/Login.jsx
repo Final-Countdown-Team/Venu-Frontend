@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { containerVariantPosAbs } from "../animations/containerVariants";
+import {
+  containerVariantPosAbs,
+  transitionTween,
+} from "../animations/containerVariants";
 import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
@@ -15,6 +18,7 @@ function Login({ userType }) {
       initial="hidden"
       animate="visible"
       exit="exit"
+      transition={transitionTween}
       className="login-page"
     >
       <div className="login-container" style={{ filter: showModal && "blur(5px)" }}>

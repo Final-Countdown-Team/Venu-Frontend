@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import {
   containerVariantX,
   containerVariantY,
+  transitionTween,
 } from "../animations/containerVariants";
 import { ScaleLoader } from "react-spinners";
 
@@ -60,7 +61,7 @@ function Overview({ userType }) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="margin-container"
+      transition={transitionTween}
     >
       <SearchBar userType={userType} />
       {isLoading ? (
@@ -75,6 +76,7 @@ function Overview({ userType }) {
           initial="exit"
           animate="visible"
           className="preview-card-container"
+          transition={transitionTween}
         >
           {renderFetchedPreviews}
           <div className={`double-arrow-down double-arrow--${userType}`}>

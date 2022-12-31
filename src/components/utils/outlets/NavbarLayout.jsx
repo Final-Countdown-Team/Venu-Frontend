@@ -9,13 +9,13 @@ function NavbarLayout() {
   const { showSidebar } = useContext(MainContext);
 
   return (
-    <>
+    <div>
       <Navbar />
       <div className={`content-container ${showSidebar ? "blur-wrapper" : "false"}`}>
         <Outlet />
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

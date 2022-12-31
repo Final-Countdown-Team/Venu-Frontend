@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { Calendar } from "react-multi-date-picker";
 import { motion } from "framer-motion";
-import { containerVariantX } from "../animations/containerVariants";
+import { containerVariantX, transitionTween } from "../animations/containerVariants";
 import { Link, useParams } from "react-router-dom";
 
 import "./_UserProfile.scss";
@@ -105,6 +105,7 @@ function UserProfile({ userType, id, editable }) {
       initial="hidden"
       animate="visible"
       exit="exit"
+      transition={transitionTween}
       className="margin-container"
     >
       <div className="preview-card-container user-profile-container">

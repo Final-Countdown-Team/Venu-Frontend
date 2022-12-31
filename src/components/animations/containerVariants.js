@@ -1,3 +1,11 @@
+export const transitionTween = {
+  transition: {
+    type: "spring",
+    // duration: 2,
+    ease: [0.17, 0.67, 0.83, 0.67],
+  },
+};
+
 export const containerVariantX = {
   hidden: {
     opacity: 0,
@@ -6,10 +14,6 @@ export const containerVariantX = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      type: "tween",
-      duration: 0.5,
-    },
   },
   exit: {
     opacity: 0,
@@ -25,10 +29,6 @@ export const containerVariantY = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      type: "tween",
-      duration: 0.5,
-    },
   },
   exit: {
     opacity: 0,
@@ -46,10 +46,6 @@ export const containerVariantPosAbs = {
     opacity: 1,
     y: "-50%",
     x: "-50%",
-    transition: {
-      type: "tween",
-      duration: 0.5,
-    },
   },
   exit: {
     opacity: 0,

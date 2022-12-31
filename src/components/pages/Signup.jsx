@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { containerVariantY } from "../animations/containerVariants";
+import { containerVariantY, transitionTween } from "../animations/containerVariants";
 
 import "./_Signup.scss";
 import SignupForm from "../forms/signupForm/SignupForm";
@@ -15,6 +15,7 @@ function Signup({ userType }) {
         initial="exit"
         animate="visible"
         exit="hidden"
+        transition={transitionTween}
       >
         <div className="arrow-wrapper arrow-wrapper-top">
           <ArrowBack userType={userType} />

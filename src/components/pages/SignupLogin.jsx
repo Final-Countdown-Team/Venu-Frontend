@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { containerVariantPosAbs } from "../animations/containerVariants";
+import {
+  containerVariantPosAbs,
+  transitionTween,
+} from "../animations/containerVariants";
 import ReuseButton from "../../components/buttons/Reusable_BB";
 
 import ArrowBack from "../utils/ArrowBack";
@@ -14,6 +17,7 @@ function SignupLogin() {
       initial="exit"
       animate="visible"
       exit="hidden"
+      transition={transitionTween}
       className="signup-container"
     >
       <div className="arrow-position">

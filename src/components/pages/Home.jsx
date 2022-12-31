@@ -3,7 +3,7 @@ import { MainContext } from "../contexts/MainContext";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
-import { containerVariantX } from "../animations/containerVariants";
+import { containerVariantX, transitionTween } from "../animations/containerVariants";
 import { ScaleLoader } from "react-spinners";
 import Heading from "../heading/Heading";
 
@@ -52,6 +52,7 @@ function Home() {
       initial="exit"
       animate="visible"
       exit="hidden"
+      transition={transitionTween}
       className="margin-container home-container"
     >
       <Heading />

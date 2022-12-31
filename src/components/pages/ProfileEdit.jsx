@@ -8,7 +8,7 @@ import "./_ProfileEdit.scss";
 
 import EditForm from "../forms/editForm/EditForm";
 import ArrowBack from "../utils/ArrowBack";
-import { containerVariantY } from "../animations/containerVariants";
+import { containerVariantY, transitionTween } from "../animations/containerVariants";
 
 function ProfileEdit() {
   const {
@@ -53,6 +53,7 @@ function ProfileEdit() {
         initial="exit"
         animate="visible"
         exit="hidden"
+        transition={transitionTween}
       >
         {isLoading ? (
           <ScaleLoader
