@@ -1,8 +1,8 @@
 export const transitionTween = {
   transition: {
     type: "spring",
-    // duration: 2,
-    ease: [0.17, 0.67, 0.83, 0.67],
+    duration: 5,
+    // ease: [0.17, 0.67, 0.83, 0.67],
   },
 };
 
