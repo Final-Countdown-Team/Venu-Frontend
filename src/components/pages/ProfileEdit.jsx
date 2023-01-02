@@ -9,6 +9,8 @@ import "./_ProfileEdit.scss";
 import EditForm from "../forms/editForm/EditForm";
 import ArrowBack from "../utils/ArrowBack";
 import { containerVariantY, transitionTween } from "../animations/containerVariants";
+import ChangePasswordForm from "../forms/editForm/ChangePasswordForm";
+import DeleteAccount from "../forms/editForm/DeleteAccount";
 
 function ProfileEdit() {
   const {
@@ -66,7 +68,9 @@ function ProfileEdit() {
             <div className="profile-edit-page--heading">
               <h1>{`Welcome${user ? `, ${user.name}` : null}`}</h1>
               <motion.div
-                initial={{ x: "-50vw", rotate: 0 }}
+
+                initial={{ x: "-100vw", rotate: 0 }}
+
                 animate={{ x: 0, rotate: 740 }}
                 transition={{
                   type: "spring",
@@ -76,8 +80,17 @@ function ProfileEdit() {
                 }}
                 className="astronaut-welcome"
               />
+
             </div>
-            {user ? <EditForm user={user} /> : null}
+            <div className="brad-lg signup-form edit-form">
+              {user ? (
+                <>
+                  <EditForm user={user} />
+                  <ChangePasswordForm userType={userType} />
+                  <DeleteAccount userType={userType} />
+                </>
+              ) : null}
+            </div>
             <div className="arrow-wrapper">
               <ArrowBack userType={userType} to={"/me"} />
             </div>

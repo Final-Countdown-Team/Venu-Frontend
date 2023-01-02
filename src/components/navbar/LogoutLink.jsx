@@ -3,11 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { MainContext } from "../contexts/MainContext";
 
 function LogoutLink({ name, sidebar }) {
-  const { userType, isLoggedIn, setIsLoggedIn } = useContext(MainContext);
+  const {
+    isLoggedIn: { userType },
+    setIsLoggedIn,
+  } = useContext(MainContext);
   const navigate = useNavigate();
 
   const logout = async () => {
-    await fetch(`/${isLoggedIn.userType}/logout`);
+    await fetch(`/${userType}/logout`);
     setIsLoggedIn(false);
     navigate("/");
   };
