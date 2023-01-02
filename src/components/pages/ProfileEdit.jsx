@@ -68,7 +68,7 @@ function ProfileEdit() {
             <div className="profile-edit-page--heading">
               <h1>{`Welcome${user ? `, ${user.name}` : null}`}</h1>
               <motion.div
-                initial={{ x: "-50vw", rotate: 0 }}
+                initial={{ x: "-100vw", rotate: 0 }}
                 animate={{ x: 0, rotate: 740 }}
                 transition={{
                   type: "spring",
@@ -83,8 +83,8 @@ function ProfileEdit() {
               {user ? (
                 <>
                   <EditForm user={user} />
-                  <ChangePasswordForm />
-                  <DeleteAccount />
+                  <ChangePasswordForm userType={userType} />
+                  <DeleteAccount userType={userType} />
                 </>
               ) : null}
             </div>

@@ -1,0 +1,16 @@
+.confirm-modal {
+  min-width: 25rem;
+  max-width: 35rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  p {
+    text-align: center;
+  }
+}

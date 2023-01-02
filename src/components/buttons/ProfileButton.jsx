@@ -1,11 +1,15 @@
 import "./_ProfileButton.scss";
 
-function ProfileButton({ text, purpose }) {
+function ProfileButton({ text, purpose, onClick }) {
   const purposeClass =
     purpose === "delete" ? "profile-button--delete" : "profile-button--update";
 
   return (
-    <button type="submit" className={`brad-sm profile-button ${purposeClass}`}>
+    <button
+      type="submit"
+      onClick={onClick && onClick}
+      className={`brad-sm profile-button ${purposeClass}`}
+    >
       {text}
     </button>
   );

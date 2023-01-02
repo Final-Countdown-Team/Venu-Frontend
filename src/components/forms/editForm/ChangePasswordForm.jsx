@@ -6,7 +6,6 @@ import { MainContext } from "../../contexts/MainContext";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { schemaBuilder } from "../signupForm/signUpSchema";
-import { ClipLoader } from "react-spinners";
 
 function ChangePasswordForm() {
   const {
