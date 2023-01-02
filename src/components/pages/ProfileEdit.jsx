@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
-import { motion } from "framer-motion";
+import { motion, spring } from "framer-motion";
 import toast from "react-hot-toast";
 import { ScaleLoader } from "react-spinners";
 
@@ -68,7 +68,9 @@ function ProfileEdit() {
             <div className="profile-edit-page--heading">
               <h1>{`Welcome${user ? `, ${user.name}` : null}`}</h1>
               <motion.div
+
                 initial={{ x: "-100vw", rotate: 0 }}
+
                 animate={{ x: 0, rotate: 740 }}
                 transition={{
                   type: "spring",
@@ -78,6 +80,7 @@ function ProfileEdit() {
                 }}
                 className="astronaut-welcome"
               />
+
             </div>
             <div className="brad-lg signup-form edit-form">
               {user ? (
