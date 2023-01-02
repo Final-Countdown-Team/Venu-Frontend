@@ -67,6 +67,10 @@ const artistSchema = yup.object().shape({
   }),
 });
 
+const changePasswordSchema = yup.object().shape({
+  passwordCurrent: yup.string().required("This field is required"),
+});
+
 // Helper function that concats the coreSchema with the schema for each userType
 export const schemaBuilder = (purpose, userType) => {
   const type = userType === "venues" ? venueSchema : artistSchema;
@@ -76,6 +80,9 @@ export const schemaBuilder = (purpose, userType) => {
   }
   if (purpose === "signup") {
     return coreSchema.concat(passwordSchema).concat(type);
+  }
+  if (purpose === "changePassword") {
+    return passwordSchema.concat(changePasswordSchema);
   }
   return;
 };

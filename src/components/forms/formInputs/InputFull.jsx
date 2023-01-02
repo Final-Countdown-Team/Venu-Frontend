@@ -16,7 +16,7 @@ function InputFull(props) {
       formikContext.setFieldValue(name, prefix);
     }
     // Activate new password and confrim password field on focus
-    if (name === "currentPassword") context.setIsDisabled(false);
+    if (name === "passwordCurrent") context.setIsDisabled(false);
     return;
   };
 

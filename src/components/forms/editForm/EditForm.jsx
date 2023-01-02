@@ -1,4 +1,4 @@
-import { Formik, Form, withFormik } from "formik";
+import { Formik, Form } from "formik";
 import "../signupForm/_SignupForm.scss";
 import "./_EditForm.scss";
 import InputFull from "../formInputs/InputFull";
@@ -7,13 +7,11 @@ import DropdownGenre from "../formInputs/DropdownGenre";
 import DateSelector from "../formInputs/DateSelector";
 import ImageUploader from "../formInputs/ImageUploader";
 import ProfileImageUploader from "../formInputs/ProfileImageUploader";
-import ChangePasswordForm from "../changePasswordForm/ChangePasswordForm";
 import ProfileButton from "../../buttons/ProfileButton";
 import { signupOnSubmit } from "../signupForm/signupOnSubmit";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { schemaBuilder, signupInitialValues } from "../signupForm/signUpSchema";
-import { useEffect } from "react";
+import { schemaBuilder } from "../signupForm/signUpSchema";
 
 function EditForm({ user }) {
   const { type: userType } = user;
@@ -40,7 +38,7 @@ function EditForm({ user }) {
       render={({ values, errors }) => {
         console.log(values, errors);
         return (
-          <Form noValidate className="brad-lg signup-form edit-form">
+          <Form noValidate>
             <div className="form-top-group">
               <div className="form-top-group--inputs">
                 <InputFull
@@ -157,17 +155,6 @@ function EditForm({ user }) {
             </div>
             <div className="profile-button-container">
               <ProfileButton text={!isPending ? "Update" : "Is Updating..."} />
-            </div>
-            {/* Change Password Group */}
-            <ChangePasswordForm />
-            {/* Delete Group */}
-            <div className="form-group-delete">
-              <div className="form-group-heading--delete">
-                <div className="delete-bar--left"></div>
-                <span>Delete Your Account</span>
-                <div className="delete-bar--right"></div>
-              </div>
-              {/* <ProfileButton text="Delete account" purpose="delete" /> */}
             </div>
           </Form>
         );

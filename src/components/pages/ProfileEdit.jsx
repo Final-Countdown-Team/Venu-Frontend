@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
-import { motion, spring } from "framer-motion";
+import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { ScaleLoader } from "react-spinners";
 
@@ -9,6 +9,8 @@ import "./_ProfileEdit.scss";
 import EditForm from "../forms/editForm/EditForm";
 import ArrowBack from "../utils/ArrowBack";
 import { containerVariantY, transitionTween } from "../animations/containerVariants";
+import ChangePasswordForm from "../forms/editForm/ChangePasswordForm";
+import DeleteAccount from "../forms/editForm/DeleteAccount";
 
 function ProfileEdit() {
   const {
@@ -77,7 +79,15 @@ function ProfileEdit() {
                 className="astronaut-welcome"
               />
             </div>
-            {user ? <EditForm user={user} /> : null}
+            <div className="brad-lg signup-form edit-form">
+              {user ? (
+                <>
+                  <EditForm user={user} />
+                  <ChangePasswordForm />
+                  <DeleteAccount />
+                </>
+              ) : null}
+            </div>
             <div className="arrow-wrapper">
               <ArrowBack userType={userType} to={"/me"} />
             </div>
