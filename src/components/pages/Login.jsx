@@ -8,9 +8,18 @@ import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
 import ForgotPasswordModal from "../forms/forgotPasswordModal/ForgotPasswordModal";
+import { useContext } from "react";
+import { MainContext } from "../contexts/MainContext";
+import { useEffect } from "react";
 
 function Login({ userType }) {
+  const { setGlobalUserType } = useContext(MainContext);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    setGlobalUserType(userType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <motion.div

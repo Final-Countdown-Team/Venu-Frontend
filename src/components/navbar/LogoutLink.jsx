@@ -3,24 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { MainContext } from "../contexts/MainContext";
 
 function LogoutLink({ name, sidebar }) {
-  const {
-    isLoggedIn: { userType },
-    setIsLoggedIn,
-  } = useContext(MainContext);
+  const { globalUserType, logoutUser } = useContext(MainContext);
   const navigate = useNavigate();
-
-  const logout = async () => {
-    await fetch(`/${userType}/logout`);
-    setIsLoggedIn(false);
-    navigate("/");
-  };
+  console.log(globalUserType);
 
   return (
-    <Link onClick={logout} className={`navbar-link ${sidebar && "sidebar-link"}`}>
+    <Link
+      onClick={() => logoutUser(navigate, "Logged out!\n Hope to see you soon 🥰")}
+      className={`navbar-link ${sidebar && "sidebar-link"}`}
+    >
       {name}
       <span
         className={`nav-links--underline ${
-          userType === "artists" && "nav-links--artists"
+          globalUserType === "artists" && "nav-links--artists"
         }`}
       />
     </Link>

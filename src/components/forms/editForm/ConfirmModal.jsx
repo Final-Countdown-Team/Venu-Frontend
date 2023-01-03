@@ -6,7 +6,7 @@ function ConfirmModal({ deleteAccount, hideModal }) {
   return (
     <div className="forgot-password-modal">
       <div className="confirm-modal">
-        <p>Are you sure that you want to delte your account?</p>
+        <p>Are you sure that you want to delete your account?</p>
         <ProfileButton text="Cancel" purpose="delete" onClick={hideModal} />
         <ProfileButton text="Yes" onClick={deleteAccount} />
       </div>

@@ -15,30 +15,20 @@ import {
 import { ScaleLoader } from "react-spinners";
 
 function Overview({ userType }) {
-  const context = useContext(MainContext);
-  // Fetched venues or artists previews overview
-  const [isLoading, setIsLoading] = useState(true);
+  const { setGlobalUserType, previews, isLoading, getPreviews } =
+    useContext(MainContext);
 
   useEffect(() => {
-    context.setGlobalUserType(userType);
+    setGlobalUserType(userType);
     console.log("rendering Overview...");
-  }, [userType, context]);
+  }, [userType]);
 
   useEffect(() => {
-    const fetchPreviews = async () => {
-      const URL = `/${userType}?fields=name,description,profileImage,availability,dates`;
-      const res = await fetch(URL);
-      const data = await res.json();
-      context.setFetchedPreviews(data);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    };
-    fetchPreviews();
+    getPreviews(userType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userType]);
 
-  const renderFetchedPreviews = context?.fetchedPreviews.data?.map((preview) => (
+  const renderFetchedPreviews = previews.data?.map((preview) => (
     <PreviewCard
       userType={userType}
       key={preview._id}
@@ -63,7 +53,7 @@ function Overview({ userType }) {
       exit="exit"
       transition={transitionTween}
     >
-      <SearchBar userType={userType} />
+      <SearchBar />
       {isLoading ? (
         <ScaleLoader
           cssOverride={spinnerOverride}

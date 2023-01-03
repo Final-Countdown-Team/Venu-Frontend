@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
-import { motion, spring } from "framer-motion";
-import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 import { ScaleLoader } from "react-spinners";
 
 import "./_ProfileEdit.scss";
@@ -13,33 +12,7 @@ import ChangePasswordForm from "../forms/editForm/ChangePasswordForm";
 import DeleteAccount from "../forms/editForm/DeleteAccount";
 
 function ProfileEdit() {
-  const {
-    isLoggedIn: { userType, id },
-    setGlobalUserType,
-  } = useContext(MainContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState();
-
-  // Set global user type for navbar boxshadow
-  useEffect(() => {
-    setGlobalUserType(userType);
-  }, [userType, setGlobalUserType]);
-
-  useEffect(() => {
-    const fetchInitialValues = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch(`/${userType}/${id}`);
-        const data = await res.json();
-        setUser(data.data);
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-        toast.error("Ups, something went wrong ☹️");
-      }
-    };
-    fetchInitialValues();
-  }, [id, userType]);
+  const { isLoading, loggedInUser, isLoggedIn } = useContext(MainContext);
 
   const spinnerOverride = {
     position: "absolute",
@@ -49,7 +22,7 @@ function ProfileEdit() {
   };
 
   return (
-    <div className="profile-edit-page" key="profile-edit">
+    <div className="profile-edit-page">
       <motion.div
         variants={containerVariantY}
         initial="exit"
@@ -57,45 +30,31 @@ function ProfileEdit() {
         exit="hidden"
         transition={transitionTween}
       >
-        {isLoading ? (
-          <ScaleLoader
-            cssOverride={spinnerOverride}
-            color={userType === "artists" ? "#0168b5" : "#b02476"}
-            aria-label="Loading Spinner"
+        <div className="profile-edit-page--heading">
+          <h1>{`Welcome${loggedInUser ? `, ${loggedInUser.name}` : null}`}</h1>
+          <motion.div
+            initial={{ x: "-100vw", rotate: 0 }}
+            animate={{ x: 0, rotate: 740 }}
+            transition={{
+              type: "spring",
+              bounce: 0.4,
+              duration: 2.5,
+            }}
+            className="astronaut-welcome"
           />
-        ) : (
+        </div>
+        <div className="brad-lg signup-form edit-form">
+          {/* {isLoggedIn ? ( */}
           <>
-            <div className="profile-edit-page--heading">
-              <h1>{`Welcome${user ? `, ${user.name}` : null}`}</h1>
-              <motion.div
-
-                initial={{ x: "-100vw", rotate: 0 }}
-
-                animate={{ x: 0, rotate: 740 }}
-                transition={{
-                  type: "spring",
-                  bounce: 0.4,
-                  delay: 0.5,
-                  duration: 2.5,
-                }}
-                className="astronaut-welcome"
-              />
-
-            </div>
-            <div className="brad-lg signup-form edit-form">
-              {user ? (
-                <>
-                  <EditForm user={user} />
-                  <ChangePasswordForm userType={userType} />
-                  <DeleteAccount userType={userType} />
-                </>
-              ) : null}
-            </div>
-            <div className="arrow-wrapper">
-              <ArrowBack userType={userType} to={"/me"} />
-            </div>
+            <EditForm />
+            <ChangePasswordForm userType={loggedInUser.type} />
+            <DeleteAccount userType={loggedInUser.type} />
           </>
-        )}
+          {/* ) : null} */}
+        </div>
+        <div className="arrow-wrapper">
+          <ArrowBack userType={loggedInUser.type} to={"/me"} />
+        </div>
       </motion.div>
     </div>
   );

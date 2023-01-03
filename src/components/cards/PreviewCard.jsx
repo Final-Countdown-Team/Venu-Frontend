@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AvailableButton from "../buttons/AvailableButton";
 import { CardButton } from "../buttons/CardButton";
 import { MainContext } from "../contexts/MainContext";
@@ -8,6 +8,7 @@ import "./_Preview-card.scss";
 
 function PreviewCard({ img, name, description, userType, id, availability }) {
   const { isLoggedIn } = useContext(MainContext);
+
   return (
     <div className="card-container brad-lg">
       <div className="userImage-container">
