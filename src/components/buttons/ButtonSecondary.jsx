@@ -4,10 +4,10 @@ import { MainContext } from "../contexts/MainContext";
 import "./_ButtonSecondary.scss";
 
 function ButtonSecondary({ text, purpose, submit, userType, redirectTo }) {
-  const context = useContext(MainContext);
+  const { globalUserType } = useContext(MainContext);
   const navigate = useNavigate();
 
-  const userColorType = !userType ? context.userType : userType;
+  const userColorType = !userType ? globalUserType : userType;
 
   const redirectHandler = () => {
     navigate(redirectTo);

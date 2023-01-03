@@ -1,17 +1,16 @@
+import { useContext, useState } from "react";
+import { MainContext } from "../../contexts/MainContext";
+import { Formik, Form } from "formik";
+import toast from "react-hot-toast";
+
 import ProfileButton from "../../buttons/ProfileButton";
 import InputFull from "../formInputs/InputFull";
-import { Formik, Form } from "formik";
-import { useContext } from "react";
-import { MainContext } from "../../contexts/MainContext";
-import toast from "react-hot-toast";
-import { useState } from "react";
 import { schemaBuilder } from "../signupForm/signUpSchema";
 
 function ChangePasswordForm() {
   const {
-    isLoggedIn: { userType },
+    loggedInUser: { type: userType },
   } = useContext(MainContext);
-  console.log(userType);
   const [isPending, setIsPending] = useState(false);
   return (
     <Formik
@@ -40,7 +39,7 @@ function ChangePasswordForm() {
             error.isOperational = res.error.isOperational;
             throw error;
           }
-          toast.success("Your password was updated");
+          toast.success("Your password has been updated");
           setIsPending(false);
         } catch (err) {
           setIsPending(false);

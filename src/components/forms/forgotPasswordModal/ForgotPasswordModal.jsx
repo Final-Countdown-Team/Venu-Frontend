@@ -11,8 +11,7 @@ import { useState } from "react";
 import { ScaleLoader } from "react-spinners";
 
 function ForgotPasswordModal({ setShowModal }) {
-  const context = useContext(MainContext);
-  const userType = context.userType;
+  const { globalUserType } = useContext(MainContext);
   const ref = useRef(null);
   const [isPending, setIsPending] = useState(false);
 
@@ -31,7 +30,7 @@ function ForgotPasswordModal({ setShowModal }) {
         try {
           setIsPending(true);
           console.log(values);
-          const req = await fetch(`/${userType}/forgotPassword`, {
+          const req = await fetch(`/${globalUserType}/forgotPassword`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -57,7 +56,7 @@ function ForgotPasswordModal({ setShowModal }) {
         noValidate
         ref={ref}
         className={`forgot-password-modal ${
-          userType === "artists" ? "modal-artists" : "modal-venues"
+          globalUserType === "artists" ? "modal-artists" : "modal-venues"
         }`}
       >
         <div className="login-form">
@@ -77,8 +76,9 @@ function ForgotPasswordModal({ setShowModal }) {
               <ButtonSecondary submit={true} text={"Send reset link"} />
             ) : (
               <ScaleLoader
-                color={userType === "artists" ? "#0168b5" : "#b02476"}
+                color={globalUserType === "artists" ? "#0168b5" : "#b02476"}
                 aria-label="Loading Spinner"
+                cssOverride={{ height: "5rem)" }}
               />
             )}
           </div>

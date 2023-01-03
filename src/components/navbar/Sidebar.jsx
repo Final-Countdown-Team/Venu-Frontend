@@ -4,7 +4,7 @@ import LogoutLink from "./LogoutLink";
 import NavbarLink from "./NavbarLink";
 
 export default function Sidebar({ close }) {
-  const { showSidebar, isLoggedIn } = useContext(MainContext);
+  const { showSidebar, loggedInUser } = useContext(MainContext);
 
   return (
     <div
@@ -23,7 +23,7 @@ export default function Sidebar({ close }) {
       <NavbarLink path="/" name="Home" sidebar={true} />
       <NavbarLink path="/artists" name="Artists" sidebar={true} />
       <NavbarLink path="/venues" name="Venues" sidebar={true} />
-      {isLoggedIn?.status ? (
+      {loggedInUser ? (
         <>
           <NavbarLink path={`/me`} name="Profile" sidebar={true} />
           <NavbarLink path={`/me/editProfile`} name="Edit Profile" sidebar={true} />

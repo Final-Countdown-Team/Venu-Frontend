@@ -11,7 +11,7 @@ import NavbarDropdown from "./NavbarDropdown";
 import LogoutLink from "./LogoutLink";
 
 export default function Navbar() {
-  const { showSidebar, setShowSidebar, isLoggedIn, globalUserType } =
+  const { showSidebar, setShowSidebar, globalUserType, isLoggedIn } =
     useContext(MainContext);
 
   function closeSidebar() {
@@ -42,7 +42,7 @@ export default function Navbar() {
           <NavbarLink path="/" name="Home" />
           <NavbarLink path="/artists" name="Artists" />
           <NavbarLink path="/venues" name="Venues" />
-          {isLoggedIn?.status ? (
+          {isLoggedIn ? (
             <>
               <NavbarLink path={`/me`} name="Profile" />
               <NavbarLink path={`/me/editProfile`} name="Edit" />

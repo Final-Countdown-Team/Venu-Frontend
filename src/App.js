@@ -21,16 +21,15 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import Home from "./components/pages/Home";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import SignupLogin from "./components/pages/SignupLogin";
-import UserProfile from "./components/pages/UserProfile";
+import UserProfile from "./components/userProfile/UserProfile";
 import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import FourOhFour from "./components/pages/FourOhFour";
+import WatchProfilePage from "./components/pages/WatchProfilePage";
 
 function App() {
-  const { showSidebar, isLoggedIn } = useContext(MainContext);
-
+  const { showSidebar, isLoggedIn, loggedInUser } = useContext(MainContext);
   const location = useLocation();
-  console.log(location);
 
   // Set overflow of body based on whether navbar overlay is showing or not
   useEffect(() => {
@@ -55,7 +54,7 @@ function App() {
               <Route index element={<Overview userType={"venues"} />} />
               <Route
                 path="profile/:id"
-                element={<UserProfile userType="venues" />}
+                element={<WatchProfilePage userType="venues" />}
               />
             </Route>
 
@@ -64,19 +63,13 @@ function App() {
               <Route
                 path="profile/:id"
                 exact
-                element={<UserProfile userType="artists" />}
+                element={<WatchProfilePage userType="artists" />}
               />
             </Route>
 
             <Route
               path="/me"
-              element={
-                <UserProfile
-                  userType={isLoggedIn.userType}
-                  id={isLoggedIn.id}
-                  editable={true}
-                />
-              }
+              element={<UserProfile user={loggedInUser} editable={true} />}
             />
             <Route path="/me/editProfile" element={<ProfileEdit />} />
           </Route>

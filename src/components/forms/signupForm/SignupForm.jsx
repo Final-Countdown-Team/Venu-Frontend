@@ -1,5 +1,8 @@
 import { useContext, useState } from "react";
+import { MainContext } from "../../contexts/MainContext";
 import { Formik, Form } from "formik";
+import { useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 
 import "./_SignupForm.scss";
 import { signupInitialValues, schemaBuilder } from "./signUpSchema";
@@ -9,16 +12,11 @@ import Textbox from "../formInputs/Textbox";
 import DropdownGenre from "../formInputs/DropdownGenre";
 import DateSelector from "../formInputs/DateSelector";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
-import { signupOnSubmit } from "./signupOnSubmit";
 import ScrollDownAnimation from "../../animations/ScrollDownAnimation";
-import { MainContext } from "../../contexts/MainContext";
-import { useNavigate } from "react-router-dom";
-import { ScaleLoader } from "react-spinners";
 
 function SignupForm({ userType }) {
-  const { setIsLoggedIn } = useContext(MainContext);
+  const { isPending, formSubmitEditSignup } = useContext(MainContext);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isPending, setIsPending] = useState(false);
 
   const navigate = useNavigate();
 
@@ -27,15 +25,7 @@ function SignupForm({ userType }) {
       initialValues={signupInitialValues}
       validationSchema={schemaBuilder("signup", userType)}
       onSubmit={(values, actions) => {
-        console.log(values);
-        signupOnSubmit(
-          values,
-          actions,
-          userType,
-          setIsPending,
-          setIsLoggedIn,
-          navigate
-        );
+        formSubmitEditSignup(values, actions, userType, navigate);
       }}
     >
       <Form noValidate className="brad-lg signup-form">
@@ -146,16 +136,16 @@ function SignupForm({ userType }) {
                 ) : (
                   <>
                     <InputFull
-                      label="Members"
-                      name="members"
-                      placeholder="How many members do you have?"
-                      thin={true}
-                    />
-                    <InputFull
                       name="mediaLinks.youtubeUrl"
                       label="Youtube"
                       type="url"
                       placeholder="Link to your youtube account"
+                      thin={true}
+                    />
+                    <InputFull
+                      label="Members"
+                      name="members"
+                      placeholder="How many members do you have?"
                       thin={true}
                     />
                   </>

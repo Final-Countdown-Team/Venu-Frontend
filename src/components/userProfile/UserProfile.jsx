@@ -1,11 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import { Calendar } from "react-multi-date-picker";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { containerVariantX, transitionTween } from "../animations/containerVariants";
-import { Link, useParams } from "react-router-dom";
+import { Calendar } from "react-multi-date-picker";
+import { useInView } from "react-intersection-observer";
 
-import "./_UserProfile.scss";
+import AvailableButton from "../buttons/AvailableButton";
+import LazyLoadImageComp from "../utils/LazyLoadImageComp";
+import ButtonSecondary from "../buttons/ButtonSecondary";
+import ContactForm from "../forms/contactForm/ContactForm";
 
 import {
   AiFillFacebook as Facebook,
@@ -15,65 +18,22 @@ import {
 } from "react-icons/ai";
 import { BsFillPeopleFill, BsGlobe2 as Website } from "react-icons/bs";
 
-import Map from "../map/Map";
-import AvailableButton from "../buttons/AvailableButton";
-import LazyLoadImageComp from "../utils/LazyLoadImageComp";
+import "./_UserProfile.scss";
 import { MainContext } from "../contexts/MainContext";
-import ContactForm from "../forms/contactForm/ContactForm";
-import ButtonSecondary from "../buttons/ButtonSecondary";
-import toast from "react-hot-toast";
-import { ScaleLoader } from "react-spinners";
 
-function UserProfile({ userType, id, editable }) {
-  const context = useContext(MainContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState();
+function UserProfile({ user, editable }) {
+  const { setGlobalUserType } = useContext(MainContext);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
-  console.log(userType);
-
-  // Get user ID from URL
-  const { id: userID } = useParams();
-  // If the id is not passed in props, take the id from the URL. id prop is passed when user is logged in and accesses the profile via the /me route
-  const currUserID = !id ? userID : id;
-
   // Load map only if it is visible in viewport for animation
   const { ref } = useInView({ triggerOnce: true });
-
-  // Set global user type for navbar boxshadow
-  useEffect(() => {
-    context.setGlobalUserType(userType);
-  }, [userType, context]);
-
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
+    setGlobalUserType(user.type);
     const handleResize = () => setDimensions({ width: window.innerWidth });
     window.addEventListener("resize", handleResize);
     console.log("Renders resize...");
     return (_) => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // Get data from backend
-  useEffect(() => {
-    const fetchUser = async () => {
-      setIsLoading(true);
-      try {
-        console.log(`/${userType}/${currUserID}`);
-        const res = await fetch(`/${userType}/${currUserID}`);
-        const data = await res.json();
-        console.log(data);
-        setUser(data.data);
-        // Signal end of loading process
-        setIsLoading(false);
-      } catch (err) {
-        console.err(err);
-        toast.error("Ups, something went wrong ☹️");
-      }
-    };
-    fetchUser();
-    console.log(user);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Object of Icons for social media icon mapping
   const icons = {
     facebook: Facebook,
@@ -82,23 +42,6 @@ function UserProfile({ userType, id, editable }) {
     youtube: Youtube,
     website: Website,
   };
-
-  const spinnerOverride = {
-    margin: "10rem 20rem",
-    transform: "scale(2)",
-  };
-
-  // Show loading spinner while fetching from backend
-  if (isLoading) {
-    return (
-      <ScaleLoader
-        cssOverride={spinnerOverride}
-        color={userType === "artists" ? "#0168b5" : "#b02476"}
-        aria-label="Loading Spinner"
-      />
-    );
-  }
-
   return (
     <motion.div
       variants={containerVariantX}
@@ -121,7 +64,7 @@ function UserProfile({ userType, id, editable }) {
             </div>
             {editable && (
               <Link
-                className={`edit-profile-btn bgColor--${userType} brad-md`}
+                className={`edit-profile-btn bgColor--${user.type} brad-md`}
                 to={"/me/editProfile"}
               >
                 Edit Profile
@@ -142,8 +85,7 @@ function UserProfile({ userType, id, editable }) {
           </div>
 
           <div className="social-media-group">
-            {!isLoading &&
-              user?.mediaLinks &&
+            {user?.mediaLinks &&
               Object.entries(user.mediaLinks).map((link) => {
                 const type = link[0].slice(0, -3);
                 const Icon = icons[type];
@@ -200,9 +142,9 @@ function UserProfile({ userType, id, editable }) {
         </div>
 
         <div className="padding-group members-group">
-          <h3>{userType === "artists" ? "Members:" : "Capacity:"}</h3>
+          <h3>{user.type === "artists" ? "Members:" : "Capacity:"}</h3>
           <div className="member-count">
-            {userType === "artists" ? user?.members : user?.capacity}
+            {user.type === "artists" ? user?.members : user?.capacity}
             <BsFillPeopleFill className="members-icon" />
           </div>
         </div>
@@ -210,16 +152,16 @@ function UserProfile({ userType, id, editable }) {
         <div className="location-group">
           <h3>Location:</h3>
           <p className="location-address">{`${user?.address?.street}, ${user?.address?.city} ${user?.address?.zipcode}`}</p>
-          {!isLoading && <div ref={ref}>{/* <Map users={[user]} /> */}</div>}
+          <div ref={ref}>{/* <Map users={[user]} /> */}</div>
         </div>
 
         <div className="padding-group contact-group">
           <h3>{!editable && "Contact:"}</h3>
           {!editable ? (
-            <ContactForm userType={userType} />
+            <ContactForm userType={user.type} />
           ) : (
             <ButtonSecondary
-              userType={userType}
+              userType={user.type}
               text="Edit Profile"
               redirectTo={"/me/editProfile"}
             />

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 
-// import "@geoapify/geocoder-autocomplete/styles/round-borders.css";
-
 import CustomDropdown from "./CustomDropdown";
 import "./_CustomDropdown.scss";
 
@@ -17,12 +15,11 @@ import {
 } from "./dropdownOptions";
 import AutocompleteLocation from "./AutocompleteLocation";
 
-export default function SearchBar({ userType }) {
-  const context = useContext(MainContext);
+export default function SearchBar() {
+  const { globalUserType, getSearchResults } = useContext(MainContext);
 
   const [searchText, setSearchText] = useState("");
   const [sort, setSort] = useState("");
-  // const [zipcode, setZipcode] = useState("");
   const [city, setCity] = useState("");
   const [radius, setRadius] = useState("");
   const [dates, setDates] = useState("");
@@ -36,20 +33,13 @@ export default function SearchBar({ userType }) {
     setDates(date);
   };
 
-  // const validateZipcode = (e) => {
-  //   e.target.value = e.target.value
-  //     .replace(/[^0-9.]/g, "")
-  //     .replace(/(\..*?)\..*/g, "$1");
-  //   setZipcode(e.target.value);
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Creat query string for fetching previews
-    const URL = `/${userType}?name=${searchText}&city=${city}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
+    const URL = `/${globalUserType}?name=${searchText}&city=${city}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
     const res = await fetch(URL);
     const data = await res.json();
-    context.setFetchedPreviews(data);
+    getSearchResults(data);
   };
 
   useEffect(() => {
@@ -72,12 +62,12 @@ export default function SearchBar({ userType }) {
     <form onSubmit={handleSubmit} className="searchbar">
       <input
         className={`brad-md searchbar--input ${
-          userType === "venues" ? "input-focus-venues" : "input-focus-artists"
+          globalUserType === "venues" ? "input-focus-venues" : "input-focus-artists"
         }`}
         onChange={(e) => setSearchText(e.target.value)}
         type="search"
         value={searchText}
-        placeholder={`Search for ${userType}`}
+        placeholder={`Search for ${globalUserType}`}
       />
       <div className="dropdown-group">
         <CustomDropdown
@@ -92,7 +82,7 @@ export default function SearchBar({ userType }) {
           options={dateOptions}
           type="Available"
         />
-        {userType === "artists" && (
+        {globalUserType === "artists" && (
           <CustomDropdown
             state={genre}
             onChange={setGenre}
@@ -111,15 +101,12 @@ export default function SearchBar({ userType }) {
           onChange={setCity}
           setLatLng={setLatLng}
         />
-        {/* <input
-          onChange={(e) => validateZipcode(e)}
-          maxLength="5"
-          className="dropdown--input search-input-zipcode"
-          name="zipcode"
-          placeholder="Zipcode"
-        /> */}
         <div className="search-btn-group">
-          <ButtonSecondary text="Search" purpose="search" userType={userType} />
+          <ButtonSecondary
+            text="Search"
+            purpose="search"
+            userType={globalUserType}
+          />
         </div>
       </div>
     </form>
