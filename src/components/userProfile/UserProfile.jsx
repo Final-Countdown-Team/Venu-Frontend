@@ -29,6 +29,7 @@ function UserProfile({ user, editable }) {
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
     const handleResize = () => setDimensions({ width: window.innerWidth });
+    window.scrollTo(0, 0);
     window.addEventListener("resize", handleResize);
     console.log("Renders resize...");
     return (_) => window.removeEventListener("resize", handleResize);
@@ -110,7 +111,7 @@ function UserProfile({ user, editable }) {
         {user?.images?.every((img) => img !== "") && (
           <div className="image-gallery">
             {user?.images?.map((image, i) => {
-              if (image === "") return null;
+              if (image.includes("empty")) return null;
               return (
                 <LazyLoadImageComp
                   src={image}

@@ -224,9 +224,9 @@ export const MainContextProvider = ({ children }) => {
       if (imageFiles.images || imageFiles.images.every((img) => img === "")) {
         imageFiles.images.forEach((image, i) => {
           // If the user didn't delete the image form database
-          if (typeof image === "string" && image.length > 2) return;
+          if (typeof image === "string" && image.includes("http")) return;
           // If the user deleted the image
-          if (image === "") {
+          if (typeof image === "string" && image.includes("empty")) {
             const emptyBlob = new Blob(["Delete me"], {
               type: "image/jpeg",
             });

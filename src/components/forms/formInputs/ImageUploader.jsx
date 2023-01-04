@@ -26,7 +26,8 @@ function ImageUploader({ setImageFiles }) {
     console.log(acceptedFiles);
     const processedFiles = processFiles(acceptedFiles);
     const newFiles = files.map((el, i) => {
-      if (el === "") return processedFiles.shift() || "";
+      if (typeof el === "string" && el.includes("empty"))
+        return processedFiles.shift() || el;
       return el;
     });
     console.log(newFiles);
@@ -38,8 +39,8 @@ function ImageUploader({ setImageFiles }) {
     const identifier = e.currentTarget.dataset.image;
     setFiles(() =>
       files.map((el, i) => {
-        if (el.imageId && el.imageId === identifier) return "";
-        if (el === identifier) return "";
+        if (el.imageId && el.imageId === identifier) return `empty-${i}`;
+        if (el === identifier) return `empty-${i}`;
         return el;
       })
     );
@@ -78,7 +79,7 @@ function ImageUploader({ setImageFiles }) {
               return (
                 <div className="preview" key={`${file.name}-${i}`}>
                   <div className="preview--inner">
-                    {file === "" ? null : (
+                    {typeof file === "string" && file.includes("empty") ? null : (
                       <>
                         <div
                           className="preview-remove-icon"
