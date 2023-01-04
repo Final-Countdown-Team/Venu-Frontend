@@ -1,17 +1,21 @@
 import { useContext, useEffect } from "react";
 import { MainContext } from "../contexts/MainContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ScaleLoader } from "react-spinners";
 import UserProfile from "../userProfile/UserProfile";
 
 function WatchProfilePage({ userType }) {
-  const { getWatchUser, watchUser, setGlobalUserType, isLoading } =
+  const { getWatchUser, watchUser, setGlobalUserType, isLoading, loggedInUser } =
     useContext(MainContext);
   // Get user ID from URL
   const { id: userID } = useParams();
+  const navigate = useNavigate();
+
   // Get data from backend
   useEffect(() => {
+    if (userID === loggedInUser._id) navigate("/me");
+    window.scrollTo(0, 0);
     const controller = new AbortController();
     const signal = controller.signal;
     setGlobalUserType(userType);

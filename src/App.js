@@ -13,10 +13,11 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 // const Home = lazy(() => import("./components/pages/Home"));
 // const ProfileEdit = lazy(() => import("./components/pages/ProfileEdit"));
 // const SignupLogin = lazy(() => import("./components/pages/SignupLogin"));
-// const UserProfile = lazy(() => import("./components/pages/UserProfile"));
+// const UserProfile = lazy(() => import("./components/userProfile/UserProfile"));
 // const Signup = lazy(() => import("./components/pages/Signup"));
 // const Login = lazy(() => import("./components/pages/Login"));
 // const FourOhFour = lazy(() => import("./components/pages/FourOhFour"));
+// const WatchProfilePage = lazy(() => import("./components/pages/WatchProfilePage"));
 
 import Home from "./components/pages/Home";
 import ProfileEdit from "./components/pages/ProfileEdit";
@@ -63,15 +64,30 @@ function App() {
               <Route
                 path="profile/:id"
                 exact
-                element={<WatchProfilePage userType="artists" />}
+                element={
+                  isLoggedIn ? (
+                    <WatchProfilePage userType="artists" />
+                  ) : (
+                    <SignupLogin />
+                  )
+                }
               />
             </Route>
 
             <Route
               path="/me"
-              element={<UserProfile user={loggedInUser} editable={true} />}
+              element={
+                isLoggedIn ? (
+                  <UserProfile user={loggedInUser} editable={true} />
+                ) : (
+                  <FourOhFour />
+                )
+              }
             />
-            <Route path="/me/editProfile" element={<ProfileEdit />} />
+            <Route
+              path="/me/editProfile"
+              element={isLoggedIn ? <ProfileEdit /> : <FourOhFour />}
+            />
           </Route>
 
           {/* Routes without navbar and footer */}

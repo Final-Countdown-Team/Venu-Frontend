@@ -63,6 +63,33 @@ export const MainContextProvider = ({ children }) => {
     });
   };
 
+  // Delete outdated dates, is called when user is logged in
+  const updateDates = async (response, userType) => {
+    try {
+      const updatedDates = response.data.dates.filter((date) => {
+        const today = new Date().toISOString();
+        return date > today;
+      });
+
+      const req = await fetch(`/${userType}/user/updateMe`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ dates: updatedDates }),
+      });
+      const res = await req.json();
+      dispatch({
+        type: "GET_LOGGED_IN_USER",
+        payload: res.data,
+      });
+      console.log("Updated dates 👍");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // Get logged in user
   const getLoggedInUser = async (values, actions, userType, navigate) => {
     try {
@@ -81,10 +108,11 @@ export const MainContextProvider = ({ children }) => {
       // Throw manual error if request fails
       if (res.status === "fail" || res.status === "error")
         throw new Error(res.message || "Ups, something went wrong");
-      dispatch({
-        type: "GET_LOGGED_IN_USER",
-        payload: res.data,
-      });
+      // dispatch({
+      //   type: "GET_LOGGED_IN_USER",
+      //   payload: res.data,
+      // });
+      updateDates(res, userType);
       localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
       // Show success notification when data is sucessfully fetched
       toast.success("Successfully logged in 🎉");
@@ -144,13 +172,16 @@ export const MainContextProvider = ({ children }) => {
     const venuesData = await venuesRes.json();
     console.log(artistsData);
 
-    const joinedData = artistsData.data.concat(venuesData.data);
+    const joinedData = artistsData?.data?.concat(venuesData.data);
     console.log(joinedData);
 
     dispatch({
       type: "GET_LOCATIONS",
       payload: joinedData,
     });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   };
 
   // Searchbar results
@@ -171,11 +202,13 @@ export const MainContextProvider = ({ children }) => {
     message && toast.success(message);
     // Save user to localStorage
     localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
+    console.log(state.loggedInUser);
   };
 
   // submitHandler for edit form, handles file uploads
   const editFormSubmitImages = async (imageFiles) => {
     try {
+      console.log(imageFiles);
       setIsPending(true);
       // --- SENDING IMAGES ---
       // Creating new FormData to be able to send files to backend
@@ -188,13 +221,21 @@ export const MainContextProvider = ({ children }) => {
           imageFiles.profileImage.name
         );
       }
-      if (imageFiles.images) {
+      if (imageFiles.images || imageFiles.images.every((img) => img === "")) {
         imageFiles.images.forEach((image, i) => {
-          if (typeof image === "string") return;
+          // If the user didn't delete the image form database
+          if (typeof image === "string" && image.length > 2) return;
+          // If the user deleted the image
+          if (image === "") {
+            const emptyBlob = new Blob(["Delete me"], {
+              type: "image/jpeg",
+            });
+            return formData.append("images", emptyBlob, `delete-me-at-${i}`);
+          }
+          // New image file uploaded
           return formData.append("images", image, `replace-at-${i}`);
         });
       }
-
       console.log(formData);
       // Sending images in formData
       const URL = `/${state.loggedInUser.type}/user/updateMe`;
@@ -231,8 +272,6 @@ export const MainContextProvider = ({ children }) => {
       const filteredValues = Object.fromEntries(
         Object.entries(newValues).filter(([_, value]) => value !== "")
       );
-      console.log(filteredValues);
-
       const URL = `/${state.loggedInUser.type}/user/updateMe`;
       // // Sending regular form data
       const req = await fetch(URL, {

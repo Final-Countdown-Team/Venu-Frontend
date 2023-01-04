@@ -40,6 +40,10 @@
     opacity: 1;
   }
 
+  &::selection {
+    background-color: #acacac;
+  }
+
   &-error {
     outline: 2px solid #fa5c5c;
   }
@@ -88,6 +92,9 @@
   &::placeholder {
     color: $color-text-placeholder;
     opacity: 1;
+  }
+  &::selection {
+    background-color: #afafaf;
   }
 }
 

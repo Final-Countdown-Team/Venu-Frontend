@@ -6,11 +6,11 @@ import { RiDeleteBack2Fill } from "react-icons/ri";
 import { MainContext } from "../../contexts/MainContext";
 
 function ImageUploader({ setImageFiles }) {
-  const { loggedInUser, isLoggedIn } = useContext(MainContext);
-  const [files, setFiles] = useState(loggedInUser.images || []);
+  const { loggedInUser } = useContext(MainContext);
+  const [files, setFiles] = useState(loggedInUser.images);
 
   const processFiles = (source) => {
-    return source?.map((file, i) =>
+    return source.map((file, i) =>
       Object.assign(file, {
         imageId: `${file.name}-${i}`,
         preview: URL.createObjectURL(file),
@@ -19,29 +19,33 @@ function ImageUploader({ setImageFiles }) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) setFiles(() => loggedInUser.images);
-  }, [loggedInUser, isLoggedIn]);
+    console.log(files);
+  }, [files]);
 
   const onDrop = (acceptedFiles) => {
-    setFiles((prev) => {
-      if (files.length + 1 > 3) return [...files];
-      const processedFiles = processFiles(acceptedFiles);
-      return [...prev, processedFiles].flat();
+    console.log(acceptedFiles);
+    const processedFiles = processFiles(acceptedFiles);
+    const newFiles = files.map((el, i) => {
+      if (el === "") return processedFiles.shift() || "";
+      return el;
     });
+    console.log(newFiles);
+    setFiles(newFiles);
   };
 
   const removeImage = (e) => {
     console.log(e.currentTarget);
     const identifier = e.currentTarget.dataset.image;
     setFiles(() =>
-      files.filter((el) => {
-        return el.imageId !== identifier;
+      files.map((el, i) => {
+        if (el.imageId && el.imageId === identifier) return "";
+        if (el === identifier) return "";
+        return el;
       })
     );
   };
 
   useEffect(() => {
-    console.log(files);
     setImageFiles((prev) => ({ ...prev, images: files }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
@@ -53,25 +57,6 @@ function ImageUploader({ setImageFiles }) {
     maxFiles: 3,
     onDrop: onDrop,
   });
-
-  const imagePreview = files?.map((file, i) => (
-    <div className="preview" key={`${file.name}-${i}`}>
-      <div className="preview--inner">
-        <div
-          className="preview-remove-icon"
-          onClick={(e) => removeImage(e)}
-          data-image={file.imageId}
-        >
-          <RiDeleteBack2Fill className="icon" />
-        </div>
-        <img
-          src={file.preview ? file.preview : file}
-          alt="preview"
-          onLoad={() => URL.revokeObjectURL(file.preview)}
-        />
-      </div>
-    </div>
-  ));
 
   return (
     <>
@@ -86,7 +71,34 @@ function ImageUploader({ setImageFiles }) {
         </p>
         <p className="image-uploader-text--thin">You can upload up to 3 images</p>
       </div>
-      <div className="preview-container">{imagePreview}</div>
+      <div className="preview-container">
+        {files.every((file) => file === "")
+          ? null
+          : files.map((file, i) => {
+              return (
+                <div className="preview" key={`${file.name}-${i}`}>
+                  <div className="preview--inner">
+                    {file === "" ? null : (
+                      <>
+                        <div
+                          className="preview-remove-icon"
+                          onClick={(e) => removeImage(e)}
+                          data-image={file.imageId ? file.imageId : file}
+                        >
+                          <RiDeleteBack2Fill className="icon" />
+                        </div>
+                        <img
+                          src={file.preview ? file.preview : file}
+                          alt="preview"
+                          onLoad={() => URL.revokeObjectURL(file.preview)}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+      </div>
     </>
   );
 }

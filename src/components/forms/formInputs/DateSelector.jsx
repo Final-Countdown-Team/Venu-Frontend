@@ -5,9 +5,7 @@ import { MdChevronRight } from "react-icons/md";
 
 function DateSelector(props) {
   const { name, label, placeholder } = props;
-
   const formikContext = useFormikContext(props);
-  const values = formikContext.values[name];
 
   const handelDatePicker = (e) => {
     const dateObjectsArray = e.map((date) => new Date(date));
@@ -23,7 +21,7 @@ function DateSelector(props) {
       <div className="datepicker-group">
         <DatePicker
           multiple
-          value={values}
+          value={formikContext.values[name]}
           name={name}
           minDate={Date.now()}
           format="MMMM/DD/YY"

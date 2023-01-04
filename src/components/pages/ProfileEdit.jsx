@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { motion } from "framer-motion";
 
@@ -12,6 +12,10 @@ import EditFormFormikWrapper from "../forms/editForm/EditFormFormikWrapper";
 
 function ProfileEdit() {
   const { loggedInUser } = useContext(MainContext);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="profile-edit-page">

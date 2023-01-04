@@ -12,14 +12,14 @@ import Map from "../map/Map";
 import ReuseButton from "../buttons/Reusable_BB";
 
 function Home() {
-  const { isLoading, setIsLoading, setGlobalUserType, getLocations, mapLocations } =
+  const { isLoading, setGlobalUserType, getLocations, mapLocations } =
     useContext(MainContext);
 
   const { ref } = useInView();
 
   useEffect(() => {
     setGlobalUserType(null);
-    setTimeout(() => getLocations(), 1500);
+    getLocations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
