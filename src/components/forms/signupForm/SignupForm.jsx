@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 
 import "./_SignupForm.scss";
-import { signupInitialValues, schemaBuilder } from "./signUpSchema";
+import {
+  venuesInitialValues,
+  artistsInitialValues,
+  schemaBuilder,
+} from "./signUpSchema";
 import defaultUser from "../../../img/default_user_small.png";
 import InputFull from "../formInputs/InputFull";
 import Textbox from "../formInputs/Textbox";
@@ -15,17 +19,19 @@ import ButtonSecondary from "../../buttons/ButtonSecondary";
 import ScrollDownAnimation from "../../animations/ScrollDownAnimation";
 
 function SignupForm({ userType }) {
-  const { isPending, formSubmitEditSignup } = useContext(MainContext);
+  const { isPending, formSubmitSignup } = useContext(MainContext);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const navigate = useNavigate();
 
   return (
     <Formik
-      initialValues={signupInitialValues}
+      initialValues={
+        userType === "venues" ? venuesInitialValues : artistsInitialValues
+      }
       validationSchema={schemaBuilder("signup", userType)}
       onSubmit={(values, actions) => {
-        formSubmitEditSignup(values, actions, userType, navigate);
+        formSubmitSignup(values, actions, userType, navigate);
       }}
     >
       <Form noValidate className="brad-lg signup-form">

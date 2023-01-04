@@ -1,9 +1,11 @@
+import { useFetcher } from "react-router-dom";
 import * as yup from "yup";
 
 // Minimum eight characters, at least one letter, one number and one special character:
 // const passwordRules =
 // /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
+// ---- SCHEMA BUILDING -----
 const coreSchema = yup.object().shape({
   name: yup
     .string()
@@ -38,7 +40,7 @@ const passwordSchema = yup.object().shape({
     .required("This field is required"),
 });
 
-const mediaLinks = {
+const mediaLinksSchema = {
   facebookUrl: yup.string().url("Please enter a valid URL"),
   instagramTag: yup
     .string()
@@ -53,7 +55,7 @@ const venueSchema = yup.object().shape({
     .min(1)
     .max(1000000),
   mediaLinks: yup.object().shape({
-    ...mediaLinks,
+    ...mediaLinksSchema,
     websiteUrl: yup.string().url("Please enter a valid URL"),
   }),
 });
@@ -62,7 +64,7 @@ const artistSchema = yup.object().shape({
   genre: yup.string(),
   members: yup.number().typeError("Please insert a valid number").min(1).max(1000),
   mediaLinks: yup.object().shape({
-    ...mediaLinks,
+    ...mediaLinksSchema,
     youtubeUrl: yup.string().url("Please enter a valid URL"),
   }),
 });
@@ -87,7 +89,58 @@ export const schemaBuilder = (purpose, userType) => {
   return;
 };
 
-export const signupInitialValues = {
+// ---- INITIAL VALUES BUILDING -----
+
+// const coreInitial = {
+//   name: "",
+//   email: "",
+//   address: {
+//     street: "",
+//     city: "",
+//     zipcode: "",
+//   },
+//   description: "",
+//   dates: "",
+// };
+
+// const mediaLinksInitial = {
+//   facebookUrl: "",
+//   instagramTag: "",
+//   twitterTag: "",
+// };
+
+// const artistsInitial = {
+//   genre: "",
+//   members: "",
+//   mediaLinks: {
+//     ...mediaLinksInitial,
+//     youtubeUrl: "",
+//   },
+// };
+
+// const venuesInitial = {
+//   capacity: "",
+//   mediaLinks: {
+//     ...mediaLinksInitial,
+//     websiteUrl: "",
+//   },
+// };
+
+// const passwordInitial = {
+//   password: "",
+//   passwordConfirm: "",
+// };
+
+// export const initialValuesBuilder = (purpose, userType, user) => {
+//   const type = userType === "venues" ? venuesInitial : artistsInitial;
+
+//   if (purpose === "edit") return { ...coreInitial, ...type };
+//   if (purpose === "edit" && user) return { ...coreInitial, ...type, ...user };
+//   if (purpose === "signup") return { ...coreInitial, ...passwordInitial, ...type };
+//   return;
+// };
+
+export const venuesInitialValues = {
   name: "",
   email: "",
   address: {
@@ -96,17 +149,40 @@ export const signupInitialValues = {
     zipcode: "",
   },
   description: "",
-  // genre: "",
+  dates: "",
+  profileImage: "",
+  images: "",
+  capacity: "",
   mediaLinks: {
     facebookUrl: "",
     instagramTag: "",
     twitterTag: "",
-    // youtubeUrl: "",
     websiteUrl: "",
   },
-  capacity: "",
-  // members: "",
+  password: "",
+  passwordConfirm: "",
+};
+
+export const artistsInitialValues = {
+  name: "",
+  email: "",
+  address: {
+    street: "",
+    city: "",
+    zipcode: "",
+  },
+  description: "",
   dates: "",
+  profileImage: "",
+  images: "",
+  genre: "",
+  members: "",
+  mediaLinks: {
+    facebookUrl: "",
+    instagramTag: "",
+    twitterTag: "",
+    youtubeUrl: "",
+  },
   password: "",
   passwordConfirm: "",
 };

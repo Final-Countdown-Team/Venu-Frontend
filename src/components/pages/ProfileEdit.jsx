@@ -1,25 +1,17 @@
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { motion } from "framer-motion";
-import { ScaleLoader } from "react-spinners";
 
 import "./_ProfileEdit.scss";
 
-import EditForm from "../forms/editForm/EditForm";
 import ArrowBack from "../utils/ArrowBack";
 import { containerVariantY, transitionTween } from "../animations/containerVariants";
 import ChangePasswordForm from "../forms/editForm/ChangePasswordForm";
 import DeleteAccount from "../forms/editForm/DeleteAccount";
+import EditFormFormikWrapper from "../forms/editForm/EditFormFormikWrapper";
 
 function ProfileEdit() {
-  const { isLoading, loggedInUser, isLoggedIn } = useContext(MainContext);
-
-  const spinnerOverride = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "scale(2)",
-  };
+  const { loggedInUser } = useContext(MainContext);
 
   return (
     <div className="profile-edit-page">
@@ -31,7 +23,11 @@ function ProfileEdit() {
         transition={transitionTween}
       >
         <div className="profile-edit-page--heading">
-          <h1>{`Welcome${loggedInUser ? `, ${loggedInUser.name}` : null}`}</h1>
+          {loggedInUser ? (
+            <h1>{`Welcome${loggedInUser.name}`}</h1>
+          ) : (
+            <h1>Hey, I think you got lost here 😬</h1>
+          )}
           <motion.div
             initial={{ x: "-100vw", rotate: 0 }}
             animate={{ x: 0, rotate: 740 }}
@@ -44,13 +40,11 @@ function ProfileEdit() {
           />
         </div>
         <div className="brad-lg signup-form edit-form">
-          {/* {isLoggedIn ? ( */}
           <>
-            <EditForm />
-            <ChangePasswordForm userType={loggedInUser.type} />
-            <DeleteAccount userType={loggedInUser.type} />
+            <EditFormFormikWrapper />
+            <ChangePasswordForm />
+            <DeleteAccount />
           </>
-          {/* ) : null} */}
         </div>
         <div className="arrow-wrapper">
           <ArrowBack userType={loggedInUser.type} to={"/me"} />

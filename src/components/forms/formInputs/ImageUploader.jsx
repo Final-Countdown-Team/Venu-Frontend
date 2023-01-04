@@ -1,24 +1,33 @@
-import { useFormikContext } from "formik";
+import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdCloudUpload } from "react-icons/md";
 import { RiDeleteBack2Fill } from "react-icons/ri";
+import { MainContext } from "../../contexts/MainContext";
 
-function ImageUploader(props) {
-  const formikContext = useFormikContext(props);
+function ImageUploader({ setImageFiles }) {
+  const { loggedInUser, isLoggedIn } = useContext(MainContext);
+  const [files, setFiles] = useState(loggedInUser.images || []);
+  console.log(files);
 
-  const [files, setFiles] = useState([]);
+  const processFiles = (source) => {
+    return source.map((file, i) =>
+      Object.assign(file, {
+        imageId: `${file.name}-${i}`,
+        preview: URL.createObjectURL(file),
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) setFiles(() => loggedInUser.images);
+  }, [loggedInUser, isLoggedIn]);
 
   const onDrop = (acceptedFiles) => {
     setFiles((prev) => {
       if (files.length + 1 > 3) return [...files];
-      const processFiles = acceptedFiles.map((file, i) =>
-        Object.assign(file, {
-          imageId: `${file.name}-${i}`,
-          preview: URL.createObjectURL(file),
-        })
-      );
-      return [...prev, processFiles].flat();
+      const processedFiles = processFiles(acceptedFiles);
+      return [...prev, processedFiles].flat();
     });
   };
 
@@ -34,7 +43,7 @@ function ImageUploader(props) {
 
   useEffect(() => {
     console.log(files);
-    formikContext.setFieldValue("images", files);
+    setImageFiles((prev) => ({ ...prev, images: files }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
@@ -57,7 +66,7 @@ function ImageUploader(props) {
           <RiDeleteBack2Fill className="icon" />
         </div>
         <img
-          src={file.preview}
+          src={file.preview ? file.preview : file}
           alt="preview"
           onLoad={() => URL.revokeObjectURL(file.preview)}
         />

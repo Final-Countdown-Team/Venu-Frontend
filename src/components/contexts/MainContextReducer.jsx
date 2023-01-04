@@ -15,8 +15,9 @@ export const mainContextReducer = (state, action) => {
     case "GET_WATCH_USER":
       return {
         ...state,
-        previews: action.payload,
+        watchUser: action.payload,
         isPending: false,
+        isLoading: false,
       };
     case "GET_LOGGED_IN_USER":
       return {

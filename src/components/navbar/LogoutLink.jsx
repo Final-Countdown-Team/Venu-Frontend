@@ -5,8 +5,6 @@ import { MainContext } from "../contexts/MainContext";
 function LogoutLink({ name, sidebar }) {
   const { globalUserType, logoutUser } = useContext(MainContext);
   const navigate = useNavigate();
-  console.log(globalUserType);
-
   return (
     <Link
       onClick={() => logoutUser(navigate, "Logged out!\n Hope to see you soon 🥰")}

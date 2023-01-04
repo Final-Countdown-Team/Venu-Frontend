@@ -6,19 +6,10 @@ import { mainContextReducer } from "./MainContextReducer";
 export const MainContext = createContext();
 
 export const MainContextProvider = ({ children }) => {
-  // Navbar
+  // Show the hamburger menu
   const [showSidebar, setShowSidebar] = useState(false);
-  // Form Inputs
+  // Conditionally disabled form inputs
   const [isDisabled, setIsDisabled] = useState(true);
-  // Fetched venues or artists previews overview
-  const [fetchedPreviews, setFetchedPreviews] = useState({});
-
-  // Sets current global userType
-  // const [globalUserType, setGlobalUserType] = useState(null);
-
-  // Use custom hook to get or set information about login state from localStorage
-  // const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
-  // console.log(isLoggedIn);
 
   // REDUCER
   const initalState = {
@@ -29,12 +20,11 @@ export const MainContextProvider = ({ children }) => {
     isLoggedIn: false,
     // Pending is for button or loading animations during fetch
     isPending: false,
-    // Loading tells components to start mounting when the data arrived
+    // Loading === false tells components to safely start mounting when the data arrived
     isLoading: true,
   };
 
   const [state, dispatch] = useReducer(mainContextReducer, initalState);
-  console.log(state);
 
   // Check if a user is still stored in localStorage and set isLoggedInUser
   useEffect(() => {
@@ -117,7 +107,7 @@ export const MainContextProvider = ({ children }) => {
       console.log(data);
       dispatch({
         type: "GET_WATCH_USER",
-        payload: res.data,
+        payload: data.data,
       });
     } catch (err) {
       setIsPending(false);
@@ -149,16 +139,90 @@ export const MainContextProvider = ({ children }) => {
     });
   };
 
-  //
-  const formSubmitEditSignup = async (
-    values,
-    actions,
-    userType,
-    navigate,
-    editForm
-  ) => {
+  // Updating helper for form submission
+  const updateAfterSubmit = (res, message) => {
+    dispatch({
+      type: "GET_LOGGED_IN_USER",
+      payload: res.data,
+    });
+    toast.success(message);
+    // Save user to localStorage
+    localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
+  };
+
+  // submitHandler for edit form, handles file uploads
+  const editFormSubmit = async (values, actions, navigate, imageFiles) => {
     try {
-      console.log("Submitting form values...");
+      setIsPending(true);
+      // --- SENDING REGULAR FORM DATA ----
+      const newValues = {
+        ...values,
+        location: { type: "Point", coordinates: [12.75597, 51.372651] },
+      };
+      // Filtering out keys with empty values
+      const filteredValues = Object.fromEntries(
+        Object.entries(newValues).filter(([_, value]) => value !== "")
+      );
+      console.log(filteredValues);
+      // --- SENDING IMAGES ---
+      // Creating new FormData to be able to send files to backend
+      const formData = new FormData();
+      // Overwriting the profileImage property with the imageFile
+      if (imageFiles.profileImage) {
+        formData.set(
+          "profileImage",
+          imageFiles.profileImage,
+          imageFiles.profileImage.name
+        );
+      }
+      if (imageFiles.images) {
+        imageFiles.images.forEach((image) => {
+          formData.append("images", image, image.name);
+        });
+      }
+      console.log(formData);
+      // ---- FETCH REQUESTS FOR IMGs AND DATA ---
+      // const URL = `/${state.loggedInUser.type}/user/updateMe`;
+      // // Sending regular form data
+      // await fetch(URL, {
+      //   method: "PATCH",
+      //   credentials: "include",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(filteredValues),
+      // });
+      // // Sending images in formData
+      // const reqImg = await fetch(URL, {
+      //   method: "PATCH",
+      //   credentials: "include",
+      //   body: formData,
+      // });
+      // const resImg = await reqImg.json();
+
+      // // Throw error when failed
+      // if (resImg.status === "fail" || resImg.status === "error") {
+      //   const error = resImg;
+      //   throw error;
+      // }
+      // console.log(resImg);
+      // updateAfterSubmit(resImg, "Your profile has been updated 🥳");
+      // setTimeout(() => navigate("/me"), 1000);
+    } catch (err) {
+      setIsPending(false);
+      console.error(err.message);
+      toast.error("Ups, something went wrong 💥");
+      // Code 11000 is duplicate key error (email already taken)
+      if (err.code === 11000) {
+        const [name, message] = err.message.split(":");
+        return actions.setFieldError(name, message);
+      }
+    }
+  };
+
+  //
+  const formSubmitSignup = async (values, actions, userType, navigate) => {
+    try {
       setIsPending(true);
       // Geocode the coordinates from address
       // const { street, city, zipcode } = values.address;
@@ -190,11 +254,8 @@ export const MainContextProvider = ({ children }) => {
       );
       console.log(filteredValues);
       // Sending POST request to backend
-      const type = !userType ? state.loggedInUser.type : userType;
-      const URL = `/${type}/${editForm ? "user/updateMe" : "signup"}`;
-      const method = editForm ? "PATCH" : "POST";
-      const req = await fetch(URL, {
-        method: method,
+      const req = await fetch(`/${userType}/signup`, {
+        method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -208,24 +269,15 @@ export const MainContextProvider = ({ children }) => {
         const error = res;
         throw error;
       }
-      const message = editForm
-        ? "Your profile has been updated 🥳"
-        : "Successfully signed up 🎉";
-      toast.success(message);
-      // actions.resetForm();
-
-      dispatch({
-        type: "GET_LOGGED_IN_USER",
-        payload: res.data,
-      });
-      localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
+      // Updating loggedInUser state + toast
+      updateAfterSubmit(res, "Successfully signed up 🎉");
       // Redirect to home
-      const navPath = editForm ? "/me" : "/";
-      setTimeout(() => navigate(navPath), 1000);
+      setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       setIsPending(false);
       console.error(err.message);
       toast.error("Ups, something went wrong 💥");
+      // Code 11000 is duplicate key error (email already taken)
       if (err.code === 11000) {
         const [name, message] = err.message.split(":");
         return actions.setFieldError(name, message);
@@ -245,6 +297,22 @@ export const MainContextProvider = ({ children }) => {
     navigate("/");
   };
 
+  // DeleteAccount
+  const deleteAccount = async (setShowConfirm, navigate) => {
+    try {
+      setShowConfirm(false);
+      await fetch(`/${state.loggedInUser.type}/user/deleteMe`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      await fetch(`/${state.loggedInUser.type}/logout`);
+      logoutUser(navigate, "Your account was deleted");
+    } catch (err) {}
+  };
+
   return (
     <MainContext.Provider
       value={{
@@ -252,15 +320,10 @@ export const MainContextProvider = ({ children }) => {
         setShowSidebar,
         isDisabled,
         setIsDisabled,
-        fetchedPreviews,
-        setFetchedPreviews,
-        // globalUserType,
-        // setGlobalUserType,
-        // isLoggedIn,
-        // setIsLoggedIn,
         setGlobalUserType,
         getSearchResults,
-        formSubmitEditSignup,
+        formSubmitSignup,
+        editFormSubmit,
         globalUserType: state.globalUserType,
         getPreviews,
         previews: state.previews,
@@ -270,8 +333,10 @@ export const MainContextProvider = ({ children }) => {
         getWatchUser,
         watchUser: state.watchUser,
         isPending: state.isPending,
+        setIsLoading,
         isLoading: state.isLoading,
         logoutUser,
+        deleteAccount,
       }}
     >
       {children}

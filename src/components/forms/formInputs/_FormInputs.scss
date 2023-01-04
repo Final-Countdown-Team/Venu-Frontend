@@ -131,11 +131,13 @@
 
 .image-uploader {
   height: 13rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px dashed #ccc;
+  cursor: pointer;
 
   .cloud-icon {
     font-size: 5rem;
@@ -154,7 +156,7 @@
 
 .preview-container {
   display: flex;
-  margin-top: 2rem;
+  margin: 1rem 0;
   align-items: center;
   justify-content: space-evenly;
 
