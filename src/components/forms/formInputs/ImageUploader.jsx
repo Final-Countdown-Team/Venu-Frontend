@@ -1,40 +1,53 @@
-import { useFormikContext } from "formik";
+import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdCloudUpload } from "react-icons/md";
 import { RiDeleteBack2Fill } from "react-icons/ri";
+import { MainContext } from "../../contexts/MainContext";
 
-function ImageUploader(props) {
-  const formikContext = useFormikContext(props);
+function ImageUploader({ setImageFiles }) {
+  const { loggedInUser } = useContext(MainContext);
+  const [files, setFiles] = useState(loggedInUser.images);
 
-  const [files, setFiles] = useState([]);
-
-  const onDrop = (acceptedFiles) => {
-    setFiles((prev) => {
-      if (files.length + 1 > 3) return [...files];
-      const processFiles = acceptedFiles.map((file, i) =>
-        Object.assign(file, {
-          imageId: `${file.name}-${i}`,
-          preview: URL.createObjectURL(file),
-        })
-      );
-      return [...prev, processFiles].flat();
-    });
-  };
-
-  const removeImage = (e) => {
-    console.log(e.currentTarget);
-    const identifier = e.currentTarget.dataset.image;
-    setFiles(() =>
-      files.filter((el) => {
-        return el.imageId !== identifier;
+  const processFiles = (source) => {
+    return source.map((file, i) =>
+      Object.assign(file, {
+        imageId: `${file.name}-${i}`,
+        preview: URL.createObjectURL(file),
       })
     );
   };
 
   useEffect(() => {
     console.log(files);
-    formikContext.setFieldValue("images", files);
+  }, [files]);
+
+  const onDrop = (acceptedFiles) => {
+    console.log(acceptedFiles);
+    const processedFiles = processFiles(acceptedFiles);
+    const newFiles = files.map((el, i) => {
+      if (typeof el === "string" && el.includes("empty"))
+        return processedFiles.shift() || el;
+      return el;
+    });
+    console.log(newFiles);
+    setFiles(newFiles);
+  };
+
+  const removeImage = (e) => {
+    console.log(e.currentTarget);
+    const identifier = e.currentTarget.dataset.image;
+    setFiles(() =>
+      files.map((el, i) => {
+        if (el.imageId && el.imageId === identifier) return `empty-${i}`;
+        if (el === identifier) return `empty-${i}`;
+        return el;
+      })
+    );
+  };
+
+  useEffect(() => {
+    setImageFiles((prev) => ({ ...prev, images: files }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
@@ -46,29 +59,10 @@ function ImageUploader(props) {
     onDrop: onDrop,
   });
 
-  const imagePreview = files.map((file, i) => (
-    <div className="preview" key={`${file.name}-${i}`}>
-      <div className="preview--inner">
-        <div
-          className="preview-remove-icon"
-          onClick={(e) => removeImage(e)}
-          data-image={file.imageId}
-        >
-          <RiDeleteBack2Fill className="icon" />
-        </div>
-        <img
-          src={file.preview}
-          alt="preview"
-          onLoad={() => URL.revokeObjectURL(file.preview)}
-        />
-      </div>
-    </div>
-  ));
-
   return (
     <>
       <div className="required-label">
-        <label htmlFor="">Images:</label>
+        <label>Images:</label>
       </div>
       <div {...getRootProps()} className="image-uploader">
         <input {...getInputProps()} />
@@ -78,7 +72,34 @@ function ImageUploader(props) {
         </p>
         <p className="image-uploader-text--thin">You can upload up to 3 images</p>
       </div>
-      <div className="preview-container">{imagePreview}</div>
+      <div className="preview-container">
+        {files.every((file) => file === "")
+          ? null
+          : files.map((file, i) => {
+              return (
+                <div className="preview" key={`${file.name}-${i}`}>
+                  <div className="preview--inner">
+                    {typeof file === "string" && file.includes("empty") ? null : (
+                      <>
+                        <div
+                          className="preview-remove-icon"
+                          onClick={(e) => removeImage(e)}
+                          data-image={file.imageId ? file.imageId : file}
+                        >
+                          <RiDeleteBack2Fill className="icon" />
+                        </div>
+                        <img
+                          src={file.preview ? file.preview : file}
+                          alt="preview"
+                          onLoad={() => URL.revokeObjectURL(file.preview)}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+      </div>
     </>
   );
 }

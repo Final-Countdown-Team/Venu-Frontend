@@ -21,7 +21,9 @@
       position: relative;
       img {
         object-fit: cover;
-        border-radius: 100vw;
+        // border-radius: 100vw;
+        border-radius: 10px;
+        width: 100%;
         max-height: 18rem;
       }
     }
@@ -60,10 +62,6 @@
 
   .signup-form-group-password {
     padding-bottom: 0rem;
-  }
-
-  .edit-form-group-password {
-    padding: 2rem 1.5rem 3rem;
   }
 
   .form-group-button {

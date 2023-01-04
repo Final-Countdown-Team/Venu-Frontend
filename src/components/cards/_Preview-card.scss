@@ -2,9 +2,9 @@
 @import "../buttons/ButtonSecondary.scss";
 
 .card-container {
-  max-width: 50rem;
-  min-width: 20rem;
-  height: 40rem;
+  max-width: 55rem;
+  min-width: 30rem;
+  height: 45rem;
   padding: 2rem;
   margin: auto;
   background-color: rgba($color: #d9d9d9, $alpha: 0.1);
@@ -17,13 +17,15 @@
 
   .card-text-content {
     width: 100%;
-    height: 50%;
+    max-width: 45rem;
+    margin: auto;
+    height: 45%;
     flex-grow: 1;
     display: flex;
     text-align: left;
     flex-direction: column;
     position: relative;
-    padding-bottom: 3rem;
+    padding-bottom: 2rem;
 
     .card-title {
       position: relative;
@@ -42,7 +44,7 @@
     }
     .card-profile-button {
       position: absolute;
-      bottom: 0;
+      bottom: -1rem;
       right: 0;
       justify-content: flex-end;
     }
@@ -56,7 +58,7 @@
       object-fit: cover;
       flex-grow: 1;
       width: 100%;
-      height: 15rem;
+      height: 20rem;
     }
 
     .preview-available-button--position {

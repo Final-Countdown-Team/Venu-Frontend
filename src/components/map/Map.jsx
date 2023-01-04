@@ -21,7 +21,8 @@ const Map = ({ users }) => {
     const bounds = new mapboxgl.LngLatBounds();
     // Create default markers
 
-    users.forEach((user) => {
+    if (!users) return;
+    users?.forEach((user) => {
       let color =
         user.type === "artists"
           ? "#0168b5"

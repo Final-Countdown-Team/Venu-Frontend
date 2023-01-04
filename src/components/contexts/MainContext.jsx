@@ -1,40 +1,32 @@
 import { useEffect, useReducer } from "react";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useFetcher } from "react-router-dom";
 import { mainContextReducer } from "./MainContextReducer";
 
 export const MainContext = createContext();
 
 export const MainContextProvider = ({ children }) => {
-  // Navbar
+  // Show the hamburger menu
   const [showSidebar, setShowSidebar] = useState(false);
-  // Form Inputs
+  // Conditionally disabled form inputs
   const [isDisabled, setIsDisabled] = useState(true);
-  // Fetched venues or artists previews overview
-  const [fetchedPreviews, setFetchedPreviews] = useState({});
-
-  // Sets current global userType
-  // const [globalUserType, setGlobalUserType] = useState(null);
-
-  // Use custom hook to get or set information about login state from localStorage
-  // const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
-  // console.log(isLoggedIn);
 
   // REDUCER
   const initalState = {
     globalUserType: {},
     previews: {},
+    mapLocations: {},
     watchUser: {},
     loggedInUser: {},
     isLoggedIn: false,
     // Pending is for button or loading animations during fetch
     isPending: false,
-    // Loading tells components to start mounting when the data arrived
+    // Loading === false tells components to safely start mounting when the data arrived
     isLoading: true,
   };
 
   const [state, dispatch] = useReducer(mainContextReducer, initalState);
-  console.log(state);
 
   // Check if a user is still stored in localStorage and set isLoggedInUser
   useEffect(() => {
@@ -71,6 +63,33 @@ export const MainContextProvider = ({ children }) => {
     });
   };
 
+  // Delete outdated dates, is called when user is logged in
+  const updateDates = async (response, userType) => {
+    try {
+      const updatedDates = response.data.dates.filter((date) => {
+        const today = new Date().toISOString();
+        return date > today;
+      });
+
+      const req = await fetch(`/${userType}/user/updateMe`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ dates: updatedDates }),
+      });
+      const res = await req.json();
+      dispatch({
+        type: "GET_LOGGED_IN_USER",
+        payload: res.data,
+      });
+      console.log("Updated dates 👍");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // Get logged in user
   const getLoggedInUser = async (values, actions, userType, navigate) => {
     try {
@@ -89,10 +108,11 @@ export const MainContextProvider = ({ children }) => {
       // Throw manual error if request fails
       if (res.status === "fail" || res.status === "error")
         throw new Error(res.message || "Ups, something went wrong");
-      dispatch({
-        type: "GET_LOGGED_IN_USER",
-        payload: res.data,
-      });
+      // dispatch({
+      //   type: "GET_LOGGED_IN_USER",
+      //   payload: res.data,
+      // });
+      updateDates(res, userType);
       localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
       // Show success notification when data is sucessfully fetched
       toast.success("Successfully logged in 🎉");
@@ -108,16 +128,16 @@ export const MainContextProvider = ({ children }) => {
   };
 
   // Visiting other user's profiles
-  const getWatchUser = async (userID, userType) => {
+  const getWatchUser = async (userID, userType, signal) => {
     console.log("Visiting user profile...");
     try {
       setIsPending(true);
-      const res = await fetch(`/${userType}/${userID}`);
+      const res = await fetch(`/${userType}/${userID}`, { signal });
       const data = await res.json();
       console.log(data);
       dispatch({
         type: "GET_WATCH_USER",
-        payload: res.data,
+        payload: data.data,
       });
     } catch (err) {
       setIsPending(false);
@@ -127,17 +147,41 @@ export const MainContextProvider = ({ children }) => {
   };
 
   // Get the previews on the overview page
-  const getPreviews = async (userType) => {
+  const getPreviews = async (userType, signal) => {
     console.log("Getting previews...");
     setIsLoading(true);
     const URL = `/${userType}?fields=name,description,profileImage,availability,dates`;
-    const res = await fetch(URL);
+    const res = await fetch(URL, { signal });
     const data = await res.json();
     dispatch({
       type: "GET_PREVIEWS",
       payload: data,
     });
     setTimeout(() => setIsLoading(false), 800);
+  };
+
+  // Get locations of 10 users of each userType for the map on Home
+  const getLocations = async () => {
+    setIsLoading(true);
+    setIsPending(true);
+    const query = "fields=name,location,type&page=1&limit=10";
+    const artistsRes = await fetch(`/artists?${query}`);
+    const artistsData = await artistsRes.json();
+
+    const venuesRes = await fetch(`/venues?${query}`);
+    const venuesData = await venuesRes.json();
+    console.log(artistsData);
+
+    const joinedData = artistsData?.data?.concat(venuesData.data);
+    console.log(joinedData);
+
+    dispatch({
+      type: "GET_LOCATIONS",
+      payload: joinedData,
+    });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   };
 
   // Searchbar results
@@ -149,16 +193,117 @@ export const MainContextProvider = ({ children }) => {
     });
   };
 
-  //
-  const formSubmitEditSignup = async (
-    values,
-    actions,
-    userType,
-    navigate,
-    editForm
-  ) => {
+  // Updating helper for form submission
+  const updateAfterSubmit = (res, message) => {
+    dispatch({
+      type: "GET_LOGGED_IN_USER",
+      payload: res.data,
+    });
+    message && toast.success(message);
+    // Save user to localStorage
+    localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
+    console.log(state.loggedInUser);
+  };
+
+  // submitHandler for edit form, handles file uploads
+  const editFormSubmitImages = async (imageFiles) => {
     try {
-      console.log("Submitting form values...");
+      console.log(imageFiles);
+      setIsPending(true);
+      // --- SENDING IMAGES ---
+      // Creating new FormData to be able to send files to backend
+      const formData = new FormData();
+      // Overwriting the profileImage property with the imageFile
+      if (imageFiles.profileImage) {
+        formData.set(
+          "profileImage",
+          imageFiles.profileImage,
+          imageFiles.profileImage.name
+        );
+      }
+      if (imageFiles.images || imageFiles.images.every((img) => img === "")) {
+        imageFiles.images.forEach((image, i) => {
+          // If the user didn't delete the image form database
+          if (typeof image === "string" && image.includes("http")) return;
+          // If the user deleted the image
+          if (typeof image === "string" && image.includes("empty")) {
+            const emptyBlob = new Blob(["Delete me"], {
+              type: "image/jpeg",
+            });
+            return formData.append("images", emptyBlob, `delete-me-at-${i}`);
+          }
+          // New image file uploaded
+          return formData.append("images", image, `replace-at-${i}`);
+        });
+      }
+      console.log(formData);
+      // Sending images in formData
+      const URL = `/${state.loggedInUser.type}/user/updateMe`;
+      const req = await fetch(URL, {
+        method: "PATCH",
+        credentials: "include",
+        body: formData,
+      });
+      const res = await req.json();
+      // // Throw error when failed
+      if (res.status === "fail" || res.status === "error") {
+        const error = res;
+        throw error;
+      }
+      console.log(res);
+      updateAfterSubmit(res);
+      // setTimeout(() => navigate("/me"), 1000);
+    } catch (err) {
+      setIsPending(false);
+      console.error(err.message);
+      toast.error("Ups, something went wrong 💥");
+    }
+  };
+
+  // submitHandler for edit form, regular data
+  const editFormSubmitData = async (values, actions) => {
+    try {
+      setIsPending(true);
+      const newValues = {
+        ...values,
+        location: { type: "Point", coordinates: [12.75597, 51.372651] },
+      };
+      // Filtering out keys with empty values
+      const filteredValues = Object.fromEntries(
+        Object.entries(newValues).filter(([_, value]) => value !== "")
+      );
+      const URL = `/${state.loggedInUser.type}/user/updateMe`;
+      // // Sending regular form data
+      const req = await fetch(URL, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filteredValues),
+      });
+      const res = await req.json();
+      // // Throw error when failed
+      if (req.status === "fail" || req.status === "error") {
+        const error = req;
+        throw error;
+      }
+      updateAfterSubmit(res);
+    } catch (err) {
+      setIsPending(false);
+      console.error(err.message);
+      toast.error("Ups, something went wrong 💥");
+      // Code 11000 is duplicate key error (email already taken)
+      if (err.code === 11000) {
+        const [name, message] = err.message.split(":");
+        return actions.setFieldError(name, message);
+      }
+    }
+  };
+
+  //
+  const formSubmitSignup = async (values, actions, userType, navigate) => {
+    try {
       setIsPending(true);
       // Geocode the coordinates from address
       // const { street, city, zipcode } = values.address;
@@ -190,11 +335,8 @@ export const MainContextProvider = ({ children }) => {
       );
       console.log(filteredValues);
       // Sending POST request to backend
-      const type = !userType ? state.loggedInUser.type : userType;
-      const URL = `/${type}/${editForm ? "user/updateMe" : "signup"}`;
-      const method = editForm ? "PATCH" : "POST";
-      const req = await fetch(URL, {
-        method: method,
+      const req = await fetch(`/${userType}/signup`, {
+        method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -208,24 +350,15 @@ export const MainContextProvider = ({ children }) => {
         const error = res;
         throw error;
       }
-      const message = editForm
-        ? "Your profile has been updated 🥳"
-        : "Successfully signed up 🎉";
-      toast.success(message);
-      // actions.resetForm();
-
-      dispatch({
-        type: "GET_LOGGED_IN_USER",
-        payload: res.data,
-      });
-      localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
+      // Updating loggedInUser state + toast
+      updateAfterSubmit(res, "Successfully signed up 🎉");
       // Redirect to home
-      const navPath = editForm ? "/me" : "/";
-      setTimeout(() => navigate(navPath), 1000);
+      setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       setIsPending(false);
       console.error(err.message);
       toast.error("Ups, something went wrong 💥");
+      // Code 11000 is duplicate key error (email already taken)
       if (err.code === 11000) {
         const [name, message] = err.message.split(":");
         return actions.setFieldError(name, message);
@@ -245,6 +378,22 @@ export const MainContextProvider = ({ children }) => {
     navigate("/");
   };
 
+  // DeleteAccount
+  const deleteAccount = async (setShowConfirm, navigate) => {
+    try {
+      setShowConfirm(false);
+      await fetch(`/${state.loggedInUser.type}/user/deleteMe`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      await fetch(`/${state.loggedInUser.type}/logout`);
+      logoutUser(navigate, "Your account was deleted");
+    } catch (err) {}
+  };
+
   return (
     <MainContext.Provider
       value={{
@@ -252,26 +401,26 @@ export const MainContextProvider = ({ children }) => {
         setShowSidebar,
         isDisabled,
         setIsDisabled,
-        fetchedPreviews,
-        setFetchedPreviews,
-        // globalUserType,
-        // setGlobalUserType,
-        // isLoggedIn,
-        // setIsLoggedIn,
         setGlobalUserType,
         getSearchResults,
-        formSubmitEditSignup,
+        formSubmitSignup,
+        editFormSubmitData,
+        editFormSubmitImages,
         globalUserType: state.globalUserType,
         getPreviews,
         previews: state.previews,
+        getLocations,
+        mapLocations: state.mapLocations,
         getLoggedInUser,
         loggedInUser: state.loggedInUser,
         isLoggedIn: state.isLoggedIn,
         getWatchUser,
         watchUser: state.watchUser,
         isPending: state.isPending,
+        setIsLoading,
         isLoading: state.isLoading,
         logoutUser,
+        deleteAccount,
       }}
     >
       {children}

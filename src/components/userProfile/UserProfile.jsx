@@ -28,11 +28,15 @@ function UserProfile({ user, editable }) {
   const { ref } = useInView({ triggerOnce: true });
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
-    setGlobalUserType(user.type);
     const handleResize = () => setDimensions({ width: window.innerWidth });
+    window.scrollTo(0, 0);
     window.addEventListener("resize", handleResize);
     console.log("Renders resize...");
     return (_) => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    setGlobalUserType(user.type);
   }, []);
   // Object of Icons for social media icon mapping
   const icons = {
@@ -104,12 +108,14 @@ function UserProfile({ user, editable }) {
           </div>
         </div>
 
-        {user?.images?.length > 0 && (
+        {user?.images?.every((img) => img !== "") && (
           <div className="image-gallery">
-            {user?.images?.map((image) => {
+            {user?.images?.map((image, i) => {
+              if (image.includes("empty")) return null;
               return (
                 <LazyLoadImageComp
                   src={image}
+                  key={`${image}-${i}`}
                   alt="gallery"
                   wrapperClassName="image-gallery-lazy-wrapper"
                   className={"image-gallery--image"}

@@ -1,12 +1,17 @@
 import { MdEdit } from "react-icons/md";
-import { useFormikContext } from "formik";
 import { useState } from "react";
 import defaultUser from "../../../img/default_user_small.png";
+import { useContext } from "react";
+import { MainContext } from "../../contexts/MainContext";
+import { useEffect } from "react";
 
-function ProfileImageUploader(props) {
-  const formikContext = useFormikContext(props);
-
+function ProfileImageUploader({ setImageFiles, ...props }) {
+  const { loggedInUser, isLoggedIn } = useContext(MainContext);
   const [curProfileImage, setCurProfileImage] = useState(defaultUser);
+
+  useEffect(() => {
+    if (isLoggedIn) setCurProfileImage(loggedInUser.profileImage);
+  }, [isLoggedIn, loggedInUser]);
 
   const showNewProfileImage = (e) => {
     const profileImage = e.currentTarget.files[0];
@@ -14,7 +19,8 @@ function ProfileImageUploader(props) {
       preview: URL.createObjectURL(profileImage),
     });
     setCurProfileImage(profileImage.preview);
-    formikContext.setFieldValue("profileImage", profileImage);
+    delete profileImage.preview;
+    setImageFiles((prev) => ({ ...prev, profileImage }));
   };
 
   return (
@@ -26,7 +32,6 @@ function ProfileImageUploader(props) {
         <input
           className="edit-input"
           type="file"
-          name="profileImage"
           accept="image/*"
           onChange={(e) => showNewProfileImage(e)}
         />

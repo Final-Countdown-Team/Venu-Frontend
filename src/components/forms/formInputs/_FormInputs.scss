@@ -40,6 +40,10 @@
     opacity: 1;
   }
 
+  &::selection {
+    background-color: #acacac;
+  }
+
   &-error {
     outline: 2px solid #fa5c5c;
   }
@@ -89,6 +93,9 @@
     color: $color-text-placeholder;
     opacity: 1;
   }
+  &::selection {
+    background-color: #afafaf;
+  }
 }
 
 .textbox-group {
@@ -131,11 +138,13 @@
 
 .image-uploader {
   height: 13rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px dashed #ccc;
+  cursor: pointer;
 
   .cloud-icon {
     font-size: 5rem;
@@ -154,7 +163,7 @@
 
 .preview-container {
   display: flex;
-  margin-top: 2rem;
+  margin: 1rem 0;
   align-items: center;
   justify-content: space-evenly;
 

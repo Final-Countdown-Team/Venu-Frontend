@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
@@ -12,32 +12,14 @@ import Map from "../map/Map";
 import ReuseButton from "../buttons/Reusable_BB";
 
 function Home() {
-  const context = useContext(MainContext);
-
-  const [isLoading, setIsLoading] = useState(true);
-  // Fetch venues and artists locations for map on /home
-  const [fetchedLocations, setFetchedLocations] = useState([]);
+  const { isLoading, setGlobalUserType, getLocations, mapLocations } =
+    useContext(MainContext);
 
   const { ref } = useInView();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const query = "fields=name,location,type&page=1&limit=10";
-      const artistsRes = await fetch(`/artists?${query}`);
-      const artistsData = await artistsRes.json();
-
-      const venuesRes = await fetch(`/venues?${query}`);
-      const venuesData = await venuesRes.json();
-      console.log(artistsData);
-
-      const joinedData = artistsData.data.concat(venuesData.data);
-      console.log(joinedData);
-
-      setFetchedLocations(joinedData);
-      setIsLoading(false);
-    };
-    context.setGlobalUserType(null);
-    setTimeout(() => fetchData(), 1500);
+    setGlobalUserType(null);
+    getLocations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -82,16 +64,16 @@ function Home() {
         </Link>
       </div>
       <div className="home-map-container">
-        {!isLoading ? (
-          <div ref={ref}>
-            <Map users={fetchedLocations} />
-          </div>
-        ) : (
+        {isLoading ? (
           <ScaleLoader
             cssOverride={spinnerOverride}
             color={"#b02476"}
             aria-label="Loading Spinner"
           />
+        ) : (
+          <div ref={ref}>
+            <Map users={mapLocations} />
+          </div>
         )}
       </div>
     </motion.div>

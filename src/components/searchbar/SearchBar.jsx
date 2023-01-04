@@ -51,9 +51,14 @@ export default function SearchBar() {
     };
     // Get lat and lng from user position
     const getUserLocation = async () => {
-      const pos = await getPosition();
-      const { latitude: lat, longitude: lng } = pos.coords;
-      setLatLng(`${lat},${lng}`);
+      try {
+        const pos = await getPosition();
+        console.log(pos);
+        const { latitude: lat, longitude: lng } = pos.coords;
+        setLatLng(`${lat},${lng}`);
+      } catch (err) {
+        console.error(err.message);
+      }
     };
     getUserLocation();
   }, []);
