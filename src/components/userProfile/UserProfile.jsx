@@ -106,10 +106,11 @@ function UserProfile({ user, editable }) {
 
         {user?.images?.length > 0 && (
           <div className="image-gallery">
-            {user?.images?.map((image) => {
+            {user?.images?.map((image, i) => {
               return (
                 <LazyLoadImageComp
                   src={image}
+                  key={`${image}-${i}`}
                   alt="gallery"
                   wrapperClassName="image-gallery-lazy-wrapper"
                   className={"image-gallery--image"}

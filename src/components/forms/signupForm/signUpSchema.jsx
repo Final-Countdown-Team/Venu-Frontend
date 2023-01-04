@@ -151,7 +151,6 @@ export const venuesInitialValues = {
   description: "",
   dates: "",
   profileImage: "",
-  images: "",
   capacity: "",
   mediaLinks: {
     facebookUrl: "",
@@ -174,7 +173,6 @@ export const artistsInitialValues = {
   description: "",
   dates: "",
   profileImage: "",
-  images: "",
   genre: "",
   members: "",
   mediaLinks: {

@@ -12,8 +12,15 @@ function WatchProfilePage({ userType }) {
   const { id: userID } = useParams();
   // Get data from backend
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     setGlobalUserType(userType);
-    getWatchUser(userID, userType);
+    getWatchUser(userID, userType, signal);
+
+    return () => {
+      console.log("Cleaning up watchUserProfile...");
+      controller.abort();
+    };
   }, []);
   const spinnerOverride = {
     margin: "10rem 20rem",

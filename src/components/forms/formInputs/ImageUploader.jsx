@@ -8,10 +8,9 @@ import { MainContext } from "../../contexts/MainContext";
 function ImageUploader({ setImageFiles }) {
   const { loggedInUser, isLoggedIn } = useContext(MainContext);
   const [files, setFiles] = useState(loggedInUser.images || []);
-  console.log(files);
 
   const processFiles = (source) => {
-    return source.map((file, i) =>
+    return source?.map((file, i) =>
       Object.assign(file, {
         imageId: `${file.name}-${i}`,
         preview: URL.createObjectURL(file),
@@ -55,7 +54,7 @@ function ImageUploader({ setImageFiles }) {
     onDrop: onDrop,
   });
 
-  const imagePreview = files.map((file, i) => (
+  const imagePreview = files?.map((file, i) => (
     <div className="preview" key={`${file.name}-${i}`}>
       <div className="preview--inner">
         <div
@@ -77,7 +76,7 @@ function ImageUploader({ setImageFiles }) {
   return (
     <>
       <div className="required-label">
-        <label htmlFor="">Images:</label>
+        <label>Images:</label>
       </div>
       <div {...getRootProps()} className="image-uploader">
         <input {...getInputProps()} />

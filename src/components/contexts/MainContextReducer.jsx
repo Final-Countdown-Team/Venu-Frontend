@@ -11,6 +11,14 @@ export const mainContextReducer = (state, action) => {
         ...state,
         previews: action.payload,
         isPending: false,
+        isLoading: false,
+      };
+    case "GET_LOCATIONS":
+      return {
+        ...state,
+        mapLocations: action.payload,
+        isPending: false,
+        isLoading: false,
       };
     case "GET_WATCH_USER":
       return {

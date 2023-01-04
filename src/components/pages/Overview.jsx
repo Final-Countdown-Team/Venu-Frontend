@@ -20,11 +20,17 @@ function Overview({ userType }) {
 
   useEffect(() => {
     setGlobalUserType(userType);
-    console.log("rendering Overview...");
   }, [userType]);
 
   useEffect(() => {
-    getPreviews(userType);
+    const controller = new AbortController();
+    const signal = controller.signal;
+    getPreviews(userType, signal);
+
+    return () => {
+      console.log("Cleaning up previews...");
+      controller.abort();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType]);
 

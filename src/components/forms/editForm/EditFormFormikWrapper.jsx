@@ -8,6 +8,7 @@ import {
   venuesInitialValues,
   artistsInitialValues,
 } from "../signupForm/signUpSchema";
+import toast from "react-hot-toast";
 
 function EditFormFormikWrapper() {
   const [imageFiles, setImageFiles] = useState({
@@ -16,7 +17,8 @@ function EditFormFormikWrapper() {
   });
   const {
     loggedInUser: { type: userType },
-    editFormSubmit,
+    editFormSubmitData,
+    editFormSubmitImages,
   } = useContext(MainContext);
   const navigate = useNavigate();
 
@@ -28,7 +30,10 @@ function EditFormFormikWrapper() {
       validationSchema={schemaBuilder("edit", userType)}
       onSubmit={(values, actions) => {
         console.log("Submitting...");
-        editFormSubmit(values, actions, navigate, imageFiles);
+        editFormSubmitData(values, actions);
+        editFormSubmitImages(imageFiles);
+        toast.success("Your profile has been updated 🥳");
+        // setTimeout(() => navigate("/me"), 1000);
       }}
     >
       <EditForm initialValues={initialValues} setImageFiles={setImageFiles} />
