@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useFetcher } from "react-router-dom";
 import { mainContextReducer } from "./MainContextReducer";
 
 export const MainContext = createContext();
@@ -15,8 +14,8 @@ export const MainContextProvider = ({ children }) => {
   // REDUCER
   const initalState = {
     globalUserType: {},
-    previews: {},
-    mapLocations: {},
+    previews: [],
+    mapLocations: [],
     watchUser: {},
     loggedInUser: {},
     isLoggedIn: false,
@@ -27,6 +26,7 @@ export const MainContextProvider = ({ children }) => {
   };
 
   const [state, dispatch] = useReducer(mainContextReducer, initalState);
+  console.log(state);
 
   // Check if a user is still stored in localStorage and set isLoggedInUser
   useEffect(() => {
@@ -132,6 +132,7 @@ export const MainContextProvider = ({ children }) => {
     console.log("Visiting user profile...");
     try {
       setIsPending(true);
+      setIsLoading(true);
       const res = await fetch(`/${userType}/${userID}`, { signal });
       const data = await res.json();
       console.log(data);
@@ -170,18 +171,14 @@ export const MainContextProvider = ({ children }) => {
 
     const venuesRes = await fetch(`/venues?${query}`);
     const venuesData = await venuesRes.json();
-    console.log(artistsData);
 
-    const joinedData = artistsData?.data?.concat(venuesData.data);
-    console.log(joinedData);
+    const joinedData = artistsData.data.concat(venuesData.data);
 
     dispatch({
       type: "GET_LOCATIONS",
       payload: joinedData,
     });
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    setTimeout(() => setIsLoading(false), 1000);
   };
 
   // Searchbar results

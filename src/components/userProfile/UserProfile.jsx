@@ -22,11 +22,15 @@ import { BsFillPeopleFill, BsGlobe2 as Website } from "react-icons/bs";
 import "./_UserProfile.scss";
 import { MainContext } from "../contexts/MainContext";
 
-function UserProfile({ user, editable }) {
-  const { setGlobalUserType } = useContext(MainContext);
+function UserProfile({ purpose, editable }) {
+  const { setGlobalUserType, loggedInUser, watchUser, isLoading } =
+    useContext(MainContext);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
   // Load map only if it is visible in viewport for animation
   const { ref } = useInView({ triggerOnce: true });
+
+  const user = purpose ? watchUser : loggedInUser;
+
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
     const handleResize = () => setDimensions({ width: window.innerWidth });
@@ -159,9 +163,11 @@ function UserProfile({ user, editable }) {
         <div className="location-group">
           <h3>Location:</h3>
           <p className="location-address">{`${user?.address?.street}, ${user?.address?.city} ${user?.address?.zipcode}`}</p>
-          <div ref={ref}>
-            <Map users={[user]} />
-          </div>
+          {!isLoading && (
+            <div ref={ref}>
+              <Map purpose={purpose} />
+            </div>
+          )}
         </div>
 
         <div className="padding-group contact-group">

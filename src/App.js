@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { MainContext } from "./components/contexts/MainContext";
-import { useContext, useEffect, lazy } from "react";
+import { useContext, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 
@@ -9,15 +9,6 @@ import "./App.scss";
 import NavbarLayout from "./components/utils/outlets/NavbarLayout";
 import Overview from "./components/pages/Overview";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
-
-// const Home = lazy(() => import("./components/pages/Home"));
-// const ProfileEdit = lazy(() => import("./components/pages/ProfileEdit"));
-// const SignupLogin = lazy(() => import("./components/pages/SignupLogin"));
-// const UserProfile = lazy(() => import("./components/userProfile/UserProfile"));
-// const Signup = lazy(() => import("./components/pages/Signup"));
-// const Login = lazy(() => import("./components/pages/Login"));
-// const FourOhFour = lazy(() => import("./components/pages/FourOhFour"));
-// const WatchProfilePage = lazy(() => import("./components/pages/WatchProfilePage"));
 
 import Home from "./components/pages/Home";
 import ProfileEdit from "./components/pages/ProfileEdit";
@@ -29,7 +20,7 @@ import FourOhFour from "./components/pages/FourOhFour";
 import WatchProfilePage from "./components/pages/WatchProfilePage";
 
 function App() {
-  const { showSidebar, isLoggedIn, loggedInUser } = useContext(MainContext);
+  const { showSidebar, isLoggedIn } = useContext(MainContext);
   const location = useLocation();
 
   // Set overflow of body based on whether navbar overlay is showing or not
@@ -76,13 +67,7 @@ function App() {
 
             <Route
               path="/me"
-              element={
-                isLoggedIn ? (
-                  <UserProfile user={loggedInUser} editable={true} />
-                ) : (
-                  <FourOhFour />
-                )
-              }
+              element={isLoggedIn ? <UserProfile editable={true} /> : <FourOhFour />}
             />
             <Route
               path="/me/editProfile"

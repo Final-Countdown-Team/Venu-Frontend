@@ -14,18 +14,23 @@ function WatchProfilePage({ userType }) {
 
   // Get data from backend
   useEffect(() => {
+    // const controller = new AbortController();
+    // const signal = controller.signal;
+    setGlobalUserType(userType);
+    getWatchUser(userID, userType);
+
+    // return () => {
+    //   console.log("Cleaning up watchUserProfile...");
+    //   controller.abort();
+    // };
+  }, []);
+
+  useEffect(() => {
+    console.log("Rendering watchProfile");
     if (userID === loggedInUser._id) navigate("/me");
     window.scrollTo(0, 0);
-    const controller = new AbortController();
-    const signal = controller.signal;
-    setGlobalUserType(userType);
-    getWatchUser(userID, userType, signal);
-
-    return () => {
-      console.log("Cleaning up watchUserProfile...");
-      controller.abort();
-    };
   }, []);
+
   const spinnerOverride = {
     margin: "10rem 20rem",
     transform: "scale(2)",
@@ -40,7 +45,7 @@ function WatchProfilePage({ userType }) {
       />
     );
   }
-  return <UserProfile user={watchUser} />;
+  return <UserProfile purpose={"watchUser"} />;
 }
 
 export default WatchProfilePage;
