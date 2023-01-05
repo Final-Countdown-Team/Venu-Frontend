@@ -25,7 +25,6 @@ function WatchProfilePage({ userType }) {
     return () => {
       mounted.current = false;
       console.log("WatchUserProfile is NOT Mounted! State: ", mounted.current);
-      console.log("Cleaning up watchUserProfile...");
       controller.abort();
       setIsLoading(true);
     };

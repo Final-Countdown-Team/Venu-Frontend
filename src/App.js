@@ -18,6 +18,7 @@ import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import FourOhFour from "./components/pages/FourOhFour";
 import WatchProfilePage from "./components/pages/WatchProfilePage";
+import WatchUserProfilePage from "./components/pages/WatchUserProfilePage";
 
 function App() {
   const { showSidebar, isLoggedIn } = useContext(MainContext);
@@ -67,11 +68,11 @@ function App() {
 
             <Route
               path="/me"
-              element={isLoggedIn ? <UserProfile editable={true} /> : <FourOhFour />}
+              element={isLoggedIn ? <WatchUserProfilePage /> : <SignupLogin />}
             />
             <Route
               path="/me/editProfile"
-              element={isLoggedIn ? <ProfileEdit /> : <FourOhFour />}
+              element={isLoggedIn ? <ProfileEdit /> : <SignupLogin />}
             />
           </Route>
 

@@ -93,7 +93,6 @@ export const MainContextProvider = ({ children }) => {
   // Get logged in user
   const getLoggedInUser = async (values, actions, userType, navigate) => {
     try {
-      console.log("Getting logged in user...");
       setIsPending(true);
       const req = await fetch(`/${userType}/login`, {
         method: "POST",
@@ -129,7 +128,6 @@ export const MainContextProvider = ({ children }) => {
 
   // Visiting other user's profiles
   const getWatchUser = async (userID, userType, signal) => {
-    console.log("Visiting user profile...");
     try {
       setIsPending(true);
       setIsLoading(true);
@@ -149,7 +147,6 @@ export const MainContextProvider = ({ children }) => {
 
   // Get the previews on the overview page
   const getPreviews = async (userType, signal) => {
-    console.log("Getting previews...");
     setIsLoading(true);
     const URL = `/${userType}?fields=name,description,profileImage,availability,dates`;
     const res = await fetch(URL, { signal });
@@ -182,7 +179,6 @@ export const MainContextProvider = ({ children }) => {
 
   // Searchbar results
   const getSearchResults = (data) => {
-    console.log("Getting search results...");
     dispatch({
       type: "GET_PREVIEWS",
       payload: data,
@@ -364,7 +360,6 @@ export const MainContextProvider = ({ children }) => {
 
   // Logout
   const logoutUser = async (navigate, message) => {
-    console.log(state.loggedInUser.type);
     await fetch(`/${state.loggedInUser.type}/logout`);
     dispatch({
       type: "CLEAR_LOGGED_IN_USER",

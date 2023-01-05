@@ -23,7 +23,7 @@ import "./_UserProfile.scss";
 import { MainContext } from "../contexts/MainContext";
 
 function UserProfile({ purpose, editable }) {
-  const { setGlobalUserType, loggedInUser, watchUser, isLoading } =
+  const { setGlobalUserType, loggedInUser, watchUser, isLoading, setIsLoading } =
     useContext(MainContext);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
   // Load map only if it is visible in viewport for animation
@@ -37,7 +37,11 @@ function UserProfile({ purpose, editable }) {
     window.scrollTo(0, 0);
     window.addEventListener("resize", handleResize);
     console.log("Renders resize...");
-    return (_) => window.removeEventListener("resize", handleResize);
+    return (_) => {
+      console.log("UserProfile is unmounting");
+      window.removeEventListener("resize", handleResize);
+      setIsLoading(true);
+    };
   }, []);
 
   useEffect(() => {
