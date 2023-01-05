@@ -22,7 +22,7 @@ const Map = ({ users }) => {
     // Create default markers
 
     if (!users) return;
-    users?.forEach((user) => {
+    users.forEach((user) => {
       let color =
         user.type === "artists"
           ? "#0168b5"

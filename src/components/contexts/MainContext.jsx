@@ -141,7 +141,7 @@ export const MainContextProvider = ({ children }) => {
       });
     } catch (err) {
       setIsPending(false);
-      console.err(err);
+      console.error(err);
       toast.error("Ups, something went wrong ☹️");
     }
   };

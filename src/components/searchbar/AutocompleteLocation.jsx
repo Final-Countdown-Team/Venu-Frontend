@@ -53,6 +53,7 @@ function AutocompleteLocation({ state, onChange, setLatLng }) {
       onChange={onChange}
       autocomplete={true}
       userInput={userInput}
+      finalQuery={finalQuery}
       setUserInput={setUserInput}
       options={autoSuggestions}
       setLatLng={setLatLng}

@@ -9,6 +9,7 @@ import AvailableButton from "../buttons/AvailableButton";
 import LazyLoadImageComp from "../utils/LazyLoadImageComp";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import ContactForm from "../forms/contactForm/ContactForm";
+import Map from "../map/Map";
 
 import {
   AiFillFacebook as Facebook,
@@ -158,7 +159,9 @@ function UserProfile({ user, editable }) {
         <div className="location-group">
           <h3>Location:</h3>
           <p className="location-address">{`${user?.address?.street}, ${user?.address?.city} ${user?.address?.zipcode}`}</p>
-          <div ref={ref}>{/* <Map users={[user]} /> */}</div>
+          <div ref={ref}>
+            <Map users={[user]} />
+          </div>
         </div>
 
         <div className="padding-group contact-group">

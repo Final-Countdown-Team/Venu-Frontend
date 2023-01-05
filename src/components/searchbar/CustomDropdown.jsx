@@ -13,6 +13,7 @@ const CustomDropdown = ({
   autocomplete,
   userInput,
   setUserInput,
+  finalQuery,
   setLatLng,
 }) => {
   const context = useContext(MainContext);
@@ -27,7 +28,9 @@ const CustomDropdown = ({
 
   return (
     <div
-      className={`dropdown--input ${isOpen ? "input--no-bottom-borders" : null}`}
+      className={`dropdown--input ${autocomplete && "dropdown--no-pointer"} ${
+        isOpen ? "input--no-bottom-borders" : null
+      }`}
       onClick={() => setIsOpen(!isOpen)}
     >
       {!autocomplete ? (
@@ -67,24 +70,27 @@ const CustomDropdown = ({
         >
           ---
         </li>
-        {options.map((option, i) => (
-          <li
-            className={
-              context.userType === "artists"
-                ? "artists-list-item"
-                : "venues-list-item"
-            }
-            key={`${option.label}-${i}`}
-            value={option.value}
-            onClick={() => {
-              onChange(option.value);
-              setDisplayLabel(option.label);
-              if (autocomplete) setLatLng(option.coordinates);
-            }}
-          >
-            {option.label}
-          </li>
-        ))}
+        {options.map((option, i) => {
+          return (
+            <li
+              className={
+                context.userType === "artists"
+                  ? "artists-list-item"
+                  : "venues-list-item"
+              }
+              key={`${option.label}-${i}`}
+              value={option.value}
+              onClick={() => {
+                onChange(option.value);
+                setDisplayLabel(option.label);
+                if (autocomplete) setLatLng(option.coordinates);
+                setUserInput(option.label);
+              }}
+            >
+              {option.label}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

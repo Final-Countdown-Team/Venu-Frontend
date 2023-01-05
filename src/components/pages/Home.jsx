@@ -18,6 +18,7 @@ function Home() {
   const { ref } = useInView();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setGlobalUserType(null);
     getLocations();
     // eslint-disable-next-line react-hooks/exhaustive-deps

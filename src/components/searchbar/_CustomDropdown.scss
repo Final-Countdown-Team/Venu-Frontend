@@ -71,6 +71,10 @@
   }
 }
 
+.dropdown--no-pointer {
+  cursor: auto;
+}
+
 .input--no-bottom-borders {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
