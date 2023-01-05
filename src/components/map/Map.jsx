@@ -7,7 +7,7 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoiZHJ1Y2ttYXgiLCJhIjoiY2xia253Z25iMDA2YTNxbW1vaTVoa3hyeiJ9.mqCHJuNW2TYEN4HPM7_7zA";
 
 const Map = ({ purpose }) => {
-  const { mapLocations, watchUser, loggedInUser, isLoading } =
+  const { mapLocations, watchUser, loggedInUser, isLoading, setIsLoading } =
     useContext(MainContext);
   const mapContainerRef = useRef(null);
   // Set users or user based on purpose
@@ -23,15 +23,17 @@ const Map = ({ purpose }) => {
         : user.type === "venues"
         ? "#b02476"
         : "#000";
-    const coords = user.location.coordinates;
-    new mapboxgl.Marker({ color }).setLngLat(coords).addTo(map);
-    bounds.extend(coords);
+    if (user.location.coordinates) {
+      const coords = user.location.coordinates;
+      new mapboxgl.Marker({ color }).setLngLat(coords).addTo(map);
+      bounds.extend(coords);
+    }
   };
 
   // Initialize map when component mounts
   useEffect(() => {
     mounted.current = true;
-    console.log("Map is Mounted!" + mounted.current);
+    console.log("Map is Mounted!");
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -43,7 +45,7 @@ const Map = ({ purpose }) => {
     });
     const bounds = new mapboxgl.LngLatBounds();
     // Create default markers, map through them for mapLocations, else set marker for single user
-    purpose === "home"
+    purpose === "home" && users.length !== 0
       ? users.forEach((user) => {
           createMarker(user, map, bounds);
         })
@@ -59,12 +61,12 @@ const Map = ({ purpose }) => {
     // Clean up on unmount
     return () => {
       mounted.current = false;
-      console.log("Map is Not Mounted!" + mounted.current);
+      console.log("Map is Not Mounted!");
       map.remove();
     };
   }, []);
 
-  if (!isLoading) return <div className="map-container" ref={mapContainerRef} />;
+  return <div className="map-container" ref={mapContainerRef} />;
 };
 
 export default Map;

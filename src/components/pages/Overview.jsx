@@ -15,7 +15,7 @@ import {
 import { ScaleLoader } from "react-spinners";
 
 function Overview({ userType }) {
-  const { setGlobalUserType, previews, isLoading, getPreviews } =
+  const { setGlobalUserType, previews, isLoading, setIsLoading, getPreviews } =
     useContext(MainContext);
 
   useEffect(() => {
@@ -28,8 +28,9 @@ function Overview({ userType }) {
     getPreviews(userType, signal);
 
     return () => {
-      console.log("Cleaning up previews...");
+      console.log("Unmounting and cleaning up previews...");
       controller.abort();
+      setIsLoading(true);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType]);

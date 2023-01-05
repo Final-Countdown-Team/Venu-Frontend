@@ -53,7 +53,6 @@ export default function SearchBar() {
     const getUserLocation = async () => {
       try {
         const pos = await getPosition();
-        console.log(pos);
         const { latitude: lat, longitude: lng } = pos.coords;
         setLatLng(`${lat},${lng}`);
       } catch (err) {

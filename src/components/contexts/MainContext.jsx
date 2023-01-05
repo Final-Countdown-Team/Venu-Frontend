@@ -178,7 +178,6 @@ export const MainContextProvider = ({ children }) => {
       type: "GET_LOCATIONS",
       payload: joinedData,
     });
-    setTimeout(() => setIsLoading(false), 1000);
   };
 
   // Searchbar results

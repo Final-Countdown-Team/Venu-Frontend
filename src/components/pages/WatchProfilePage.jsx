@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -6,23 +6,29 @@ import { ScaleLoader } from "react-spinners";
 import UserProfile from "../userProfile/UserProfile";
 
 function WatchProfilePage({ userType }) {
-  const { getWatchUser, watchUser, setGlobalUserType, isLoading, loggedInUser } =
+  const { getWatchUser, setIsLoading, setGlobalUserType, isLoading, loggedInUser } =
     useContext(MainContext);
   // Get user ID from URL
   const { id: userID } = useParams();
   const navigate = useNavigate();
+  const mounted = useRef(false);
 
   // Get data from backend
   useEffect(() => {
-    // const controller = new AbortController();
-    // const signal = controller.signal;
+    mounted.current = true;
+    console.log("WatchUserProfile is Mounted! State: ", mounted.current);
+    const controller = new AbortController();
+    const signal = controller.signal;
     setGlobalUserType(userType);
-    getWatchUser(userID, userType);
+    getWatchUser(userID, userType, signal);
 
-    // return () => {
-    //   console.log("Cleaning up watchUserProfile...");
-    //   controller.abort();
-    // };
+    return () => {
+      mounted.current = false;
+      console.log("WatchUserProfile is NOT Mounted! State: ", mounted.current);
+      console.log("Cleaning up watchUserProfile...");
+      controller.abort();
+      setIsLoading(true);
+    };
   }, []);
 
   useEffect(() => {

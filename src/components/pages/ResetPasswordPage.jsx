@@ -10,9 +10,6 @@ import "../forms/forgotPasswordModal/_ForgotPasswordModal.scss";
 
 function ResetPasswordPage() {
   const { userType, resetToken } = useParams();
-
-  console.log(userType, resetToken);
-
   return (
     <motion.div
       variants={containerVariantPosAbs}
