@@ -18,7 +18,8 @@
 }
 
 .form-input-full {
-  margin-bottom: 1.5rem;
+  // margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .input {
@@ -104,6 +105,10 @@
     width: 100%;
     text-align: left;
   }
+}
+
+.textbox-group-contact {
+  margin: 1rem 0;
 }
 
 .textbox-user-profile {

@@ -155,7 +155,6 @@ export const MainContextProvider = ({ children }) => {
       type: "GET_PREVIEWS",
       payload: data,
     });
-    setTimeout(() => setIsLoading(false), 800);
   };
 
   // Get locations of 10 users of each userType for the map on Home
@@ -382,7 +381,28 @@ export const MainContextProvider = ({ children }) => {
       });
       await fetch(`/${state.loggedInUser.type}/logout`);
       logoutUser(navigate, "Your account was deleted");
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Deactiavte Account
+  const reactivateAccount = async (userType, id) => {
+    try {
+      setIsLoading(true);
+      await fetch(`/${userType}/reactivateAccount/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      toast.success("Your account has been reactivated 🎉 \n Please login as usual");
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Sorry, something went wrong");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -412,6 +432,7 @@ export const MainContextProvider = ({ children }) => {
         isLoading: state.isLoading,
         logoutUser,
         deleteAccount,
+        reactivateAccount,
       }}
     >
       {children}

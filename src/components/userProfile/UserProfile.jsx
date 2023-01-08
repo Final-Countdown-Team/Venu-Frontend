@@ -33,12 +33,12 @@ function UserProfile({ purpose, editable }) {
 
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
+    console.log("User profile is mounted");
     const handleResize = () => setDimensions({ width: window.innerWidth });
     window.scrollTo(0, 0);
     window.addEventListener("resize", handleResize);
-    console.log("Renders resize...");
     return (_) => {
-      console.log("UserProfile is unmounting");
+      console.log("UserProfile is NOT mounted");
       window.removeEventListener("resize", handleResize);
       setIsLoading(true);
     };
@@ -138,7 +138,7 @@ function UserProfile({ purpose, editable }) {
           <h3>Available Dates:</h3>
           <Calendar
             numberOfMonths={
-              dimensions.width >= 1150 ? 3 : dimensions.width >= 700 ? 2 : 1
+              dimensions.width >= 1150 ? 3 : dimensions.width >= 750 ? 2 : 1
             }
             multiple={true}
             minDate={Date.now()}
@@ -166,12 +166,12 @@ function UserProfile({ purpose, editable }) {
 
         <div className="location-group">
           <h3>Location:</h3>
-          <p className="location-address">{`${user?.address?.street}, ${user?.address?.city} ${user?.address?.zipcode}`}</p>
           {!isLoading && (
             <div ref={ref}>
               <Map purpose={purpose} />
             </div>
           )}
+          <p className="location-address">{`${user?.address?.street},${user?.address?.city} ${user?.address?.zipcode}`}</p>
         </div>
 
         <div className="padding-group contact-group">

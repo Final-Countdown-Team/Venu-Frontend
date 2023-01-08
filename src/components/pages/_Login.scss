@@ -1,18 +1,20 @@
 @import "../../Utilities";
 
 .login-page {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 50rem;
-  width: 80%;
-  margin: auto;
-  min-height: 50rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .login-container {
+    max-width: 50rem;
+    width: 80%;
+    margin: auto;
+    min-height: 50rem;
 
-  h1 {
-    font-family: $font-special;
-    font-size: clamp(3.5rem, 10vmin, 5rem);
-    padding: 1rem;
+    h1 {
+      font-family: $font-special;
+      font-size: clamp(3.5rem, 10vmin, 5rem);
+      padding: 1rem;
+    }
   }
 }

@@ -20,7 +20,7 @@ function Home() {
 
   useEffect(() => {
     mounted.current = true;
-    console.log("Is Mounted! State: ", mounted.current);
+    console.log("Home is Mounted! IsLoading: ", isLoading);
     setIsLoading(true);
     window.scrollTo(0, 0);
     setGlobalUserType(null);

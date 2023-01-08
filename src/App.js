@@ -13,12 +13,12 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import Home from "./components/pages/Home";
 import ProfileEdit from "./components/pages/ProfileEdit";
 import SignupLogin from "./components/pages/SignupLogin";
-import UserProfile from "./components/userProfile/UserProfile";
 import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import FourOhFour from "./components/pages/FourOhFour";
 import WatchProfilePage from "./components/pages/WatchProfilePage";
 import WatchUserProfilePage from "./components/pages/WatchUserProfilePage";
+import ReactivateAccount from "./components/pages/ReactivateAccount";
 
 function App() {
   const { showSidebar, isLoggedIn } = useContext(MainContext);
@@ -27,8 +27,8 @@ function App() {
   // Set overflow of body based on whether navbar overlay is showing or not
   useEffect(() => {
     showSidebar
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "unset");
+      ? (document.documentElement.style.overflowY = "hidden")
+      : (document.documentElement.style.overflowY = "unset");
   }, [showSidebar]);
 
   return (
@@ -84,7 +84,11 @@ function App() {
           <Route path="/artists/signup" element={<Signup userType={"artists"} />} />
           <Route
             path="/:userType/resetPassword/:resetToken"
-            element={<ResetPasswordPage />}
+            element={<ReactivateAccount />}
+          />
+          <Route
+            path="/:userType/reactivateAccount/:id"
+            element={<ReactivateAccount />}
           />
           <Route path="*" element={<FourOhFour />} />
         </Routes>

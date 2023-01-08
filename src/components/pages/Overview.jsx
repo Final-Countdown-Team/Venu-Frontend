@@ -19,18 +19,15 @@ function Overview({ userType }) {
     useContext(MainContext);
 
   useEffect(() => {
-    setGlobalUserType(userType);
-  }, [userType]);
-
-  useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
+    setGlobalUserType(userType);
     getPreviews(userType, signal);
 
     return () => {
-      console.log("Unmounting and cleaning up previews...");
-      controller.abort();
       setIsLoading(true);
+      console.log("Previews is NOT mounted! IsLoading: ", isLoading);
+      controller.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType]);

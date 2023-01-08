@@ -85,6 +85,12 @@ $container-max-width-md: 65rem;
 
 // ----- Media Queries Utility -----
 @mixin respond($breakpoint) {
+  @if $breakpoint == small-height-landscape {
+    @media only screen and (max-height: 318px) {
+      @content;
+    }
+  }
+
   @if $breakpoint == phone-xs {
     @media only screen and (max-width: 325px) {
       @content;

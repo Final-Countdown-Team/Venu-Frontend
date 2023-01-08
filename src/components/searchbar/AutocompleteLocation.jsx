@@ -49,7 +49,6 @@ function AutocompleteLocation({ state, onChange, setLatLng }) {
 
   return (
     <CustomDropdown
-      state={state}
       onChange={onChange}
       autocomplete={true}
       userInput={userInput}

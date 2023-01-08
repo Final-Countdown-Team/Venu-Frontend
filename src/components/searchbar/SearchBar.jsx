@@ -74,37 +74,17 @@ export default function SearchBar() {
         placeholder={`Search for ${globalUserType}`}
       />
       <div className="dropdown-group">
+        <CustomDropdown onChange={setSort} options={sortOptions} type="Sort" />
         <CustomDropdown
-          state={sort}
-          onChange={setSort}
-          options={sortOptions}
-          type="Sort"
-        />
-        <CustomDropdown
-          state={dates}
           onChange={dateHandler}
           options={dateOptions}
           type="Available"
         />
         {globalUserType === "artists" && (
-          <CustomDropdown
-            state={genre}
-            onChange={setGenre}
-            options={genreOptions}
-            type="Genre"
-          />
+          <CustomDropdown onChange={setGenre} options={genreOptions} type="Genre" />
         )}
-        <CustomDropdown
-          state={radius}
-          onChange={setRadius}
-          options={radiusOptions}
-          type="Radius"
-        />
-        <AutocompleteLocation
-          state={"city"}
-          onChange={setCity}
-          setLatLng={setLatLng}
-        />
+        <CustomDropdown onChange={setRadius} options={radiusOptions} type="Radius" />
+        <AutocompleteLocation onChange={setCity} setLatLng={setLatLng} />
         <div className="search-btn-group">
           <ButtonSecondary
             text="Search"

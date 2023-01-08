@@ -1,9 +1,7 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import {
-  containerVariantPosAbs,
-  transitionTween,
-} from "../animations/containerVariants";
+import { containerVariantY, transitionTween } from "../animations/containerVariants";
 import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
@@ -23,10 +21,10 @@ function Login({ userType }) {
 
   return (
     <motion.div
-      variants={containerVariantPosAbs}
-      initial="hidden"
+      variants={containerVariantY}
+      initial="exit"
       animate="visible"
-      exit="exit"
+      exit="hidden"
       transition={transitionTween}
       className="login-page"
     >
@@ -39,5 +37,13 @@ function Login({ userType }) {
     </motion.div>
   );
 }
+
+Login.defaultProps = {
+  userType: "venues",
+};
+
+Login.propTypes = {
+  userType: PropTypes.string,
+};
 
 export default Login;

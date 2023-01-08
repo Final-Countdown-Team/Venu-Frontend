@@ -133,25 +133,32 @@
   height: 100vh;
   width: 100%;
   z-index: 10;
-  padding-top: 8rem;
+  padding: 8rem 0 8rem 0;
   transform: translateY(-100%);
   visibility: hidden;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   user-select: none;
   background: linear-gradient(0deg, #220717d5, #00121fe6);
   transition: all 0.7s ease;
 
+  @include respond(small-height-landscape) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
   .sidebar-link {
+    flex-grow: 1;
     display: block;
+    flex-basis: 25vw;
     position: relative;
     letter-spacing: 1rem;
-    padding: 2rem 0;
-    width: 20rem;
     margin: auto;
     text-transform: uppercase;
     font-weight: 500;
-    margin-bottom: 1em;
-    font-size: 1.6em;
+    font-size: clamp(2rem, 5vh, 3rem);
 
     &.active {
       color: $color-venu-primary;

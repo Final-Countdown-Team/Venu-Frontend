@@ -9,8 +9,9 @@
   flex-direction: column;
 
   h3 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin: 1rem 0;
+    font-weight: 500;
   }
 
   .padding-group {
@@ -163,10 +164,15 @@
   .dates-group {
     padding: 4rem 0;
     .calendar {
-      margin-top: 2rem;
+      margin: 2rem auto 0 auto;
       padding: 1rem;
       background-color: rgba(255, 255, 255, 0.1);
       box-shadow: none;
+
+      @include respond(landscape) {
+        transform: scale(1.29);
+        margin: 5rem auto 0 auto;
+      }
 
       span {
         color: white;
@@ -193,13 +199,18 @@
     width: 100%;
 
     .location-address {
-      padding-bottom: 2rem;
+      padding: 0 2rem;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-family: $font-special;
+      text-transform: lowercase;
     }
 
     .map-container {
       opacity: 0.9;
       width: 100%;
       height: 20rem;
+      margin-bottom: 2rem;
     }
   }
 
@@ -211,6 +222,7 @@
 
     .input-row {
       display: flex;
+      width: 100%;
       justify-content: center;
       flex-wrap: wrap;
       align-items: center;

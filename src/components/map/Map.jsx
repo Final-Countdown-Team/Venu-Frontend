@@ -7,7 +7,7 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoiZHJ1Y2ttYXgiLCJhIjoiY2xia253Z25iMDA2YTNxbW1vaTVoa3hyeiJ9.mqCHJuNW2TYEN4HPM7_7zA";
 
 const Map = ({ purpose }) => {
-  const { mapLocations, watchUser, loggedInUser, isLoading, setIsLoading } =
+  const { mapLocations, watchUser, loggedInUser, isLoading } =
     useContext(MainContext);
   const mapContainerRef = useRef(null);
   // Set users or user based on purpose
@@ -23,7 +23,9 @@ const Map = ({ purpose }) => {
         : user.type === "venues"
         ? "#b02476"
         : "#000";
-    if (user.location.coordinates) {
+    if (!user.location.coordinates) {
+      return;
+    } else {
       const coords = user.location.coordinates;
       new mapboxgl.Marker({ color }).setLngLat(coords).addTo(map);
       bounds.extend(coords);
@@ -33,7 +35,7 @@ const Map = ({ purpose }) => {
   // Initialize map when component mounts
   useEffect(() => {
     mounted.current = true;
-    console.log("Map is Mounted!");
+    console.log("Map is Mounted! Is loading:", isLoading);
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -45,28 +47,36 @@ const Map = ({ purpose }) => {
     });
     const bounds = new mapboxgl.LngLatBounds();
     // Create default markers, map through them for mapLocations, else set marker for single user
-    purpose === "home" && users.length !== 0
-      ? users.forEach((user) => {
+    if (users.length !== 0 || Object.keys(user).length !== 0) {
+      if (purpose === "home" && users.length !== 0) {
+        users.forEach((user) => {
           createMarker(user, map, bounds);
-        })
-      : createMarker(user, map, bounds);
+        });
+      } else if (Object.keys(user).length !== 0) {
+        createMarker(user, map, bounds);
+      } else {
+        return;
+      }
 
-    map.fitBounds(bounds, {
-      padding: {
-        top: 50,
-        bottom: 50,
-      },
-    });
+      map.fitBounds(bounds, {
+        padding: {
+          top: 50,
+          bottom: 50,
+        },
+      });
+    }
 
     // Clean up on unmount
     return () => {
       mounted.current = false;
-      console.log("Map is Not Mounted!");
+      console.log("Map is Not Mounted! Is loading: ", isLoading);
       map.remove();
     };
   }, []);
 
   return <div className="map-container" ref={mapContainerRef} />;
 };
+
+Map.defaultProps = {};
 
 export default Map;
