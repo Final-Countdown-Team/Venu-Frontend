@@ -5,7 +5,7 @@ import { containerVariantY, transitionTween } from "../animations/containerVaria
 import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
-import ForgotPasswordModal from "../forms/forgotPasswordModal/ForgotPasswordModal";
+import ForgotPasswordModal from "../modal/forgotPasswordModal/ForgotPasswordModal";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { useEffect } from "react";

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { containerVariantX, transitionTween } from "../animations/containerVariants";
 import { Calendar } from "react-multi-date-picker";
@@ -28,8 +28,13 @@ function UserProfile({ purpose, editable }) {
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
   // Load map only if it is visible in viewport for animation
   const { ref } = useInView({ triggerOnce: true });
+  const navigate = useNavigate();
 
-  const user = purpose ? watchUser : loggedInUser;
+  const user = purpose === "watchUser" ? watchUser : loggedInUser;
+
+  const redirectHandler = () => {
+    navigate("/me/editProfile");
+  };
 
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
@@ -64,7 +69,7 @@ function UserProfile({ purpose, editable }) {
       transition={transitionTween}
       className="margin-container"
     >
-      <div className="preview-card-container user-profile-container">
+      <div className="user-profile-container">
         <div className="padding-group">
           <div className="user-profile-image-container brad-md">
             <LazyLoadImageComp
@@ -90,10 +95,13 @@ function UserProfile({ purpose, editable }) {
           </div>
 
           <div className="user-description-group">
-            <p className="genre">
-              <span className="bold">Genre: </span>
-              {user?.genre}
-            </p>
+            {user?.type === "artists" && (
+              <p className="genre">
+                <span className="bold">Genre: </span>
+                {user?.genre}
+              </p>
+            )}
+
             <p className="description">{user?.description}</p>
           </div>
 
@@ -117,22 +125,23 @@ function UserProfile({ purpose, editable }) {
           </div>
         </div>
 
-        {user?.images?.every((img) => img !== "") && (
-          <div className="image-gallery">
-            {user?.images?.map((image, i) => {
-              if (image.includes("empty")) return null;
-              return (
-                <LazyLoadImageComp
-                  src={image}
-                  key={`${image}-${i}`}
-                  alt="gallery"
-                  wrapperClassName="image-gallery-lazy-wrapper"
-                  className={"image-gallery--image"}
-                />
-              );
-            })}
-          </div>
-        )}
+        {user?.images?.length !== 0 &&
+          !user?.images?.every((img) => img.startsWith("empty")) && (
+            <div className="image-gallery">
+              {user?.images?.map((image, i) => {
+                if (image.includes("empty")) return null;
+                return (
+                  <LazyLoadImageComp
+                    src={image}
+                    key={`${image}-${i}`}
+                    alt="gallery"
+                    wrapperClassName="image-gallery-lazy-wrapper"
+                    className={"image-gallery--image"}
+                  />
+                );
+              })}
+            </div>
+          )}
 
         <div className="dates-group brad-lg">
           <h3>Available Dates:</h3>
@@ -182,7 +191,7 @@ function UserProfile({ purpose, editable }) {
             <ButtonSecondary
               userType={user.type}
               text="Edit Profile"
-              redirectTo={"/me/editProfile"}
+              onClick={redirectHandler}
             />
           )}
         </div>

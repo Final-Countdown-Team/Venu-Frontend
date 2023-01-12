@@ -6,7 +6,7 @@ import ResetPasswordForm from "../forms/resetPasswordForm/ResetPasswordForm";
 
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
-import "../forms/forgotPasswordModal/_ForgotPasswordModal.scss";
+import "../modal/forgotPasswordModal/_ForgotPasswordModal.scss";
 
 function ResetPasswordPage() {
   const { userType, resetToken } = useParams();

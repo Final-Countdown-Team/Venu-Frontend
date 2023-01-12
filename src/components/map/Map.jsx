@@ -3,8 +3,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MainContext } from "../contexts/MainContext";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiZHJ1Y2ttYXgiLCJhIjoiY2xia253Z25iMDA2YTNxbW1vaTVoa3hyeiJ9.mqCHJuNW2TYEN4HPM7_7zA";
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
 const Map = ({ purpose }) => {
   const { mapLocations, watchUser, loggedInUser, isLoading } =

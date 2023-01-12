@@ -23,6 +23,7 @@ export const MainContextProvider = ({ children }) => {
     isPending: false,
     // Loading === false tells components to safely start mounting when the data arrived
     isLoading: true,
+    fetchFromLocalStorage: true,
   };
 
   const [state, dispatch] = useReducer(mainContextReducer, initalState);
@@ -30,14 +31,15 @@ export const MainContextProvider = ({ children }) => {
 
   // Check if a user is still stored in localStorage and set isLoggedInUser
   useEffect(() => {
-    console.log("Is fetching from local storage...");
     if (localStorage.getItem("loggedInUser")) {
+      console.log("Is fetching from local storage...");
       const user = JSON.parse(localStorage.getItem("loggedInUser"));
       dispatch({
         type: "GET_LOGGED_IN_USER",
         payload: user,
       });
     }
+    setFetchFromLocalStorage(false);
     return;
   }, []);
 
@@ -54,6 +56,10 @@ export const MainContextProvider = ({ children }) => {
   // Set loading helper functions
   const setIsLoading = (boolean) =>
     dispatch({ type: "SET_IS_LOADING", payload: boolean });
+
+  const setFetchFromLocalStorage = (boolean) => {
+    dispatch({ type: "SET_FETCH_FROM_LOCAL_STORAGE", payload: boolean });
+  };
 
   // Set a globalUserType
   const setGlobalUserType = (userType) => {
@@ -417,6 +423,7 @@ export const MainContextProvider = ({ children }) => {
         formSubmitSignup,
         editFormSubmitData,
         editFormSubmitImages,
+        fetchFromLocalStorage: state.fetchFromLocalStorage,
         globalUserType: state.globalUserType,
         getPreviews,
         previews: state.previews,

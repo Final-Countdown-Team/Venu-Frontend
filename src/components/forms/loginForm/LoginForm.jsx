@@ -56,6 +56,7 @@ function LoginForm({ userType, setShowModal }) {
             <ScaleLoader
               color={userType === "artists" ? "#0168b5" : "#b02476"}
               cssOverride={{
+                padding: "2.25rem",
                 transform: "scale(1.5)",
               }}
               aria-label="Loading Spinner"

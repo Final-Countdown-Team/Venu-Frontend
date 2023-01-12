@@ -43,11 +43,13 @@ function WatchProfilePage({ userType }) {
   // Show loading spinner while fetching from backend
   if (isLoading) {
     return (
-      <ScaleLoader
-        cssOverride={spinnerOverride}
-        color={userType === "artists" ? "#0168b5" : "#b02476"}
-        aria-label="Loading Spinner"
-      />
+      <div className="loading-wrapper">
+        <ScaleLoader
+          cssOverride={spinnerOverride}
+          color={userType === "artists" ? "#0168b5" : "#b02476"}
+          aria-label="Loading Spinner"
+        />
+      </div>
     );
   }
   return <UserProfile purpose={"watchUser"} />;

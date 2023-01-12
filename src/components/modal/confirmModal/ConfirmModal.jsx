@@ -1,5 +1,5 @@
 import ProfileButton from "../../buttons/ProfileButton";
-import "../forgotPasswordModal/_ForgotPasswordModal.scss";
+import "../../modal/forgotPasswordModal/_ForgotPasswordModal.scss";
 import "./_ConfirmModal.scss";
 
 function ConfirmModal({ deleteAccount, hideModal }) {

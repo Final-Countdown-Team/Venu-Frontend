@@ -3,10 +3,10 @@ import { MainContext } from "../../contexts/MainContext";
 import { useNavigate } from "react-router-dom";
 
 import ProfileButton from "../../buttons/ProfileButton";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "../../modal/confirmModal/ConfirmModal";
 import "../signupForm/_SignupForm.scss";
 import "./_EditForm.scss";
-import "./_ConfirmModal.scss";
+import "../../modal/confirmModal/_ConfirmModal.scss";
 
 function DeleteAccount() {
   const [showConfirm, setShowConfirm] = useState(false);

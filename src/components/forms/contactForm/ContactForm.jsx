@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Formik, Form } from "formik";
 import InputFull from "../formInputs/InputFull";
 import CustomDropdown from "../../searchbar/CustomDropdown";
@@ -7,7 +7,9 @@ import ButtonSecondary from "../../buttons/ButtonSecondary";
 import { MainContext } from "../../contexts/MainContext";
 
 function ContactForm({ userType }) {
-  const { watchUser } = useContext(MainContext);
+  const { watchUser, loggedInUser } = useContext(MainContext);
+
+  console.log(watchUser);
 
   return (
     <>
@@ -18,8 +20,25 @@ function ContactForm({ userType }) {
           message: "",
           receiver: watchUser.email,
         }}
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
           console.log(values);
+          try {
+            const req = await fetch(
+              `/${watchUser.type}/contactUser/${watchUser._id}`,
+              {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+              }
+            );
+            const res = await req.json();
+            console.log(res);
+          } catch (err) {
+            console.log(err);
+          }
         }}
       >
         {(props) => (
@@ -29,6 +48,7 @@ function ContactForm({ userType }) {
                 name="firstname"
                 label="First name"
                 placeholder="Enter your first name"
+                className="input--contact"
               />
               {watchUser?.dates?.length !== 0 && (
                 <div className="form-input-full">

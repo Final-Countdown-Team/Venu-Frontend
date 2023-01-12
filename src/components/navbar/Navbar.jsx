@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import "./_Navbar.scss";
 import venuLogo from "../../img/venu-logo.png";
-import Sidebar from "../navbar/Sidebar";
+import Sidebar from "./Sidebar";
 import NavbarLink from "./NavbarLink";
 import NavbarDropdown from "./NavbarDropdown";
 import LogoutLink from "./LogoutLink";

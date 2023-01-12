@@ -8,10 +8,11 @@ import "./_SearchBar.scss";
 
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import {
-  sortOptions,
   radiusOptions,
   dateOptions,
   genreOptions,
+  sortOptionsArtists,
+  sortOptionsVenues,
 } from "./dropdownOptions";
 import AutocompleteLocation from "./AutocompleteLocation";
 
@@ -37,8 +38,10 @@ export default function SearchBar() {
     e.preventDefault();
     // Creat query string for fetching previews
     const URL = `/${globalUserType}?name=${searchText}&city=${city}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
+    console.log(URL);
     const res = await fetch(URL);
     const data = await res.json();
+    console.log(data);
     getSearchResults(data);
   };
 
@@ -74,7 +77,13 @@ export default function SearchBar() {
         placeholder={`Search for ${globalUserType}`}
       />
       <div className="dropdown-group">
-        <CustomDropdown onChange={setSort} options={sortOptions} type="Sort" />
+        <CustomDropdown
+          onChange={setSort}
+          options={
+            globalUserType === "artists" ? sortOptionsArtists : sortOptionsVenues
+          }
+          type="Sort"
+        />
         <CustomDropdown
           onChange={dateHandler}
           options={dateOptions}

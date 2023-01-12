@@ -1,14 +1,12 @@
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import React, { useContext, useRef } from "react";
-import InputFull from "../formInputs/InputFull";
 import "./_ForgotPasswordModal.scss";
-import ButtonSecondary from "../../buttons/ButtonSecondary";
-import { MdClose } from "react-icons/md";
 import { MainContext } from "../../contexts/MainContext";
 import HandleClickOutside from "../../utils/HandleClickOutside";
 import { useState } from "react";
-import { ScaleLoader } from "react-spinners";
+
+import ModalComponent from "../ModalComponent";
 
 function ForgotPasswordModal({ setShowModal }) {
   const { globalUserType } = useContext(MainContext);
@@ -59,30 +57,7 @@ function ForgotPasswordModal({ setShowModal }) {
           globalUserType === "artists" ? "modal-artists" : "modal-venues"
         }`}
       >
-        <div className="login-form">
-          <div onClick={() => setShowModal(false)} className="close-icon">
-            <MdClose />
-          </div>
-          <h2>
-            You forgot your password<span>?</span>
-          </h2>
-          <p className="padding">
-            No problem, we got you. Please enter your email address and we will send
-            you a link to reset your password ☺️
-          </p>
-          <InputFull name="email" placeholder={"Please enter your email"} />
-          <div className="padding">
-            {!isPending ? (
-              <ButtonSecondary submit={true} text={"Send reset link"} />
-            ) : (
-              <ScaleLoader
-                color={globalUserType === "artists" ? "#0168b5" : "#b02476"}
-                aria-label="Loading Spinner"
-                cssOverride={{ height: "5rem)" }}
-              />
-            )}
-          </div>
-        </div>
+        <ModalComponent onClick={() => setShowModal(false)} isPending={isPending} />
       </Form>
     </Formik>
   );
