@@ -43,9 +43,9 @@ export const MainContextProvider = ({ children }) => {
     return;
   }, []);
 
-  // // Persist the loggedInUser to localStorage
+  // Persist the loggedInUser to localStorage
   useEffect(() => {
-    if (Object.keys(state.loggedInUser).length === 0) return;
+    if (state.loggedInUser && Object.keys(state.loggedInUser).length === 0) return;
     localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
   }, [state.loggedInUser]);
 
@@ -70,31 +70,31 @@ export const MainContextProvider = ({ children }) => {
   };
 
   // Delete outdated dates, is called when user is logged in
-  const updateDates = async (response, userType) => {
-    try {
-      const updatedDates = response.data.dates.filter((date) => {
-        const today = new Date().toISOString();
-        return date > today;
-      });
+  // const updateDates = async (response, userType) => {
+  //   try {
+  //     const updatedDates = response.data.dates.filter((date) => {
+  //       const today = new Date().toISOString();
+  //       return date > today;
+  //     });
 
-      const req = await fetch(`/${userType}/user/updateMe`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ dates: updatedDates }),
-      });
-      const res = await req.json();
-      dispatch({
-        type: "GET_LOGGED_IN_USER",
-        payload: res.data,
-      });
-      console.log("Updated dates 👍");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //     const req = await fetch(`/${userType}/user/updateMe`, {
+  //       method: "PATCH",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ dates: updatedDates }),
+  //     });
+  //     const res = await req.json();
+  //     dispatch({
+  //       type: "GET_LOGGED_IN_USER",
+  //       payload: res.data,
+  //     });
+  //     console.log("Updated dates 👍");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   // Get logged in user
   const getLoggedInUser = async (values, actions, userType, navigate) => {
@@ -113,11 +113,11 @@ export const MainContextProvider = ({ children }) => {
       // Throw manual error if request fails
       if (res.status === "fail" || res.status === "error")
         throw new Error(res.message || "Ups, something went wrong");
-      // dispatch({
-      //   type: "GET_LOGGED_IN_USER",
-      //   payload: res.data,
-      // });
-      updateDates(res, userType);
+      dispatch({
+        type: "GET_LOGGED_IN_USER",
+        payload: res.data,
+      });
+      // updateDates(res, userType);
       localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
       // Show success notification when data is sucessfully fetched
       toast.success("Successfully logged in 🎉");
@@ -129,6 +129,27 @@ export const MainContextProvider = ({ children }) => {
       console.error(err);
       toast.error("Ups, something went wrong");
       actions.setErrors({ email: err.message, password: err.message });
+    }
+  };
+
+  // Updating loggedInUser data when visiting profileMe Page
+  const getMe = async () => {
+    try {
+      setIsPending(true);
+      setIsLoading(true);
+      const req = await fetch(`/${state.loggedInUser.type}/user/me`);
+      const res = await req.json();
+      if (res.status === "fail" || res.status === "error")
+        throw new Error(res.message || "Ups, something went wrong");
+      dispatch({
+        type: "GET_LOGGED_IN_USER",
+        payload: res.data,
+      });
+      localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
+      setIsLoading(false);
+    } catch (err) {
+      setIsPending(false);
+      console.error(err);
     }
   };
 
@@ -432,6 +453,7 @@ export const MainContextProvider = ({ children }) => {
         getLoggedInUser,
         loggedInUser: state.loggedInUser,
         isLoggedIn: state.isLoggedIn,
+        getMe,
         getWatchUser,
         watchUser: state.watchUser,
         isPending: state.isPending,

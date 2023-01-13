@@ -22,20 +22,33 @@ import { BsFillPeopleFill, BsGlobe2 as Website } from "react-icons/bs";
 import "./_UserProfile.scss";
 import { MainContext } from "../contexts/MainContext";
 
+// Get the booked Dates from the nested arrays
+const flatBookedDates = (user) =>
+  user.bookedDates
+    .map((object) => object.bookedDates.map((bookedDate) => bookedDate))
+    .flat();
+
+// Merge the avaialable dates with the bookedDates
+const mergeDates = (user, bookedDates) => [...user.dates, ...bookedDates].sort();
+
 function UserProfile({ purpose, editable }) {
   const { setGlobalUserType, loggedInUser, watchUser, isLoading, setIsLoading } =
     useContext(MainContext);
+
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
+
+  const user = purpose === "watchUser" ? watchUser : loggedInUser;
+  console.log(user);
+
+  const [bookedDates] = useState(user.bookedDates ? flatBookedDates(user) : null);
+
   // Load map only if it is visible in viewport for animation
   const { ref } = useInView({ triggerOnce: true });
   const navigate = useNavigate();
 
-  const user = purpose === "watchUser" ? watchUser : loggedInUser;
-
   const redirectHandler = () => {
     navigate("/me/editProfile");
   };
-
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
     console.log("User profile is mounted");
@@ -52,6 +65,7 @@ function UserProfile({ purpose, editable }) {
   useEffect(() => {
     setGlobalUserType(user.type);
   }, []);
+
   // Object of Icons for social media icon mapping
   const icons = {
     facebook: Facebook,
@@ -144,25 +158,41 @@ function UserProfile({ purpose, editable }) {
           )}
 
         <div className="dates-group brad-lg">
-          <h3>Available Dates:</h3>
+          <h3>Dates:</h3>
           <Calendar
             numberOfMonths={
               dimensions.width >= 1150 ? 3 : dimensions.width >= 750 ? 2 : 1
             }
             multiple={true}
             minDate={Date.now()}
+            currentDate={Date.now()}
             mapDays={({ today, date, isSameDate }) => {
               let props = {};
               if (isSameDate(date, today))
                 props.style = {
                   backgroundColor: "#666",
                 };
+              if (
+                bookedDates.some(
+                  (bookedDate) =>
+                    new Date(date).getTime() === new Date(bookedDate).getTime()
+                )
+              ) {
+                props.style = {
+                  backgroundColor: "#e5534b",
+                };
+              }
               return props;
             }}
             className="calendar"
-            value={user?.dates?.sort()}
+            value={mergeDates(user, bookedDates)}
             readOnly={true}
           />
+          <p className="date-subheading">
+            <span className="blue">Available </span>
+            <span>&nbsp;/&nbsp;</span>
+            <span className="red"> booked</span>
+          </p>
         </div>
 
         <div className="padding-group members-group">

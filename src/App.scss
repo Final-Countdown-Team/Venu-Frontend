@@ -19,6 +19,7 @@
     filter: saturate(0) blur(2px);
     z-index: -1;
     transition: all 1s;
+    overflow: hidden;
   }
 
   .content-container {

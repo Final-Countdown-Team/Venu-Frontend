@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { containerVariantY, transitionTween } from "../animations/containerVariants";
 
@@ -7,9 +7,12 @@ import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
 import "../modal/forgotPasswordModal/_ForgotPasswordModal.scss";
 import ButtonSecondary from "../buttons/ButtonSecondary";
+import toast from "react-hot-toast";
 
-function ResetPasswordPage() {
+function ConfirmDatePage() {
   const { userType, token } = useParams();
+
+  const navigate = useNavigate();
 
   const confirmDateHandler = async () => {
     try {
@@ -19,12 +22,15 @@ function ResetPasswordPage() {
           "Content-Type": "application/json",
         },
       });
-      if (!req.status) throw new Error("Something, went wrong confirming the date");
       const res = await req.json();
+      if (res.status === "fail") throw new Error(res.message);
       console.log(res);
+      toast.success("Successfully confirmed the date!");
     } catch (err) {
+      toast.error(err.message);
       console.error(err);
     }
+    navigate("/");
   };
 
   return (
@@ -57,4 +63,4 @@ function ResetPasswordPage() {
   );
 }
 
-export default ResetPasswordPage;
+export default ConfirmDatePage;

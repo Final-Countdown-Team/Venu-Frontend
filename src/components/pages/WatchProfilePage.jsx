@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { ScaleLoader } from "react-spinners";
 import UserProfile from "../userProfile/UserProfile";
+import { spinnerOverrideBig } from "../utils/spinnerOverride";
 
 function WatchProfilePage({ userType }) {
   const { getWatchUser, setIsLoading, setGlobalUserType, isLoading, loggedInUser } =
@@ -17,6 +18,7 @@ function WatchProfilePage({ userType }) {
   useEffect(() => {
     mounted.current = true;
     console.log("WatchUserProfile is Mounted! State: ", mounted.current);
+    setIsLoading(true);
     const controller = new AbortController();
     const signal = controller.signal;
     setGlobalUserType(userType);
@@ -36,16 +38,12 @@ function WatchProfilePage({ userType }) {
     window.scrollTo(0, 0);
   }, []);
 
-  const spinnerOverride = {
-    margin: "10rem 20rem",
-    transform: "scale(2)",
-  };
   // Show loading spinner while fetching from backend
   if (isLoading) {
     return (
       <div className="loading-wrapper">
         <ScaleLoader
-          cssOverride={spinnerOverride}
+          cssOverride={spinnerOverrideBig}
           color={userType === "artists" ? "#0168b5" : "#b02476"}
           aria-label="Loading Spinner"
         />

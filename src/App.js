@@ -19,7 +19,7 @@ import FourOhFour from "./components/pages/FourOhFour";
 import WatchProfilePage from "./components/pages/WatchProfilePage";
 import WatchUserProfilePage from "./components/pages/WatchUserProfilePage";
 import ReactivateAccount from "./components/pages/ReactivateAccount";
-import ConfirmDate from "./components/pages/ConfirmDate";
+import ConfirmDatePage from "./components/pages/ConfirmDate";
 
 import { ScaleLoader } from "react-spinners";
 import { spinnerOverrideBig } from "./components/utils/spinnerOverride";
@@ -129,7 +129,7 @@ function App() {
               />
               <Route
                 path="/:userType/confirmDate/:token"
-                element={<ConfirmDate />}
+                element={<ConfirmDatePage />}
               />
               <Route path="*" element={<FourOhFour />} />
             </Routes>

@@ -5,11 +5,10 @@ import CustomDropdown from "../../searchbar/CustomDropdown";
 import Textbox from "../formInputs/Textbox";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
 import { MainContext } from "../../contexts/MainContext";
+import toast from "react-hot-toast";
 
 function ContactForm({ userType }) {
-  const { watchUser, loggedInUser } = useContext(MainContext);
-
-  console.log(watchUser);
+  const { watchUser } = useContext(MainContext);
 
   return (
     <>
@@ -36,7 +35,9 @@ function ContactForm({ userType }) {
             );
             const res = await req.json();
             console.log(res);
+            toast.success("Successfully sent your message 🎉");
           } catch (err) {
+            toast.error("Sorry, something went wrong ☹️");
             console.log(err);
           }
         }}
