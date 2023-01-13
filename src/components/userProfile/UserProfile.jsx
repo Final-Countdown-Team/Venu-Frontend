@@ -40,7 +40,9 @@ function UserProfile({ purpose, editable }) {
   const user = purpose === "watchUser" ? watchUser : loggedInUser;
   console.log(user);
 
-  const [bookedDates] = useState(user.bookedDates ? flatBookedDates(user) : null);
+  const [bookedDates, setBookedDates] = useState(
+    user.bookedDates ? flatBookedDates(user) : null
+  );
 
   // Load map only if it is visible in viewport for animation
   const { ref } = useInView({ triggerOnce: true });
@@ -65,6 +67,10 @@ function UserProfile({ purpose, editable }) {
   useEffect(() => {
     setGlobalUserType(user.type);
   }, []);
+
+  useEffect(() => {
+    setBookedDates(flatBookedDates(user));
+  }, [user]);
 
   // Object of Icons for social media icon mapping
   const icons = {
