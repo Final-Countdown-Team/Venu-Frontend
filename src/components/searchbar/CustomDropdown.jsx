@@ -22,6 +22,8 @@ const CustomDropdown = ({
   const [isOpen, setIsOpen] = useState(false);
   const [displayLabel, setDisplayLabel] = useState("");
 
+  console.log(options);
+
   // Set ref to dropdown list
   const ref = useRef(null);
   // Close dropdown when user clicks outside of dropdown list
@@ -69,7 +71,8 @@ const CustomDropdown = ({
           {!isLoading &&
             options.map((option, i) => {
               const value = typeof option === "string" ? option : option.value;
-              const label = typeof option === "string" ? option : option.label;
+              let label = typeof option === "string" ? option : option.label;
+              if (label.includes("00.000Z")) label = label.substring(0, 10);
               return (
                 <li
                   className={`${globalUserType}-list-item`}
@@ -84,7 +87,7 @@ const CustomDropdown = ({
                     }
                   }}
                 >
-                  {label}
+                  {label.includes("00.000Z") ? label.substring(0, 10) : label}
                 </li>
               );
             })}

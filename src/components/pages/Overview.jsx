@@ -13,10 +13,13 @@ import {
   transitionTween,
 } from "../animations/containerVariants";
 import { ScaleLoader } from "react-spinners";
+import { spinnerOverrideBig } from "../utils/spinnerOverride";
 
 function Overview({ userType }) {
   const { setGlobalUserType, previews, isLoading, setIsLoading, getPreviews } =
     useContext(MainContext);
+
+  console.log(previews);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -39,15 +42,11 @@ function Overview({ userType }) {
       id={preview._id}
       description={preview.description}
       availability={preview.availability}
+      bookedDates={preview.bookedDates}
       name={preview.name}
       img={preview.profileImage}
     />
   ));
-
-  const spinnerOverride = {
-    margin: "10rem 20rem",
-    transform: "scale(2)",
-  };
 
   return (
     <motion.div
@@ -61,7 +60,7 @@ function Overview({ userType }) {
       {isLoading ? (
         <div className="loading-wrapper--overview">
           <ScaleLoader
-            cssOverride={spinnerOverride}
+            cssOverride={spinnerOverrideBig}
             color={userType === "artists" ? "#0168b5" : "#b02476"}
             aria-label="Loading Spinner"
           />

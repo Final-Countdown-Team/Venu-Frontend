@@ -10,6 +10,7 @@ function DateSelector(props) {
   const handelDatePicker = (e) => {
     const dateObjectsArray = e.map((date) => new Date(date));
     const dateStringsArr = dateObjectsArray.flat();
+    console.log(dateStringsArr);
     formikContext.setFieldValue("dates", dateStringsArr);
   };
 
@@ -22,7 +23,7 @@ function DateSelector(props) {
         <DatePicker
           multiple
           value={formikContext.values[name]}
-          name={name}
+          // currentDate={new Date(Date.now())}
           minDate={Date.now()}
           format="MMMM/DD/YY"
           className="datepicker"

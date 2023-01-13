@@ -175,7 +175,7 @@ export const MainContextProvider = ({ children }) => {
   // Get the previews on the overview page
   const getPreviews = async (userType, signal) => {
     setIsLoading(true);
-    const URL = `/${userType}?fields=name,description,profileImage,availability,dates`;
+    const URL = `/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
     const res = await fetch(URL, { signal });
     const data = await res.json();
     dispatch({

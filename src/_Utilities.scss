@@ -44,6 +44,7 @@ $container-max-width-md: 65rem;
 
 // Utility Classes
 .button-link {
+  min-width: 18rem;
   flex-basis: 45%;
   flex-grow: 1;
 }

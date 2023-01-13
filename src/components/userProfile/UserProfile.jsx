@@ -16,6 +16,7 @@ import {
   AiOutlineInstagram as Instagram,
   AiOutlineTwitter as Twitter,
   AiFillYoutube as Youtube,
+  AiOutlineRight,
 } from "react-icons/ai";
 import { BsFillPeopleFill, BsGlobe2 as Website } from "react-icons/bs";
 
@@ -40,18 +41,27 @@ const mergeDates = (user, bookedDates) => {
   return [];
 };
 
+// Object of Icons for social media icon mapping
+const icons = {
+  facebook: Facebook,
+  instagram: Instagram,
+  twitter: Twitter,
+  youtube: Youtube,
+  website: Website,
+};
+
+// START OF FUNCTION COMPONENT //
 function UserProfile({ purpose, editable }) {
   const { setGlobalUserType, loggedInUser, watchUser, isLoading, setIsLoading } =
     useContext(MainContext);
 
-  const [dimensions, setDimensions] = useState({ width: window.innerWidth });
-
   const user = purpose === "watchUser" ? watchUser : loggedInUser;
   console.log(user);
-
   const [bookedDates, setBookedDates] = useState(
     user.bookedDates ? flatBookedDates(user) : []
   );
+
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth });
 
   // Load map only if it is visible in viewport for animation
   const { ref } = useInView({ triggerOnce: true });
@@ -62,6 +72,7 @@ function UserProfile({ purpose, editable }) {
   };
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
+    setGlobalUserType(user.type);
     console.log("User profile is mounted");
     const handleResize = () => setDimensions({ width: window.innerWidth });
     window.scrollTo(0, 0);
@@ -74,21 +85,10 @@ function UserProfile({ purpose, editable }) {
   }, []);
 
   useEffect(() => {
-    setGlobalUserType(user.type);
-  }, []);
-
-  useEffect(() => {
+    console.log("Set global user type");
     setBookedDates(flatBookedDates(user));
   }, [user]);
 
-  // Object of Icons for social media icon mapping
-  const icons = {
-    facebook: Facebook,
-    instagram: Instagram,
-    twitter: Twitter,
-    youtube: Youtube,
-    website: Website,
-  };
   return (
     <motion.div
       variants={containerVariantX}
@@ -130,7 +130,6 @@ function UserProfile({ purpose, editable }) {
                 {user?.genre}
               </p>
             )}
-
             <p className="description">{user?.description}</p>
           </div>
 
@@ -188,10 +187,12 @@ function UserProfile({ purpose, editable }) {
                   backgroundColor: "#666",
                 };
               if (
-                bookedDates.some(
-                  (bookedDate) =>
-                    new Date(date).getTime() === new Date(bookedDate).getTime()
-                )
+                bookedDates.some((bookedDate) => {
+                  return (
+                    new Date(date).toDateString() ===
+                    new Date(bookedDate).toDateString()
+                  );
+                })
               ) {
                 props.style = {
                   backgroundColor: "#e5534b",
@@ -209,6 +210,24 @@ function UserProfile({ purpose, editable }) {
             <span className="red"> booked</span>
           </p>
         </div>
+
+        {user.bookedDates && user.bookedDates?.length !== 0 && (
+          <div className="padding-group booked-dates-group">
+            <h3>Upcoming Events:</h3>
+            <ul>
+              {user.bookedDates.map((obj) => {
+                const booked =
+                  user.type === "artists" ? obj.venue.name : obj.artist.name;
+                const recentDate = obj.bookedDates.sort();
+                return (
+                  <li>
+                    {booked} - {recentDate[0].substring(0, 10)}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
 
         <div className="padding-group members-group">
           <h3>{user.type === "artists" ? "Members:" : "Capacity:"}</h3>

@@ -204,8 +204,9 @@
       position: absolute;
       display: flex;
       justify-content: center;
-      background-color: rgba($color: #000000, $alpha: 0.3);
-      border-radius: 100vw;
+      background-color: rgba($color: #000000, $alpha: 0.5);
+      opacity: 0.6;
+      border-radius: 10rem;
       font-size: 1.8rem;
       @include respond(landscape) {
         bottom: -10px;
@@ -217,6 +218,42 @@
       .blue {
         color: #0074d9;
       }
+    }
+  }
+
+  .flex-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .booked-dates-group {
+    padding-bottom: 0;
+
+    h3 {
+      padding-bottom: 2rem;
+    }
+
+    ul {
+      text-align: left;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      list-style-type: none;
+      gap: 2rem;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      padding: 2rem;
+      max-width: 35rem;
+      flex: 1 1 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #050505;
     }
   }
 
