@@ -18,6 +18,7 @@ export const mainContextReducer = (state, action) => {
         ...state,
         mapLocations: action.payload,
         isPending: false,
+        isLoading: false,
       };
     case "GET_WATCH_USER":
       return {
@@ -32,6 +33,7 @@ export const mainContextReducer = (state, action) => {
         loggedInUser: action.payload,
         isPending: false,
         isLoggedIn: true,
+        fetchFromLocalStorage: false,
       };
     // Pending is for the fetch requests
     case "SET_IS_PENDING":
@@ -45,6 +47,12 @@ export const mainContextReducer = (state, action) => {
         ...state,
         isLoading: action.payload,
       };
+    case "SET_FETCH_FROM_LOCAL_STORAGE": {
+      return {
+        ...state,
+        fetchFromLocalStorage: action.payload,
+      };
+    }
     case "CLEAR_LOGGED_IN_USER":
       return {
         ...state,

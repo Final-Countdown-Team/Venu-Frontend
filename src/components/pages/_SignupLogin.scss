@@ -1,43 +1,49 @@
 @import "../../Utilities";
 
-.signup-container {
-  width: 90%;
-  max-width: 85rem;
-  padding: 4rem 2rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 20px 10px rgb(0, 0, 0);
+.signup-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  .arrow-position {
-    position: absolute;
-    top: 0rem;
-    left: 0;
-    padding: 1rem;
-  }
+  .signup-container {
+    position: relative;
+    width: 90%;
+    max-width: 85rem;
+    margin: auto;
+    padding: 4rem 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px 10px rgb(0, 0, 0);
 
-  h2 {
-    font-family: $font-special;
-    font-size: 4rem;
-  }
-  .userType-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 4rem auto;
-    width: 100%;
-  }
+    .arrow-position {
+      position: absolute;
+      top: -2rem;
+      left: 0;
+      padding: 1rem;
+    }
 
-  .button-container {
-    width: 85%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    margin: 2rem auto;
+    h2 {
+      font-family: $font-special;
+      font-size: 4rem;
+    }
+    .userType-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem auto;
+      width: 100%;
+    }
+
+    .button-container {
+      width: 85%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      margin: 2rem auto;
+    }
   }
 }

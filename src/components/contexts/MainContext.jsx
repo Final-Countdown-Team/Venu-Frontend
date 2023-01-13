@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useFetcher } from "react-router-dom";
 import { mainContextReducer } from "./MainContextReducer";
 
 export const MainContext = createContext();
@@ -15,8 +14,8 @@ export const MainContextProvider = ({ children }) => {
   // REDUCER
   const initalState = {
     globalUserType: {},
-    previews: {},
-    mapLocations: {},
+    previews: [],
+    mapLocations: [],
     watchUser: {},
     loggedInUser: {},
     isLoggedIn: false,
@@ -24,26 +23,29 @@ export const MainContextProvider = ({ children }) => {
     isPending: false,
     // Loading === false tells components to safely start mounting when the data arrived
     isLoading: true,
+    fetchFromLocalStorage: true,
   };
 
   const [state, dispatch] = useReducer(mainContextReducer, initalState);
+  console.log(state);
 
   // Check if a user is still stored in localStorage and set isLoggedInUser
   useEffect(() => {
-    console.log("Is fetching from local storage...");
     if (localStorage.getItem("loggedInUser")) {
+      console.log("Is fetching from local storage...");
       const user = JSON.parse(localStorage.getItem("loggedInUser"));
       dispatch({
         type: "GET_LOGGED_IN_USER",
         payload: user,
       });
     }
+    setFetchFromLocalStorage(false);
     return;
   }, []);
 
-  // // Persist the loggedInUser to localStorage
+  // Persist the loggedInUser to localStorage
   useEffect(() => {
-    if (Object.keys(state.loggedInUser).length === 0) return;
+    if (state.loggedInUser && Object.keys(state.loggedInUser).length === 0) return;
     localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
   }, [state.loggedInUser]);
 
@@ -55,6 +57,10 @@ export const MainContextProvider = ({ children }) => {
   const setIsLoading = (boolean) =>
     dispatch({ type: "SET_IS_LOADING", payload: boolean });
 
+  const setFetchFromLocalStorage = (boolean) => {
+    dispatch({ type: "SET_FETCH_FROM_LOCAL_STORAGE", payload: boolean });
+  };
+
   // Set a globalUserType
   const setGlobalUserType = (userType) => {
     dispatch({
@@ -64,36 +70,35 @@ export const MainContextProvider = ({ children }) => {
   };
 
   // Delete outdated dates, is called when user is logged in
-  const updateDates = async (response, userType) => {
-    try {
-      const updatedDates = response.data.dates.filter((date) => {
-        const today = new Date().toISOString();
-        return date > today;
-      });
+  // const updateDates = async (response, userType) => {
+  //   try {
+  //     const updatedDates = response.data.dates.filter((date) => {
+  //       const today = new Date().toISOString();
+  //       return date > today;
+  //     });
 
-      const req = await fetch(`/${userType}/user/updateMe`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ dates: updatedDates }),
-      });
-      const res = await req.json();
-      dispatch({
-        type: "GET_LOGGED_IN_USER",
-        payload: res.data,
-      });
-      console.log("Updated dates 👍");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //     const req = await fetch(`/${userType}/user/updateMe`, {
+  //       method: "PATCH",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ dates: updatedDates }),
+  //     });
+  //     const res = await req.json();
+  //     dispatch({
+  //       type: "GET_LOGGED_IN_USER",
+  //       payload: res.data,
+  //     });
+  //     console.log("Updated dates 👍");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   // Get logged in user
   const getLoggedInUser = async (values, actions, userType, navigate) => {
     try {
-      console.log("Getting logged in user...");
       setIsPending(true);
       const req = await fetch(`/${userType}/login`, {
         method: "POST",
@@ -108,11 +113,11 @@ export const MainContextProvider = ({ children }) => {
       // Throw manual error if request fails
       if (res.status === "fail" || res.status === "error")
         throw new Error(res.message || "Ups, something went wrong");
-      // dispatch({
-      //   type: "GET_LOGGED_IN_USER",
-      //   payload: res.data,
-      // });
-      updateDates(res, userType);
+      dispatch({
+        type: "GET_LOGGED_IN_USER",
+        payload: res.data,
+      });
+      // updateDates(res, userType);
       localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
       // Show success notification when data is sucessfully fetched
       toast.success("Successfully logged in 🎉");
@@ -127,11 +132,32 @@ export const MainContextProvider = ({ children }) => {
     }
   };
 
-  // Visiting other user's profiles
-  const getWatchUser = async (userID, userType, signal) => {
-    console.log("Visiting user profile...");
+  // Updating loggedInUser data when visiting profileMe Page
+  const getMe = async () => {
     try {
       setIsPending(true);
+      setIsLoading(true);
+      const req = await fetch(`/${state.loggedInUser.type}/user/me`);
+      const res = await req.json();
+      if (res.status === "fail" || res.status === "error")
+        throw new Error(res.message || "Ups, something went wrong");
+      dispatch({
+        type: "GET_LOGGED_IN_USER",
+        payload: res.data,
+      });
+      localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
+      setIsLoading(false);
+    } catch (err) {
+      setIsPending(false);
+      console.error(err);
+    }
+  };
+
+  // Visiting other user's profiles
+  const getWatchUser = async (userID, userType, signal) => {
+    try {
+      setIsPending(true);
+      setIsLoading(true);
       const res = await fetch(`/${userType}/${userID}`, { signal });
       const data = await res.json();
       console.log(data);
@@ -141,23 +167,21 @@ export const MainContextProvider = ({ children }) => {
       });
     } catch (err) {
       setIsPending(false);
-      console.err(err);
+      console.error(err);
       toast.error("Ups, something went wrong ☹️");
     }
   };
 
   // Get the previews on the overview page
   const getPreviews = async (userType, signal) => {
-    console.log("Getting previews...");
     setIsLoading(true);
-    const URL = `/${userType}?fields=name,description,profileImage,availability,dates`;
+    const URL = `/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
     const res = await fetch(URL, { signal });
     const data = await res.json();
     dispatch({
       type: "GET_PREVIEWS",
       payload: data,
     });
-    setTimeout(() => setIsLoading(false), 800);
   };
 
   // Get locations of 10 users of each userType for the map on Home
@@ -170,23 +194,17 @@ export const MainContextProvider = ({ children }) => {
 
     const venuesRes = await fetch(`/venues?${query}`);
     const venuesData = await venuesRes.json();
-    console.log(artistsData);
 
-    const joinedData = artistsData?.data?.concat(venuesData.data);
-    console.log(joinedData);
+    const joinedData = artistsData.data.concat(venuesData.data);
 
     dispatch({
       type: "GET_LOCATIONS",
       payload: joinedData,
     });
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
   };
 
   // Searchbar results
   const getSearchResults = (data) => {
-    console.log("Getting search results...");
     dispatch({
       type: "GET_PREVIEWS",
       payload: data,
@@ -368,7 +386,6 @@ export const MainContextProvider = ({ children }) => {
 
   // Logout
   const logoutUser = async (navigate, message) => {
-    console.log(state.loggedInUser.type);
     await fetch(`/${state.loggedInUser.type}/logout`);
     dispatch({
       type: "CLEAR_LOGGED_IN_USER",
@@ -391,7 +408,28 @@ export const MainContextProvider = ({ children }) => {
       });
       await fetch(`/${state.loggedInUser.type}/logout`);
       logoutUser(navigate, "Your account was deleted");
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Deactiavte Account
+  const reactivateAccount = async (userType, id) => {
+    try {
+      setIsLoading(true);
+      await fetch(`/${userType}/reactivateAccount/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      toast.success("Your account has been reactivated 🎉 \n Please login as usual");
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Sorry, something went wrong");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -406,6 +444,7 @@ export const MainContextProvider = ({ children }) => {
         formSubmitSignup,
         editFormSubmitData,
         editFormSubmitImages,
+        fetchFromLocalStorage: state.fetchFromLocalStorage,
         globalUserType: state.globalUserType,
         getPreviews,
         previews: state.previews,
@@ -414,6 +453,7 @@ export const MainContextProvider = ({ children }) => {
         getLoggedInUser,
         loggedInUser: state.loggedInUser,
         isLoggedIn: state.isLoggedIn,
+        getMe,
         getWatchUser,
         watchUser: state.watchUser,
         isPending: state.isPending,
@@ -421,6 +461,7 @@ export const MainContextProvider = ({ children }) => {
         isLoading: state.isLoading,
         logoutUser,
         deleteAccount,
+        reactivateAccount,
       }}
     >
       {children}

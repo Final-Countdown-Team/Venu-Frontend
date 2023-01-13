@@ -28,7 +28,7 @@ function ProfileEdit() {
       >
         <div className="profile-edit-page--heading">
           {loggedInUser ? (
-            <h1>{`Welcome${loggedInUser.name}`}</h1>
+            <h1>{`Welcome ${loggedInUser.name},`}</h1>
           ) : (
             <h1>Hey, I think you got lost here 😬</h1>
           )}

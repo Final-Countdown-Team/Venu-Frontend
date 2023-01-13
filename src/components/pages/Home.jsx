@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
@@ -12,14 +12,25 @@ import Map from "../map/Map";
 import ReuseButton from "../buttons/Reusable_BB";
 
 function Home() {
-  const { isLoading, setGlobalUserType, getLocations, mapLocations } =
+  const { isLoading, setIsLoading, setGlobalUserType, getLocations } =
     useContext(MainContext);
 
   const { ref } = useInView();
+  const mounted = useRef(false);
 
   useEffect(() => {
+    mounted.current = true;
+    console.log("Home is Mounted! IsLoading: ", isLoading);
+    setIsLoading(true);
+    window.scrollTo(0, 0);
     setGlobalUserType(null);
     getLocations();
+
+    return () => {
+      mounted.current = false;
+      console.log("HOME is Not Mounted! State: ", mounted.current);
+      setIsLoading(true);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,7 +83,7 @@ function Home() {
           />
         ) : (
           <div ref={ref}>
-            <Map users={mapLocations} />
+            <Map purpose={"home"} />
           </div>
         )}
       </div>

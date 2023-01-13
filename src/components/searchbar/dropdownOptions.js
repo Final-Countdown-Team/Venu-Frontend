@@ -13,13 +13,21 @@ export const genreOptions = [
   { value: "Singer-Songwriter", label: "Singer-Songwriter" },
 ];
 
-export const sortOptions = [
+export const sortOptionsCore = [
   { value: "name", label: "Name: A-Z" },
   { value: "-name", label: "Name: Z-A" },
   { value: "-createdAt", label: "Newest" },
+];
+
+export const sortOptionsArtists = sortOptionsCore.concat([
+  { value: "members", label: "Members asc." },
+  { value: "-members", label: "Members desc." },
+]);
+
+export const sortOptionsVenues = sortOptionsCore.concat([
   { value: "capacity", label: "Capacity asc." },
   { value: "-capacity", label: "Capacity desc." },
-];
+]);
 
 export const radiusOptions = [
   { value: "5", label: "5km" },

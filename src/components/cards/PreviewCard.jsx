@@ -1,13 +1,34 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AvailableButton from "../buttons/AvailableButton";
 import { CardButton } from "../buttons/CardButton";
 import { MainContext } from "../contexts/MainContext";
 import LazyLoadImageComp from "../utils/LazyLoadImageComp";
+import { BsCalendarDate } from "react-icons/bs";
+import { motion } from "framer-motion";
+import {
+  containerVariantY,
+  transitionTween,
+} from "../animations/containerVariants.js";
 
 import "./_Preview-card.scss";
 
-function PreviewCard({ img, name, description, userType, id, availability }) {
+function PreviewCard({
+  img,
+  name,
+  description,
+  userType,
+  id,
+  availability,
+  bookedDates,
+}) {
   const { isLoggedIn } = useContext(MainContext);
+  const [showBooked, setShowBooked] = useState(false);
+
+  const showBookedHandler = () => {
+    setShowBooked(!showBooked);
+  };
+
+  // console.log(bookedDates.sort((a, b) => a.bookedDates.every - b.confirmedAt));
 
   return (
     <div className="card-container brad-lg">
@@ -15,8 +36,41 @@ function PreviewCard({ img, name, description, userType, id, availability }) {
         <LazyLoadImageComp
           src={img}
           alt="profile preview"
-          className="brad-lg preview-userImage"
+          className="brad-md preview-userImage"
         />
+
+        {bookedDates.length !== 0 && (
+          <>
+            <div
+              onClick={showBookedHandler}
+              className={`brad-md preview-date-icon ${
+                userType === "artists" ? "color--artists" : "color--venues"
+              }`}
+            >
+              <BsCalendarDate />
+            </div>
+
+            <div
+              className={`brad-md show-booked-dates ${
+                showBooked && "show-booked-active"
+              }`}
+            >
+              <ul>
+                {bookedDates.slice(0, 5).map((obj) => {
+                  const booked =
+                    userType === "artists" ? obj.venue.name : obj.artist.name;
+                  const recentDate = obj.bookedDates.sort();
+                  return (
+                    <li>
+                      {booked} - {recentDate[0].substring(0, 10)}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </>
+        )}
+
         <div className="preview-available-button--position">
           <AvailableButton available={availability} />
         </div>

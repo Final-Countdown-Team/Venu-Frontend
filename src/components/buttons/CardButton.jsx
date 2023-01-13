@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../buttons/_CardButton.scss";
+import "./_CardButton.scss";
 import { HiArrowRight as ArrowRight } from "react-icons/hi";
 
 export const CardButton = ({ userType, link, text }) => {

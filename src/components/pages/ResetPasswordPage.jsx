@@ -1,21 +1,19 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { containerVariantPosAbs } from "../animations/containerVariants";
+import { containerVariantY, transitionTween } from "../animations/containerVariants";
 import ResetPasswordForm from "../forms/resetPasswordForm/ResetPasswordForm";
 
 import ArrowBack from "../utils/ArrowBack";
 import "./_Login.scss";
-import "../forms/forgotPasswordModal/_ForgotPasswordModal.scss";
+import "../modal/forgotPasswordModal/_ForgotPasswordModal.scss";
 
 function ResetPasswordPage() {
   const { userType, resetToken } = useParams();
-
-  console.log(userType, resetToken);
-
   return (
     <motion.div
-      variants={containerVariantPosAbs}
+      variants={containerVariantY}
+      transition={transitionTween}
       initial="hidden"
       animate="visible"
       exit="exit"

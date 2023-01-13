@@ -4,7 +4,7 @@ function Textbox(props) {
   const { name, placeholder, label, customClass } = props;
 
   return (
-    <div className="form-input-full textbox-group">
+    <div className="form-input-full textbox-group textbox-group-contact">
       {label && <label htmlFor="message">{label}</label>}
       <Field
         as="textarea"

@@ -7,7 +7,16 @@ function InputFull(props) {
   const formikContext = useFormikContext(props);
   const context = useContext(MainContext);
 
-  const { name, label, type, required, placeholder, thin, canBeDisabled } = props;
+  const {
+    name,
+    label,
+    type,
+    required,
+    placeholder,
+    thin,
+    canBeDisabled,
+    className,
+  } = props;
 
   const focusHandler = (e) => {
     // Prefix URL fields with https:// when focuses field
@@ -44,7 +53,7 @@ function InputFull(props) {
   const ifDisabled = canBeDisabled && context.isDisabled ? "input-disabled" : "";
 
   return (
-    <div className="form-input-full">
+    <div className={`form-input-full`}>
       {label && (
         <div className="required-label">
           <label className={thin && "label-thin"} htmlFor={name}>
@@ -60,7 +69,7 @@ function InputFull(props) {
       <Field
         {...field}
         disabled={canBeDisabled ? context.isDisabled : false}
-        className={`brad-sm input ${
+        className={`brad-sm input ${className} ${
           meta.error && meta.touched ? "input-error" : ""
         } ${ifDisabled}`}
         type={type ? type : "text"}

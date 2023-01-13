@@ -40,7 +40,7 @@ export const containerVariantPosAbs = {
   hidden: {
     opacity: 0,
     y: "-100vh",
-    x: "-50%",
+    x: "-50vw",
   },
   visible: {
     opacity: 1,
@@ -50,7 +50,7 @@ export const containerVariantPosAbs = {
   exit: {
     opacity: 0,
     y: "100vh",
-    x: "-50%",
+    x: "-50vw",
   },
 };
 

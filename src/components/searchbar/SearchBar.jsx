@@ -8,10 +8,11 @@ import "./_SearchBar.scss";
 
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import {
-  sortOptions,
   radiusOptions,
   dateOptions,
   genreOptions,
+  sortOptionsArtists,
+  sortOptionsVenues,
 } from "./dropdownOptions";
 import AutocompleteLocation from "./AutocompleteLocation";
 
@@ -37,8 +38,10 @@ export default function SearchBar() {
     e.preventDefault();
     // Creat query string for fetching previews
     const URL = `/${globalUserType}?name=${searchText}&city=${city}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
+    console.log(URL);
     const res = await fetch(URL);
     const data = await res.json();
+    console.log(data);
     getSearchResults(data);
   };
 
@@ -53,7 +56,6 @@ export default function SearchBar() {
     const getUserLocation = async () => {
       try {
         const pos = await getPosition();
-        console.log(pos);
         const { latitude: lat, longitude: lng } = pos.coords;
         setLatLng(`${lat},${lng}`);
       } catch (err) {
@@ -76,36 +78,22 @@ export default function SearchBar() {
       />
       <div className="dropdown-group">
         <CustomDropdown
-          state={sort}
           onChange={setSort}
-          options={sortOptions}
+          options={
+            globalUserType === "artists" ? sortOptionsArtists : sortOptionsVenues
+          }
           type="Sort"
         />
         <CustomDropdown
-          state={dates}
           onChange={dateHandler}
           options={dateOptions}
           type="Available"
         />
         {globalUserType === "artists" && (
-          <CustomDropdown
-            state={genre}
-            onChange={setGenre}
-            options={genreOptions}
-            type="Genre"
-          />
+          <CustomDropdown onChange={setGenre} options={genreOptions} type="Genre" />
         )}
-        <CustomDropdown
-          state={radius}
-          onChange={setRadius}
-          options={radiusOptions}
-          type="Radius"
-        />
-        <AutocompleteLocation
-          state={"city"}
-          onChange={setCity}
-          setLatLng={setLatLng}
-        />
+        <CustomDropdown onChange={setRadius} options={radiusOptions} type="Radius" />
+        <AutocompleteLocation onChange={setCity} setLatLng={setLatLng} />
         <div className="search-btn-group">
           <ButtonSecondary
             text="Search"
