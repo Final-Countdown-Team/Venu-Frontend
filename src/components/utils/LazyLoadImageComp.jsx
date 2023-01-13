@@ -5,10 +5,12 @@ import placeholder from "../../img/placeholder.jpg";
 import "./_LazyLoadImageComp.scss";
 
 function LazyLoadImageComp({ src, alt, className, wrapperClassName }) {
+  const LQIP = src.replace("upload/", "upload/q_30/e_blur:1000/w_100");
+  console.log(src);
   return (
     <LazyLoadImage
       style={{ display: "block" }}
-      placeholderSrc={placeholder}
+      placeholderSrc={src.includes("cloudinary") ? LQIP : placeholder}
       effect="blur"
       wrapperClassName={wrapperClassName || "preview-image-wrapper"}
       className={className || ""}

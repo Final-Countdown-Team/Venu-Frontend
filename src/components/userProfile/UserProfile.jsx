@@ -23,13 +23,22 @@ import "./_UserProfile.scss";
 import { MainContext } from "../contexts/MainContext";
 
 // Get the booked Dates from the nested arrays
-const flatBookedDates = (user) =>
-  user.bookedDates
-    .map((object) => object.bookedDates.map((bookedDate) => bookedDate))
-    .flat();
+const flatBookedDates = (user) => {
+  if (user.bookedDates) {
+    return user.bookedDates
+      .map((object) => object.bookedDates.map((bookedDate) => bookedDate))
+      .flat();
+  }
+  return [];
+};
 
 // Merge the avaialable dates with the bookedDates
-const mergeDates = (user, bookedDates) => [...user.dates, ...bookedDates].sort();
+const mergeDates = (user, bookedDates) => {
+  if (user.dates) {
+    return [...user.dates, ...bookedDates].sort();
+  }
+  return [];
+};
 
 function UserProfile({ purpose, editable }) {
   const { setGlobalUserType, loggedInUser, watchUser, isLoading, setIsLoading } =
@@ -41,7 +50,7 @@ function UserProfile({ purpose, editable }) {
   console.log(user);
 
   const [bookedDates, setBookedDates] = useState(
-    user.bookedDates ? flatBookedDates(user) : null
+    user.bookedDates ? flatBookedDates(user) : []
   );
 
   // Load map only if it is visible in viewport for animation
