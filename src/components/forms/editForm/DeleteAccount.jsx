@@ -17,6 +17,8 @@ function DeleteAccount() {
     setShowConfirm(false);
   };
 
+  console.log(showConfirm);
+
   return (
     <>
       <div className="form-group-delete">

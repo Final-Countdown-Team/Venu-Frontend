@@ -143,7 +143,7 @@
 }
 
 .image-uploader {
-  height: 13rem;
+  height: 16rem;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -163,8 +163,21 @@
       font-size: 1.4rem;
       font-weight: 300;
       padding-bottom: 1rem;
+
+      .size-descr {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 200;
+      }
     }
   }
+}
+
+.image-error {
+  color: $color-profile-button--delete;
+  padding-top: 1rem;
+  font-size: 1.4rem;
+  text-align: left;
 }
 
 .preview-container {
