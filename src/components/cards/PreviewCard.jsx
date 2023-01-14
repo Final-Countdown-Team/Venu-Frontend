@@ -1,14 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import AvailableButton from "../buttons/AvailableButton";
 import { CardButton } from "../buttons/CardButton";
 import { MainContext } from "../contexts/MainContext";
 import LazyLoadImageComp from "../utils/LazyLoadImageComp";
 import { BsCalendarDate } from "react-icons/bs";
-import { motion } from "framer-motion";
-import {
-  containerVariantY,
-  transitionTween,
-} from "../animations/containerVariants.js";
 
 import "./_Preview-card.scss";
 
@@ -27,9 +22,6 @@ function PreviewCard({
   const showBookedHandler = () => {
     setShowBooked(!showBooked);
   };
-
-  // console.log(bookedDates.sort((a, b) => a.bookedDates.every - b.confirmedAt));
-
   return (
     <div className="card-container brad-lg">
       <div className="userImage-container">

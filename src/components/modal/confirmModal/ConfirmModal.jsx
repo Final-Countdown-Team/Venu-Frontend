@@ -3,7 +3,6 @@ import "../../modal/forgotPasswordModal/_ForgotPasswordModal.scss";
 import "./_ConfirmModal.scss";
 
 function ConfirmModal({ deleteAccount, hideModal }) {
-  console.log("test");
   return (
     <div className="confirm-modal-wrapper">
       <div className="confirm-modal">

@@ -27,20 +27,20 @@ function ImageUploader({ setImageFiles }) {
   const onDrop = (acceptedFiles) => {
     setError("");
     if (validateFileSize(acceptedFiles[0])) return;
-    console.log("Accepted: ", acceptedFiles);
+    // console.log("Accepted: ", acceptedFiles);
     const processedFiles = processFiles(acceptedFiles);
     const newFiles = files.map((el, i) => {
       if (typeof el === "string" && el.includes("empty"))
         return processedFiles.shift() || el;
       return el;
     });
-    console.log(newFiles);
+    // console.log(newFiles);
     setFiles(newFiles);
   };
 
   const validateFileSize = (file) => {
     console.log(file.size);
-    if (file.size >= 500000) {
+    if (file.size >= 5000000) {
       setError("This file is too big");
       toast.error("This file is too big");
       return true;

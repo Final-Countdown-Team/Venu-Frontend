@@ -17,8 +17,7 @@ function ProfileImageUploader({ setImageFiles, ...props }) {
   }, [isLoggedIn, loggedInUser]);
 
   const validateFileSize = (file) => {
-    console.log(file.size);
-    if (file.size >= 500000) {
+    if (file.size >= 5000000) {
       toast.error("This file is too big");
       return true;
     }

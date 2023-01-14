@@ -16,9 +16,6 @@ function DeleteAccount() {
   const hideModal = () => {
     setShowConfirm(false);
   };
-
-  console.log(showConfirm);
-
   return (
     <>
       <div className="form-group-delete">

@@ -38,10 +38,8 @@ export default function SearchBar() {
     e.preventDefault();
     // Creat query string for fetching previews
     const URL = `/${globalUserType}?name=${searchText}&city=${city}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
-    console.log(URL);
     const res = await fetch(URL);
     const data = await res.json();
-    console.log(data);
     getSearchResults(data);
   };
 

@@ -13,6 +13,7 @@ function ReactivateAccount() {
     return () => {
       setIsLoading(true);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isLoading) return <Login userType={userType} />;
