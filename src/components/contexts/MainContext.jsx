@@ -226,6 +226,7 @@ export const MainContextProvider = ({ children }) => {
   const editFormSubmitImages = async (imageFiles) => {
     try {
       console.log(imageFiles);
+      if (!imageFiles.profileImage || !imageFiles.images) return;
       setIsPending(true);
       // --- SENDING IMAGES ---
       // Creating new FormData to be able to send files to backend
@@ -281,14 +282,14 @@ export const MainContextProvider = ({ children }) => {
   const editFormSubmitData = async (values, actions) => {
     try {
       setIsPending(true);
-      const newValues = {
-        ...values,
-        location: { type: "Point", coordinates: [12.75597, 51.372651] },
-      };
       // Filtering out keys with empty values
       const filteredValues = Object.fromEntries(
-        Object.entries(newValues).filter(([_, value]) => value !== "")
+        Object.entries(values).filter(([_, value]) => value !== "")
       );
+      // Get coordinates based on address
+      const geoCodeValues = await geoCodeAddress(filteredValues);
+      console.log(geoCodeValues);
+
       const URL = `/${state.loggedInUser.type}/user/updateMe`;
       // // Sending regular form data
       const req = await fetch(URL, {
@@ -297,7 +298,7 @@ export const MainContextProvider = ({ children }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(filteredValues),
+        body: JSON.stringify(geoCodeValues),
       });
       const res = await req.json();
       // // Throw error when failed
@@ -318,69 +319,89 @@ export const MainContextProvider = ({ children }) => {
     }
   };
 
-  //
+  // Signup submit handler
   const formSubmitSignup = async (values, actions, userType, navigate) => {
     try {
       setIsPending(true);
-      // Geocode the coordinates from address
-      // const { street, city, zipcode } = values.address;
-      // // Fetching address data from geoApify
-      // const geoRes = await fetch(
-      //   `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
-      // );
-
-      // if (!geoRes.ok)
-      //   throw new Error(
-      //     "Something went wrong validating your address. Please check if you entered a valid address."
-      //   );
-      // const geoData = await geoRes.json();
-      // // Destructuring coordinates
-      // const [{ lat, lon }] = geoData.results;
-      // console.log(lat, lon);
-
-      // const newValues = {
-      //   ...values,
-      //   location: { coordinates: [lon, lat] },
-      // };
-      const newValues = {
-        ...values,
-        location: { type: "Point", coordinates: [12.75597, 51.372651] },
-      };
       // Filtering out keys with empty values
       const filteredValues = Object.fromEntries(
-        Object.entries(newValues).filter(([_, value]) => value !== "")
+        Object.entries(values).filter(([_, value]) => value !== "")
       );
       console.log(filteredValues);
+      const geoCodeValues = await geoCodeAddress(filteredValues);
+      console.log(geoCodeValues);
       // Sending POST request to backend
-      const req = await fetch(`/${userType}/signup`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(filteredValues),
-      });
-      const res = await req.json();
-      console.log(res);
-      // Throw error when failed
-      if (res.status === "fail" || res.status === "error") {
-        const error = res;
-        throw error;
+      if (geoCodeValues) {
+        const req = await fetch(`/${userType}/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(geoCodeValues),
+        });
+        const res = await req.json();
+        console.log(res);
+        // Throw error when failed
+        if (res.status === "fail" || res.status === "error") {
+          const error = res;
+          throw error;
+        }
+        // Updating loggedInUser state + toast
+        updateAfterSubmit(res, "Successfully signed up 🎉");
+        // Redirect to home
+        setTimeout(() => navigate("/"), 1000);
+      } else {
+        throw new Error("Couldn't send request");
       }
-      // Updating loggedInUser state + toast
-      updateAfterSubmit(res, "Successfully signed up 🎉");
-      // Redirect to home
-      setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       setIsPending(false);
       console.error(err.message);
-      toast.error("Ups, something went wrong 💥");
       // Code 11000 is duplicate key error (email already taken)
-      if (err.code === 11000) {
-        const [name, message] = err.message.split(":");
-        return actions.setFieldError(name, message);
+      if (err.error && err.error.code === 11000) {
+        toast.error("This email is already taken", {
+          position: "bottom-center",
+        });
+        actions.setFieldError("email", "This email is already taken");
+        return;
+      } else if (err.isOperational) {
+        toast.error(err.message);
+        actions.setFieldError("address", "Please check your address");
+      } else {
+        toast.error("Sorry, something went wrong 💥", {
+          position: "bottom-center",
+        });
       }
     }
+  };
+
+  // Geocode helper function the coordinates from address
+  const geoCodeAddress = async (values) => {
+    // Guard clause when there is no address property on values
+    if (!values.address) return values;
+    const { street, city, zipcode } = values.address;
+    // Fetching address data from geoApify
+    const geoRes = await fetch(
+      `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
+    );
+    console.log(geoRes);
+    const geoData = await geoRes.json();
+
+    if (!geoRes.ok || !geoData.results.length) {
+      const error = new Error(
+        "Something went wrong validating your address. Please check if you entered a valid address."
+      );
+      error.isOperational = true;
+      throw error;
+    }
+    // Destructuring coordinates
+    const [{ lat, lon }] = geoData.results;
+    console.log(lat, lon);
+
+    const newValues = {
+      ...values,
+      location: { type: "Point", coordinates: [lon, lat] },
+    };
+    return newValues;
   };
 
   // Logout

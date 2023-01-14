@@ -92,8 +92,8 @@ function SignupForm({ userType }) {
         {showDropdown && (
           <>
             <div className="form-group-transparent">
-              <div className="form-group-heading">
-                <p>Description:</p>
+              <div className="required-label description-label-pos">
+                <label className="label-thin">Description:</label>
               </div>
 
               <div className="dropdown-collapse">
