@@ -26,6 +26,7 @@ function EditForm({ initialValues, setImageFiles, ...props }) {
       return acc;
     }, {});
     formikContext.setValues(userFields);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (

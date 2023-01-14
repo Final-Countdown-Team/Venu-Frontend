@@ -17,6 +17,7 @@
     justify-content: space-between;
 
     &--image {
+      min-width: 15rem;
       margin: auto;
       position: relative;
       img {

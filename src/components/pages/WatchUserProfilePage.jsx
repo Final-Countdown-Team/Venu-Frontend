@@ -8,14 +8,15 @@ function WatchUserProfilePage() {
   const { setIsLoading, isLoading, getMe, loggedInUser } = useContext(MainContext);
 
   useEffect(() => {
-    console.log("UserProfile is mounted");
+    // console.log("UserProfile is mounted");
     getMe();
     setIsLoading(false);
 
     return () => {
-      console.log("UserProfile is unmounted");
+      // console.log("UserProfile is unmounted");
       setIsLoading(true);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {

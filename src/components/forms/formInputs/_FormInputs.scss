@@ -56,9 +56,10 @@
 }
 
 .edit-button {
+  height: 4rem;
   padding: 0.5rem 1rem;
   position: absolute;
-  bottom: 5px;
+  bottom: 8px;
   border: 1px solid rgba($color: #fff, $alpha: 0.5);
   background-color: rgba($color: #000000, $alpha: 0.5);
   display: flex;
@@ -78,6 +79,13 @@
     left: 0;
     opacity: 0;
   }
+}
+
+.reset-button {
+  height: 4rem;
+  justify-content: center;
+  right: 0;
+  cursor: pointer;
 }
 
 .textbox {
@@ -143,7 +151,7 @@
 }
 
 .image-uploader {
-  height: 13rem;
+  height: 16rem;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -163,8 +171,20 @@
       font-size: 1.4rem;
       font-weight: 300;
       padding-bottom: 1rem;
+
+      .size-descr {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 200;
+      }
     }
   }
+}
+
+.image-error {
+  color: $color-profile-button--delete;
+  padding-top: 1rem;
+  font-size: 1.2rem;
 }
 
 .preview-container {

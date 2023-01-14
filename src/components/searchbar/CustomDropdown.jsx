@@ -22,8 +22,6 @@ const CustomDropdown = ({
   const [isOpen, setIsOpen] = useState(false);
   const [displayLabel, setDisplayLabel] = useState("");
 
-  console.log(options);
-
   // Set ref to dropdown list
   const ref = useRef(null);
   // Close dropdown when user clicks outside of dropdown list

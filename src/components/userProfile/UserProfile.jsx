@@ -16,7 +16,6 @@ import {
   AiOutlineInstagram as Instagram,
   AiOutlineTwitter as Twitter,
   AiFillYoutube as Youtube,
-  AiOutlineRight,
 } from "react-icons/ai";
 import { BsFillPeopleFill, BsGlobe2 as Website } from "react-icons/bs";
 
@@ -56,7 +55,6 @@ function UserProfile({ purpose, editable }) {
     useContext(MainContext);
 
   const user = purpose === "watchUser" ? watchUser : loggedInUser;
-  console.log(user);
   const [bookedDates, setBookedDates] = useState(
     user.bookedDates ? flatBookedDates(user) : []
   );
@@ -73,19 +71,19 @@ function UserProfile({ purpose, editable }) {
   // Check changes in screen size for responsiveness of calendar
   useEffect(() => {
     setGlobalUserType(user.type);
-    console.log("User profile is mounted");
+    // console.log("User profile is mounted");
     const handleResize = () => setDimensions({ width: window.innerWidth });
     window.scrollTo(0, 0);
     window.addEventListener("resize", handleResize);
     return (_) => {
-      console.log("UserProfile is NOT mounted");
+      // console.log("UserProfile is NOT mounted");
       window.removeEventListener("resize", handleResize);
       setIsLoading(true);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    console.log("Set global user type");
     setBookedDates(flatBookedDates(user));
   }, [user]);
 

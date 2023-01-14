@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
 import { MdCloudUpload } from "react-icons/md";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import { MainContext } from "../../contexts/MainContext";
@@ -8,6 +9,7 @@ import { MainContext } from "../../contexts/MainContext";
 function ImageUploader({ setImageFiles }) {
   const { loggedInUser } = useContext(MainContext);
   const [files, setFiles] = useState(loggedInUser.images);
+  const [error, setError] = useState("");
 
   const processFiles = (source) => {
     return source.map((file, i) =>
@@ -18,24 +20,35 @@ function ImageUploader({ setImageFiles }) {
     );
   };
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
+  // useEffect(() => {
+  //   console.log(files);
+  // }, [files]);
 
   const onDrop = (acceptedFiles) => {
-    console.log(acceptedFiles);
+    setError("");
+    if (validateFileSize(acceptedFiles[0])) return;
+    // console.log("Accepted: ", acceptedFiles);
     const processedFiles = processFiles(acceptedFiles);
     const newFiles = files.map((el, i) => {
       if (typeof el === "string" && el.includes("empty"))
         return processedFiles.shift() || el;
       return el;
     });
-    console.log(newFiles);
+    // console.log(newFiles);
     setFiles(newFiles);
   };
 
+  const validateFileSize = (file) => {
+    console.log(file.size);
+    if (file.size >= 5000000) {
+      setError("This file is too big");
+      toast.error("This file is too big");
+      return true;
+    }
+    return false;
+  };
+
   const removeImage = (e) => {
-    console.log(e.currentTarget);
     const identifier = e.currentTarget.dataset.image;
     setFiles(() =>
       files.map((el, i) => {
@@ -70,8 +83,16 @@ function ImageUploader({ setImageFiles }) {
         <p className="image-uploader-text">
           Click or drag files to this area to upload
         </p>
-        <p className="image-uploader-text--thin">You can upload up to 3 images</p>
+        <p className="image-uploader-text--thin">
+          You can upload up to 3 images{" "}
+          <span className="size-descr">The max. size per file is 5MB</span>
+        </p>
       </div>
+      {error && (
+        <p className="image-error">
+          This file is too big. You can only upload images up to 5MB.
+        </p>
+      )}
       <div className="preview-container">
         {files.every((file) => file === "")
           ? null

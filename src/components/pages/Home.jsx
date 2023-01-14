@@ -20,7 +20,7 @@ function Home() {
 
   useEffect(() => {
     mounted.current = true;
-    console.log("Home is Mounted! IsLoading: ", isLoading);
+    // console.log("Home is Mounted! IsLoading: ", isLoading);
     setIsLoading(true);
     window.scrollTo(0, 0);
     setGlobalUserType(null);
@@ -28,7 +28,7 @@ function Home() {
 
     return () => {
       mounted.current = false;
-      console.log("HOME is Not Mounted! State: ", mounted.current);
+      // console.log("HOME is Not Mounted! State: ", mounted.current);
       setIsLoading(true);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

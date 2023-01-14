@@ -6,8 +6,7 @@ import { MainContext } from "../contexts/MainContext";
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
 const Map = ({ purpose }) => {
-  const { mapLocations, watchUser, loggedInUser, isLoading } =
-    useContext(MainContext);
+  const { mapLocations, watchUser, loggedInUser } = useContext(MainContext);
   const mapContainerRef = useRef(null);
   // Set users or user based on purpose
   const users = purpose === "home" ? mapLocations : [];
@@ -34,7 +33,7 @@ const Map = ({ purpose }) => {
   // Initialize map when component mounts
   useEffect(() => {
     mounted.current = true;
-    console.log("Map is Mounted! Is loading:", isLoading);
+    // console.log("Map is Mounted! Is loading:", isLoading);
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -68,9 +67,10 @@ const Map = ({ purpose }) => {
     // Clean up on unmount
     return () => {
       mounted.current = false;
-      console.log("Map is Not Mounted! Is loading: ", isLoading);
+      // console.log("Map is Not Mounted! Is loading: ", isLoading);
       map.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div className="map-container" ref={mapContainerRef} />;

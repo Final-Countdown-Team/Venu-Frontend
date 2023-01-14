@@ -1,16 +1,25 @@
-.confirm-modal {
-  min-width: 25rem;
-  max-width: 40rem;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+.confirm-modal-wrapper {
   position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
   bottom: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  background-color: rgba($color: #000000, $alpha: 0.8);
 
-  p {
-    text-align: center;
+  .confirm-modal {
+    min-width: 25rem;
+    max-width: 40rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: absolute;
+    bottom: 4.3rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    p {
+      text-align: center;
+    }
   }
 }

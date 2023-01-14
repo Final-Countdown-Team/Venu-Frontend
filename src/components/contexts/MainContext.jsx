@@ -32,7 +32,7 @@ export const MainContextProvider = ({ children }) => {
   // Check if a user is still stored in localStorage and set isLoggedInUser
   useEffect(() => {
     if (localStorage.getItem("loggedInUser")) {
-      console.log("Is fetching from local storage...");
+      // console.log("Is fetching from local storage...");
       const user = JSON.parse(localStorage.getItem("loggedInUser"));
       dispatch({
         type: "GET_LOGGED_IN_USER",
@@ -220,7 +220,6 @@ export const MainContextProvider = ({ children }) => {
     message && toast.success(message);
     // Save user to localStorage
     localStorage.setItem("loggedInUser", JSON.stringify(state.loggedInUser));
-    console.log(state.loggedInUser);
   };
 
   // submitHandler for edit form, handles file uploads

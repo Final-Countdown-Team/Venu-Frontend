@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 import "./_Overview.scss";
 import SearchBar from "../searchbar/SearchBar";
@@ -19,8 +19,6 @@ function Overview({ userType }) {
   const { setGlobalUserType, previews, isLoading, setIsLoading, getPreviews } =
     useContext(MainContext);
 
-  console.log(previews);
-
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -29,7 +27,7 @@ function Overview({ userType }) {
 
     return () => {
       setIsLoading(true);
-      console.log("Previews is NOT mounted! IsLoading: ", isLoading);
+      // console.log("Previews is NOT mounted! IsLoading: ", isLoading);
       controller.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

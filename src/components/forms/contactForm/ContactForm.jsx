@@ -38,7 +38,7 @@ function ContactForm({ userType }) {
             toast.success("Successfully sent your message 🎉");
           } catch (err) {
             toast.error("Sorry, something went wrong ☹️");
-            console.log(err);
+            console.error(err);
           }
         }}
       >
