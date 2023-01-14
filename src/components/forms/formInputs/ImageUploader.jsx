@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
 import { MdCloudUpload } from "react-icons/md";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import { MainContext } from "../../contexts/MainContext";
@@ -41,6 +42,7 @@ function ImageUploader({ setImageFiles }) {
     console.log(file.size);
     if (file.size >= 500000) {
       setError("This file is too big");
+      toast.error("This file is too big");
       return true;
     }
     return false;
