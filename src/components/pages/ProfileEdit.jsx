@@ -11,10 +11,12 @@ import DeleteAccount from "../forms/editForm/DeleteAccount";
 import EditFormFormikWrapper from "../forms/editForm/EditFormFormikWrapper";
 
 function ProfileEdit() {
-  const { loggedInUser } = useContext(MainContext);
+  const { loggedInUser, setGlobalUserType } = useContext(MainContext);
 
   useEffect(() => {
+    setGlobalUserType(loggedInUser.type);
     window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -66,8 +66,7 @@ export default function SearchBar() {
   return (
     <form onSubmit={handleSubmit} className="searchbar">
       <input
-        className={`brad-md searchbar--input ${
-          globalUserType === "venues" ? "input-focus-venues" : "input-focus-artists"
+        className={`brad-md searchbar--input input-focus-${globalUserType}
         }`}
         onChange={(e) => setSearchText(e.target.value)}
         type="search"

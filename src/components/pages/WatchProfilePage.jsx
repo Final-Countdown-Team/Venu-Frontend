@@ -17,6 +17,8 @@ function WatchProfilePage({ userType }) {
   // Get data from backend
   useEffect(() => {
     mounted.current = true;
+    if (userID === loggedInUser._id) return navigate("/me");
+    window.scrollTo(0, 0);
     // console.log("WatchUserProfile is Mounted! State: ", mounted.current);
     setIsLoading(true);
     const controller = new AbortController();
@@ -30,12 +32,6 @@ function WatchProfilePage({ userType }) {
       controller.abort();
       setIsLoading(true);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (userID === loggedInUser._id) navigate("/me");
-    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

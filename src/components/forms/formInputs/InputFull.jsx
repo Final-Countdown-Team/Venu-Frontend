@@ -71,7 +71,7 @@ function InputFull(props) {
         disabled={canBeDisabled ? context.isDisabled : false}
         className={`brad-sm input ${className} ${
           meta.error && meta.touched ? "input-error" : ""
-        } ${ifDisabled}`}
+        } ${ifDisabled} input-focus-${context.globalUserType}`}
         type={type ? type : "text"}
         name={name}
         placeholder={placeholder}

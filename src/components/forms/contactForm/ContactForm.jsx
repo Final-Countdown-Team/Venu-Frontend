@@ -8,7 +8,7 @@ import { MainContext } from "../../contexts/MainContext";
 import toast from "react-hot-toast";
 
 function ContactForm({ userType }) {
-  const { watchUser, globalUserType } = useContext(MainContext);
+  const { watchUser } = useContext(MainContext);
 
   return (
     <>
@@ -49,7 +49,7 @@ function ContactForm({ userType }) {
                 name="firstname"
                 label="First name"
                 placeholder="Enter your first name"
-                className={`input--contact input-focus-${globalUserType}`}
+                className={`input--contact`}
               />
               {watchUser?.dates?.length !== 0 && (
                 <div className={`form-input-full`}>
