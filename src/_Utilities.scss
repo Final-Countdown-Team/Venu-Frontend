@@ -84,6 +84,19 @@ $container-max-width-md: 65rem;
   border-radius: 15px;
 }
 
+.input-focus-venues {
+  &:focus {
+    outline: 2px solid $color-venu-primary !important;
+    outline-offset: 2px;
+  }
+}
+.input-focus-artists {
+  &:focus {
+    outline: 2px solid $color-artist-primary !important;
+    outline-offset: 2px;
+  }
+}
+
 // ----- Media Queries Utility -----
 @mixin respond($breakpoint) {
   @if $breakpoint == small-height-landscape {

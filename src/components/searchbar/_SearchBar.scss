@@ -14,18 +14,6 @@
     font-size: 1.6rem;
     background-color: rgba(255, 255, 255, 0.9);
   }
-  .input-focus-venues {
-    &:focus {
-      outline: 2px solid $color-venu-primary;
-      outline-offset: 2px;
-    }
-  }
-  .input-focus-artists {
-    &:focus {
-      outline: 2px solid $color-artist-primary;
-      outline-offset: 2px;
-    }
-  }
 
   .dropdown-group {
     width: 100%;
