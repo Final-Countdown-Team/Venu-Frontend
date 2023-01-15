@@ -28,11 +28,11 @@ function EditFormFormikWrapper() {
     <Formik
       initialValues={initialValues}
       validationSchema={schemaBuilder("edit", userType)}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         console.log("Submitting...");
 
-        editFormSubmitData(values, actions);
-        editFormSubmitImages(imageFiles);
+        await editFormSubmitData(values, actions);
+        await editFormSubmitImages(imageFiles);
         toast.success("Your profile has been updated 🥳");
         // setTimeout(() => navigate("/me"), 1000);
       }}
