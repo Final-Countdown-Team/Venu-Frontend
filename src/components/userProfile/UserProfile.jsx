@@ -219,9 +219,6 @@ function UserProfile({ purpose, editable }) {
                     ? { name: obj.venue.name, id: obj.venue._id }
                     : { name: obj.artist.name, id: obj.artist._id };
                 const recentDate = obj.bookedDates.sort();
-
-                console.log(id, user._id);
-
                 const linkToProfile =
                   id === loggedInUser._id
                     ? "/me"

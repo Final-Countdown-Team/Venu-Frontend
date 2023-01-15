@@ -30,11 +30,10 @@ function EditFormFormikWrapper() {
       validationSchema={schemaBuilder("edit", userType)}
       onSubmit={async (values, actions) => {
         console.log("Submitting...");
-
         await editFormSubmitData(values, actions);
         await editFormSubmitImages(imageFiles);
         toast.success("Your profile has been updated 🥳");
-        // setTimeout(() => navigate("/me"), 1000);
+        setTimeout(() => navigate("/me"), 1000);
       }}
     >
       <EditForm initialValues={initialValues} setImageFiles={setImageFiles} />

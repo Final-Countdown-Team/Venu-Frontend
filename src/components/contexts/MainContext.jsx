@@ -27,7 +27,7 @@ export const MainContextProvider = ({ children }) => {
   };
 
   const [state, dispatch] = useReducer(mainContextReducer, initalState);
-  console.log(state);
+  // console.log(state);
 
   // Check if a user is still stored in localStorage and set isLoggedInUser
   useEffect(() => {
@@ -160,7 +160,7 @@ export const MainContextProvider = ({ children }) => {
       setIsLoading(true);
       const res = await fetch(`/${userType}/${userID}`, { signal });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       dispatch({
         type: "GET_WATCH_USER",
         payload: data.data,
@@ -225,8 +225,7 @@ export const MainContextProvider = ({ children }) => {
   // submitHandler for edit form, handles file uploads
   const editFormSubmitImages = async (imageFiles) => {
     try {
-      console.log(imageFiles);
-      if (!imageFiles.profileImage || !imageFiles.images) return;
+      if (!imageFiles.profileImage && !imageFiles.images) return;
       setIsPending(true);
       // --- SENDING IMAGES ---
       // Creating new FormData to be able to send files to backend
