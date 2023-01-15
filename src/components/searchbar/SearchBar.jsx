@@ -21,7 +21,6 @@ export default function SearchBar() {
 
   const [searchText, setSearchText] = useState("");
   const [sort, setSort] = useState("");
-  const [city, setCity] = useState("");
   const [radius, setRadius] = useState("");
   const [dates, setDates] = useState("");
   const [genre, setGenre] = useState("");
@@ -36,11 +35,11 @@ export default function SearchBar() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Creat query string for fetching previews
-    const URL = `/${globalUserType}?name=${searchText}&city=${city}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
+    // Create query string for fetching previews
+    const URL = `/${globalUserType}?name=${searchText}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
     const res = await fetch(URL);
     const data = await res.json();
-    getSearchResults(data);
+    await getSearchResults(data);
   };
 
   useEffect(() => {
@@ -90,7 +89,7 @@ export default function SearchBar() {
           <CustomDropdown onChange={setGenre} options={genreOptions} type="Genre" />
         )}
         <CustomDropdown onChange={setRadius} options={radiusOptions} type="Radius" />
-        <AutocompleteLocation onChange={setCity} setLatLng={setLatLng} />
+        <AutocompleteLocation setLatLng={setLatLng} />
         <div className="search-btn-group">
           <ButtonSecondary
             text="Search"

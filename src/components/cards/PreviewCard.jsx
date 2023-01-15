@@ -48,12 +48,12 @@ function PreviewCard({
               }`}
             >
               <ul>
-                {bookedDates.slice(0, 5).map((obj) => {
+                {bookedDates.slice(0, 5)?.map((obj, i) => {
                   const booked =
                     userType === "artists" ? obj.venue.name : obj.artist.name;
                   const recentDate = obj.bookedDates.sort();
                   return (
-                    <li>
+                    <li key={`${obj._id}-${i}`}>
                       {booked} - {recentDate[0].substring(0, 10)}
                     </li>
                   );

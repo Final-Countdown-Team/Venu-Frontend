@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import CustomDropdown from "./CustomDropdown";
 
-function AutocompleteLocation({ state, onChange, setLatLng }) {
+function AutocompleteLocation({ setLatLng }) {
   const [userInput, setUserInput] = useState("");
   const [finalQuery, setFinalQuery] = useState("");
   const [autoSuggestions, setAutoSuggestions] = useState([]);
@@ -39,8 +39,6 @@ function AutocompleteLocation({ state, onChange, setLatLng }) {
         }
       };
       fetchAutocomplete();
-
-      console.log("is fetching...");
     };
     // If no input return function before fetching
     if (finalQuery === "") return;
@@ -49,7 +47,6 @@ function AutocompleteLocation({ state, onChange, setLatLng }) {
 
   return (
     <CustomDropdown
-      onChange={onChange}
       autocomplete={true}
       userInput={userInput}
       finalQuery={finalQuery}
