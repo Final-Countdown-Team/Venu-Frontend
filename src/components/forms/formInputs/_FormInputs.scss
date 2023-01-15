@@ -32,10 +32,6 @@
   border: none;
   outline-offset: 2px;
 
-  &:focus {
-    outline: 2px solid $color-artist-primary;
-  }
-
   &::placeholder {
     color: $color-text-placeholder;
     font-size: inherit;

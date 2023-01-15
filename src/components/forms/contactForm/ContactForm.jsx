@@ -49,10 +49,10 @@ function ContactForm({ userType }) {
                 name="firstname"
                 label="First name"
                 placeholder="Enter your first name"
-                className="input--contact"
+                className={`input--contact`}
               />
               {watchUser?.dates?.length !== 0 && (
-                <div className="form-input-full">
+                <div className={`form-input-full`}>
                   <div className="required-label">
                     <label>Availabe Dates:</label>
                   </div>

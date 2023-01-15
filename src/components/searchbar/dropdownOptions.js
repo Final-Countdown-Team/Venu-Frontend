@@ -30,13 +30,14 @@ export const sortOptionsVenues = sortOptionsCore.concat([
 ]);
 
 export const radiusOptions = [
-  { value: "5", label: "5km" },
   { value: "10", label: "10km" },
   { value: "20", label: "20km" },
   { value: "50", label: "50km" },
   { value: "100", label: "100km" },
   { value: "200", label: "200km" },
+  { value: "400", label: "400km" },
   { value: "500", label: "500km" },
+  { value: "1000", label: "1000km" },
 ];
 
 export const dateOptions = [
