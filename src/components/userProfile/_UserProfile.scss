@@ -241,19 +241,48 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
+      align-items: stretch;
       list-style-type: none;
       gap: 2rem;
     }
 
-    li {
+    .booked-list {
       display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
       padding: 2rem;
-      max-width: 35rem;
+      max-width: 28rem;
       flex: 1 1 100%;
       border-radius: 10px;
-      box-shadow: 0 0 10px #050505;
+      box-shadow: 0 0 10px #060606;
+      background-color: rgba($color: #fff, $alpha: 0.11);
+
+      .link-to-profile--venues {
+        color: $color-artist-primary;
+
+        &:hover {
+          color: lighten($color-artist-primary, $amount: 10);
+        }
+      }
+
+      .link-to-profile--artists {
+        color: $color-venu-primary;
+
+        &:hover {
+          color: lighten($color-venu-primary, $amount: 10);
+        }
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        list-style-type: circle;
+      }
     }
   }
 

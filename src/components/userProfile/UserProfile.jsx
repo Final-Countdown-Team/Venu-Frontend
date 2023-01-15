@@ -213,13 +213,35 @@ function UserProfile({ purpose, editable }) {
           <div className="padding-group booked-dates-group">
             <h3>Upcoming Events:</h3>
             <ul>
-              {user.bookedDates.map((obj) => {
-                const booked =
-                  user.type === "artists" ? obj.venue.name : obj.artist.name;
+              {user.bookedDates.map((obj, i) => {
+                const { name, id } =
+                  user.type === "artists"
+                    ? { name: obj.venue.name, id: obj.venue._id }
+                    : { name: obj.artist.name, id: obj.artist._id };
                 const recentDate = obj.bookedDates.sort();
+
+                console.log(id, user._id);
+
+                const linkToProfile =
+                  id === loggedInUser._id
+                    ? "/me"
+                    : `/${
+                        user.type === "artists" ? "venues" : "artists"
+                      }/profile/${id}`;
+
                 return (
-                  <li>
-                    {booked} - {recentDate[0].substring(0, 10)}
+                  <li key={`${id}-${i}`} className="booked-list">
+                    <Link
+                      className={`link-to-profile--${user.type}`}
+                      to={linkToProfile}
+                    >
+                      {name}:
+                    </Link>
+                    <ul>
+                      {recentDate.map((date, i) => (
+                        <li key={`${date}-${i}`}>{date.substring(0, 10)}</li>
+                      ))}
+                    </ul>
                   </li>
                 );
               })}
