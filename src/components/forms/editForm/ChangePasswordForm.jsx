@@ -24,14 +24,17 @@ function ChangePasswordForm() {
         console.log(values);
         try {
           setIsPending(true);
-          const req = await fetch(`/${userType}/user/updateMyPassword`, {
-            method: "PATCH",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          });
+          const req = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/${userType}/user/updateMyPassword`,
+            {
+              method: "PATCH",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(values),
+            }
+          );
           const res = await req.json();
           // console.log(res);
           if (res.status === "fail" || res.status === "error") {

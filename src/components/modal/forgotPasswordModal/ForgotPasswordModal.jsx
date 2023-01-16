@@ -28,13 +28,16 @@ function ForgotPasswordModal({ setShowModal }) {
         try {
           setIsPending(true);
           console.log(values);
-          const req = await fetch(`/${globalUserType}/forgotPassword`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          });
+          const req = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/${globalUserType}/forgotPassword`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(values),
+            }
+          );
           const res = await req.json();
           console.log(res);
           if (res.status === "fail" || res.status === "error")

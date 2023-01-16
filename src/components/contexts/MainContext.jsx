@@ -3,6 +3,8 @@ import { createContext, useState } from "react";
 import toast from "react-hot-toast";
 import { mainContextReducer } from "./MainContextReducer";
 
+const BACKEND = process.env.REACT_APP_BACKEND_URL;
+
 export const MainContext = createContext();
 
 export const MainContextProvider = ({ children }) => {
@@ -100,7 +102,8 @@ export const MainContextProvider = ({ children }) => {
   const getLoggedInUser = async (values, actions, userType, navigate) => {
     try {
       setIsPending(true);
-      const req = await fetch(`/${userType}/login`, {
+
+      const req = await fetch(`${BACKEND}/${userType}/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -137,7 +140,7 @@ export const MainContextProvider = ({ children }) => {
     try {
       setIsPending(true);
       setIsLoading(true);
-      const req = await fetch(`/${state.loggedInUser.type}/user/me`);
+      const req = await fetch(`/${BACKEND}/${state.loggedInUser.type}/user/me`);
       const res = await req.json();
       if (res.status === "fail" || res.status === "error")
         throw new Error(res.message || "Ups, something went wrong");
@@ -158,7 +161,7 @@ export const MainContextProvider = ({ children }) => {
     try {
       setIsPending(true);
       setIsLoading(true);
-      const res = await fetch(`/${userType}/${userID}`, { signal });
+      const res = await fetch(`${BACKEND}/${userType}/${userID}`, { signal });
       const data = await res.json();
       // console.log(data);
       dispatch({
@@ -175,7 +178,7 @@ export const MainContextProvider = ({ children }) => {
   // Get the previews on the overview page
   const getPreviews = async (userType, signal) => {
     setIsLoading(true);
-    const URL = `/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
+    const URL = `${BACKEND}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
     const res = await fetch(URL, { signal });
     const data = await res.json();
     dispatch({
@@ -189,10 +192,10 @@ export const MainContextProvider = ({ children }) => {
     setIsLoading(true);
     setIsPending(true);
     const query = "fields=name,location,type&page=1&limit=10";
-    const artistsRes = await fetch(`/artists?${query}`);
+    const artistsRes = await fetch(`${BACKEND}/artists?${query}`);
     const artistsData = await artistsRes.json();
 
-    const venuesRes = await fetch(`/venues?${query}`);
+    const venuesRes = await fetch(`${BACKEND}/venues?${query}`);
     const venuesData = await venuesRes.json();
 
     const joinedData = artistsData.data.concat(venuesData.data);
@@ -255,7 +258,7 @@ export const MainContextProvider = ({ children }) => {
       }
       console.log(formData);
       // Sending images in formData
-      const URL = `/${state.loggedInUser.type}/user/updateMe`;
+      const URL = `${BACKEND}}/${state.loggedInUser.type}/user/updateMe`;
       const req = await fetch(URL, {
         method: "PATCH",
         credentials: "include",
@@ -289,7 +292,7 @@ export const MainContextProvider = ({ children }) => {
       const geoCodeValues = await geoCodeAddress(filteredValues);
       console.log(geoCodeValues);
 
-      const URL = `/${state.loggedInUser.type}/user/updateMe`;
+      const URL = `${BACKEND}/${state.loggedInUser.type}/user/updateMe`;
       // // Sending regular form data
       const req = await fetch(URL, {
         method: "PATCH",
@@ -331,7 +334,7 @@ export const MainContextProvider = ({ children }) => {
       console.log(geoCodeValues);
       // Sending POST request to backend
       if (geoCodeValues) {
-        const req = await fetch(`/${userType}/signup`, {
+        const req = await fetch(`${BACKEND}/${userType}/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -405,7 +408,7 @@ export const MainContextProvider = ({ children }) => {
 
   // Logout
   const logoutUser = async (navigate, message) => {
-    await fetch(`/${state.loggedInUser.type}/logout`);
+    await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`);
     dispatch({
       type: "CLEAR_LOGGED_IN_USER",
     });
@@ -418,14 +421,14 @@ export const MainContextProvider = ({ children }) => {
   const deleteAccount = async (setShowConfirm, navigate) => {
     try {
       setShowConfirm(false);
-      await fetch(`/${state.loggedInUser.type}/user/deleteMe`, {
+      await fetch(`${BACKEND}/${state.loggedInUser.type}/user/deleteMe`, {
         method: "DELETE",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      await fetch(`/${state.loggedInUser.type}/logout`);
+      await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`);
       logoutUser(navigate, "Your account was deleted");
     } catch (err) {
       console.error(err);
@@ -436,7 +439,7 @@ export const MainContextProvider = ({ children }) => {
   const reactivateAccount = async (userType, id) => {
     try {
       setIsLoading(true);
-      await fetch(`/${userType}/reactivateAccount/${id}`, {
+      await fetch(`${BACKEND}/${userType}/reactivateAccount/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

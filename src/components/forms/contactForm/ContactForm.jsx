@@ -23,7 +23,7 @@ function ContactForm({ userType }) {
           console.log(values);
           try {
             const req = await fetch(
-              `/${watchUser.type}/contactUser/${watchUser._id}`,
+              `${process.env.REACT_APP_BACKEND_URL}/${watchUser.type}/contactUser/${watchUser._id}`,
               {
                 method: "POST",
                 credentials: "include",

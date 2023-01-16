@@ -29,14 +29,17 @@ function ResetPasswordForm({ userType, resetToken }) {
       onSubmit={async (values, actions) => {
         try {
           setIsPending(true);
-          const req = await fetch(`/${userType}/resetPassword/${resetToken}`, {
-            method: "PATCH",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          });
+          const req = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/${userType}/resetPassword/${resetToken}`,
+            {
+              method: "PATCH",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(values),
+            }
+          );
           const res = await req.json();
           if (res.status === "fail" || res.status === "error")
             throw new Error(res.message);

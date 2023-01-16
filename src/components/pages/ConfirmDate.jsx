@@ -16,12 +16,15 @@ function ConfirmDatePage() {
 
   const confirmDateHandler = async () => {
     try {
-      const req = await fetch(`/${userType}/confirmBookedDate/${token}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const req = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/${userType}/confirmBookedDate/${token}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const res = await req.json();
       if (res.status === "fail") throw new Error(res.message);
       console.log(res);
