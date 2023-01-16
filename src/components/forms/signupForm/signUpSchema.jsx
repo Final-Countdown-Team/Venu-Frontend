@@ -1,4 +1,3 @@
-import { useFetcher } from "react-router-dom";
 import * as yup from "yup";
 
 // Minimum eight characters, at least one letter, one number and one special character:
