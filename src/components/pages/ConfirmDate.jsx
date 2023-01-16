@@ -20,8 +20,10 @@ function ConfirmDatePage() {
         `${process.env.REACT_APP_BACKEND_URL}/${userType}/confirmBookedDate/${token}`,
         {
           method: "PATCH",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
           },
         }
       );

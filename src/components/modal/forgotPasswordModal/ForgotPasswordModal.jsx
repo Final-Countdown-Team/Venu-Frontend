@@ -32,8 +32,10 @@ function ForgotPasswordModal({ setShowModal }) {
             `${process.env.REACT_APP_BACKEND_URL}/${globalUserType}/forgotPassword`,
             {
               method: "POST",
+              credentials: "include",
               headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
               },
               body: JSON.stringify(values),
             }

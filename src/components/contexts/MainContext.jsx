@@ -4,6 +4,10 @@ import toast from "react-hot-toast";
 import { mainContextReducer } from "./MainContextReducer";
 
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
+const fetchHeaders = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": BACKEND,
+};
 
 export const MainContext = createContext();
 
@@ -108,6 +112,7 @@ export const MainContextProvider = ({ children }) => {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": BACKEND,
         },
         body: JSON.stringify(values),
       });
@@ -140,7 +145,11 @@ export const MainContextProvider = ({ children }) => {
     try {
       setIsPending(true);
       setIsLoading(true);
-      const req = await fetch(`/${BACKEND}/${state.loggedInUser.type}/user/me`);
+      const req = await fetch(`/${BACKEND}/${state.loggedInUser.type}/user/me`, {
+        method: "GET",
+        credentials: "include",
+        headers: fetchHeaders,
+      });
       const res = await req.json();
       if (res.status === "fail" || res.status === "error")
         throw new Error(res.message || "Ups, something went wrong");
@@ -161,7 +170,12 @@ export const MainContextProvider = ({ children }) => {
     try {
       setIsPending(true);
       setIsLoading(true);
-      const res = await fetch(`${BACKEND}/${userType}/${userID}`, { signal });
+      const res = await fetch(`${BACKEND}/${userType}/${userID}`, {
+        method: "GET",
+        credentials: "include",
+        headers: fetchHeaders,
+        signal,
+      });
       const data = await res.json();
       // console.log(data);
       dispatch({
@@ -179,7 +193,10 @@ export const MainContextProvider = ({ children }) => {
   const getPreviews = async (userType, signal) => {
     setIsLoading(true);
     const URL = `${BACKEND}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
-    const res = await fetch(URL, { signal });
+    const res = await fetch(URL, {
+      headers: fetchHeaders,
+      signal,
+    });
     const data = await res.json();
     dispatch({
       type: "GET_PREVIEWS",
@@ -192,10 +209,14 @@ export const MainContextProvider = ({ children }) => {
     setIsLoading(true);
     setIsPending(true);
     const query = "fields=name,location,type&page=1&limit=10";
-    const artistsRes = await fetch(`${BACKEND}/artists?${query}`);
+    const artistsRes = await fetch(`${BACKEND}/artists?${query}`, {
+      headers: fetchHeaders,
+    });
     const artistsData = await artistsRes.json();
 
-    const venuesRes = await fetch(`${BACKEND}/venues?${query}`);
+    const venuesRes = await fetch(`${BACKEND}/venues?${query}`, {
+      headers: fetchHeaders,
+    });
     const venuesData = await venuesRes.json();
 
     const joinedData = artistsData.data.concat(venuesData.data);
@@ -262,6 +283,9 @@ export const MainContextProvider = ({ children }) => {
       const req = await fetch(URL, {
         method: "PATCH",
         credentials: "include",
+        headers: {
+          "Access-Control-Allow-Origin": BACKEND,
+        },
         body: formData,
       });
       const res = await req.json();
@@ -297,9 +321,7 @@ export const MainContextProvider = ({ children }) => {
       const req = await fetch(URL, {
         method: "PATCH",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: fetchHeaders,
         body: JSON.stringify(geoCodeValues),
       });
       const res = await req.json();
@@ -336,9 +358,8 @@ export const MainContextProvider = ({ children }) => {
       if (geoCodeValues) {
         const req = await fetch(`${BACKEND}/${userType}/signup`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          credentials: "include",
+          headers: fetchHeaders,
           body: JSON.stringify(geoCodeValues),
         });
         const res = await req.json();
@@ -408,7 +429,11 @@ export const MainContextProvider = ({ children }) => {
 
   // Logout
   const logoutUser = async (navigate, message) => {
-    await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`);
+    await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`, {
+      method: "GET",
+      credentials: "include",
+      headers: fetchHeaders,
+    });
     dispatch({
       type: "CLEAR_LOGGED_IN_USER",
     });
@@ -424,11 +449,13 @@ export const MainContextProvider = ({ children }) => {
       await fetch(`${BACKEND}/${state.loggedInUser.type}/user/deleteMe`, {
         method: "DELETE",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: fetchHeaders,
       });
-      await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`);
+      await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`, {
+        method: "GET",
+        credentials: "include",
+        headers: fetchHeaders,
+      });
       logoutUser(navigate, "Your account was deleted");
     } catch (err) {
       console.error(err);
@@ -441,9 +468,8 @@ export const MainContextProvider = ({ children }) => {
       setIsLoading(true);
       await fetch(`${BACKEND}/${userType}/reactivateAccount/${id}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        credentials: "include",
+        headers: fetchHeaders,
       });
       toast.success("Your account has been reactivated 🎉 \n Please login as usual");
       setIsLoading(false);

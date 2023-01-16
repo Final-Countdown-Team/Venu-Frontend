@@ -37,7 +37,14 @@ export default function SearchBar() {
     e.preventDefault();
     // Create query string for fetching previews
     const URL = `${process.env.REACT_APP_BACKEND_URL}/${globalUserType}?name=${searchText}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
-    const res = await fetch(URL);
+    const res = await fetch(URL, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
+      },
+    });
     const data = await res.json();
     await getSearchResults(data);
   };

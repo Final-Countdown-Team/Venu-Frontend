@@ -29,6 +29,7 @@ function ContactForm({ userType }) {
                 credentials: "include",
                 headers: {
                   "Content-Type": "application/json",
+                  "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
                 },
                 body: JSON.stringify(values),
               }
