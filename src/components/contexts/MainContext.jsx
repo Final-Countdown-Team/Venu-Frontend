@@ -147,7 +147,7 @@ export const MainContextProvider = ({ children }) => {
     try {
       setIsPending(true);
       setIsLoading(true);
-      const req = await fetch(`/${BACKEND}/${state.loggedInUser.type}/user/me`, {
+      const req = await fetch(`${BACKEND}/${state.loggedInUser.type}/user/me`, {
         method: "GET",
         credentials: "include",
         headers: fetchHeaders,
