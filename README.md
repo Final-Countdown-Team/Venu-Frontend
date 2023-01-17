@@ -1,4 +1,4 @@
-<div style="display: flex; align-items: center">
+<div style="display: flex; align-items: center; width:100%">
 <img src="./src/img/venu-logo.png" height=60>
 <h1 style="padding-left: 10px">Venu - Frontend</h1>
 </div>
