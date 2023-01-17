@@ -1,7 +1,4 @@
-<div style="display: flex; align-items: center; width:100%">
-<img src="./src/img/venu-logo.png" height=60>
-<h1 style="padding-left: 10px">Venu - Frontend</h1>
-</div>
+# Venu - Frontend
 
 This project was done as a final project during the 1-year fullstack web development course at DCI and was developed over a period of 2 months.
 
