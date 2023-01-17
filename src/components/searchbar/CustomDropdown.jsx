@@ -59,7 +59,7 @@ const CustomDropdown = ({
           <li
             className={`list-item-no-selection ${globalUserType}-list-item"`}
             onClick={() => {
-              onChange("");
+              onChange && onChange("");
               setDisplayLabel("");
               autocomplete && setUserInput("");
             }}
@@ -78,16 +78,14 @@ const CustomDropdown = ({
                   value={value}
                   onClick={() => {
                     if (autocomplete) {
-                      setUserInput(label);
                       setLatLng(option.coordinates);
-                      return;
                     } else {
                       !contact && onChange
                         ? onChange(value)
                         : setFieldValue("date", value);
-                      setDisplayLabel(label);
-                      return;
                     }
+                    setDisplayLabel(label);
+                    setUserInput(label);
                   }}
                 >
                   {label.includes("00.000Z") ? label.substring(0, 10) : label}
