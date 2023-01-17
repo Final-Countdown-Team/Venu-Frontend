@@ -77,7 +77,9 @@ const CustomDropdown = ({
                   key={`${label}-${i}`}
                   value={value}
                   onClick={() => {
-                    !contact ? onChange(value) : setFieldValue("date", value);
+                    !contact && onChange
+                      ? onChange(value)
+                      : setFieldValue("date", value);
                     setDisplayLabel(label);
                     if (autocomplete) {
                       setUserInput(label);
