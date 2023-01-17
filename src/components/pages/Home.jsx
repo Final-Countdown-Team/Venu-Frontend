@@ -50,7 +50,7 @@ function Home() {
     >
       <Heading />
       <div className="about-text">
-        <p className="bold-text">
+        <p className="bold-text" stlye={{ fontSize: "2rem" }}>
           VENU is an innovative and effortless app that makes music happen.
         </p>
         <p>
