@@ -14,6 +14,8 @@ const CustomDropdown = ({
   userInput,
   setUserInput,
   setLatLng,
+  setRadius,
+  radius,
   contact,
   setFieldValue,
 }) => {
@@ -35,7 +37,15 @@ const CustomDropdown = ({
       onClick={() => setIsOpen(!isOpen)}
     >
       {!autocomplete ? (
-        <span>{displayLabel ? displayLabel : type}</span>
+        <>
+          <span>{radius ? `${radius}km` : displayLabel ? displayLabel : type}</span>
+          <span
+            className="dropdown-arrow"
+            style={{ transform: isOpen && "rotate(-180deg)" }}
+          >
+            <MdKeyboardArrowDown />
+          </span>
+        </>
       ) : (
         <input
           className="autocomplete-input"
@@ -45,12 +55,7 @@ const CustomDropdown = ({
           placeholder="Enter City"
         />
       )}
-      <span
-        className="dropdown-arrow"
-        style={{ transform: isOpen && "rotate(-180deg)" }}
-      >
-        <MdKeyboardArrowDown />
-      </span>
+
       {options.length === 0 ? null : (
         <ul
           ref={ref}
@@ -61,7 +66,11 @@ const CustomDropdown = ({
             onClick={() => {
               propsOnChange && propsOnChange("");
               setDisplayLabel("");
-              autocomplete && setUserInput("");
+              if (autocomplete) {
+                setRadius("");
+                setUserInput("");
+                setLatLng("");
+              }
             }}
           >
             ---
@@ -78,6 +87,7 @@ const CustomDropdown = ({
                   value={value}
                   onClick={() => {
                     if (autocomplete) {
+                      setRadius("10");
                       setLatLng(option.coordinates);
                       setUserInput(label);
                     } else {
@@ -100,6 +110,7 @@ CustomDropdown.defaultProps = {
   options: [],
   contact: false,
   autocomplete: false,
+  radius: "",
 };
 CustomDropdown.propTypes = {
   options: PropTypes.array,

@@ -66,8 +66,14 @@ export default function SearchBar() {
         console.error(err.message);
       }
     };
-    getUserLocation();
-  }, []);
+    if (latLng === "") {
+      setRadius("");
+      getUserLocation();
+      return;
+    } else {
+      return;
+    }
+  }, [latLng]);
 
   return (
     <form onSubmit={handleSubmit} className="searchbar">
@@ -95,8 +101,13 @@ export default function SearchBar() {
         {globalUserType === "artists" && (
           <CustomDropdown onChange={setGenre} options={genreOptions} type="Genre" />
         )}
-        <CustomDropdown onChange={setRadius} options={radiusOptions} type="Radius" />
-        <AutocompleteLocation setLatLng={setLatLng} />
+        <CustomDropdown
+          onChange={setRadius}
+          options={radiusOptions}
+          type="Radius"
+          radius={radius}
+        />
+        <AutocompleteLocation setLatLng={setLatLng} setRadius={setRadius} />
         <div className="search-btn-group">
           <ButtonSecondary
             text="Search"

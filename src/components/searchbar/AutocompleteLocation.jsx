@@ -2,16 +2,21 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import CustomDropdown from "./CustomDropdown";
 
-function AutocompleteLocation({ setLatLng }) {
+function AutocompleteLocation({ setLatLng, setRadius }) {
   const [userInput, setUserInput] = useState("");
   const [finalQuery, setFinalQuery] = useState("");
   const [autoSuggestions, setAutoSuggestions] = useState([]);
 
   // Delaying the user input to not trigger fetch on every onChange
   useEffect(() => {
+    if (userInput === "") {
+      setLatLng("");
+      setRadius((prev) => (prev = ""));
+      return;
+    }
     const timeoutID = setTimeout(() => setFinalQuery(userInput), 1000);
     return () => clearTimeout(timeoutID);
-  }, [userInput]);
+  }, [userInput, setLatLng, setRadius]);
 
   // Fetch the data from geoapify, set the data to autoSuggestions and signal that data is received to dataReceived
   useEffect(() => {
@@ -53,6 +58,7 @@ function AutocompleteLocation({ setLatLng }) {
       setUserInput={setUserInput}
       options={autoSuggestions}
       setLatLng={setLatLng}
+      setRadius={setRadius}
     />
   );
 }
