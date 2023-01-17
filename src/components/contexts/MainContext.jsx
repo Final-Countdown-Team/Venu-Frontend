@@ -199,40 +199,49 @@ export const MainContextProvider = ({ children }) => {
 
   // Get the previews on the overview page
   const getPreviews = async (userType, signal) => {
-    setIsLoading(true);
-    const URL = `${BACKEND}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
-    const res = await fetch(URL, {
-      headers: fetchHeaders,
-      signal,
-    });
-    const data = await res.json();
-    dispatch({
-      type: "GET_PREVIEWS",
-      payload: data,
-    });
+    try {
+      setIsLoading(true);
+      const URL = `${BACKEND}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
+      const res = await fetch(URL, {
+        headers: fetchHeaders,
+        signal,
+      });
+      const data = await res.json();
+      dispatch({
+        type: "GET_PREVIEWS",
+        payload: data,
+      });
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+    }
   };
 
   // Get locations of 10 users of each userType for the map on Home
   const getLocations = async () => {
-    setIsLoading(true);
-    setIsPending(true);
-    const query = "fields=name,location,type&page=1&limit=10";
-    const artistsRes = await fetch(`${BACKEND}/artists?${query}`, {
-      headers: fetchHeaders,
-    });
-    const artistsData = await artistsRes.json();
+    try {
+      setIsLoading(true);
+      setIsPending(true);
+      const query = "fields=name,location,type&page=1&limit=10";
+      const artistsRes = await fetch(`${BACKEND}/artists?${query}`, {
+        headers: fetchHeaders,
+      });
+      const artistsData = await artistsRes.json();
 
-    const venuesRes = await fetch(`${BACKEND}/venues?${query}`, {
-      headers: fetchHeaders,
-    });
-    const venuesData = await venuesRes.json();
+      const venuesRes = await fetch(`${BACKEND}/venues?${query}`, {
+        headers: fetchHeaders,
+      });
+      const venuesData = await venuesRes.json();
 
-    const joinedData = artistsData.data.concat(venuesData.data);
+      const joinedData = artistsData.data.concat(venuesData.data);
 
-    dispatch({
-      type: "GET_LOCATIONS",
-      payload: joinedData,
-    });
+      dispatch({
+        type: "GET_LOCATIONS",
+        payload: joinedData,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Searchbar results
@@ -407,47 +416,56 @@ export const MainContextProvider = ({ children }) => {
 
   // Geocode helper function the coordinates from address
   const geoCodeAddress = async (values) => {
-    // Guard clause when there is no address property on values
-    if (!values.address) return values;
-    const { street, city, zipcode } = values.address;
-    // Fetching address data from geoApify
-    const geoRes = await fetch(
-      `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
-    );
-    console.log(geoRes);
-    const geoData = await geoRes.json();
-
-    if (!geoRes.ok || !geoData.results.length) {
-      const error = new Error(
-        "Something went wrong validating your address. Please check if you entered a valid address."
+    try {
+      // Guard clause when there is no address property on values
+      if (!values.address) return values;
+      const { street, city, zipcode } = values.address;
+      // Fetching address data from geoApify
+      const geoRes = await fetch(
+        `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
       );
-      error.isOperational = true;
-      throw error;
-    }
-    // Destructuring coordinates
-    const [{ lat, lon }] = geoData.results;
-    console.log(lat, lon);
+      console.log(geoRes);
+      const geoData = await geoRes.json();
 
-    const newValues = {
-      ...values,
-      location: { type: "Point", coordinates: [lon, lat] },
-    };
-    return newValues;
+      if (!geoRes.ok || !geoData.results.length) {
+        const error = new Error(
+          "Something went wrong validating your address. Please check if you entered a valid address."
+        );
+        error.isOperational = true;
+        throw error;
+      }
+      // Destructuring coordinates
+      const [{ lat, lon }] = geoData.results;
+      console.log(lat, lon);
+
+      const newValues = {
+        ...values,
+        location: { type: "Point", coordinates: [lon, lat] },
+      };
+      return newValues;
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Logout
   const logoutUser = async (navigate, message) => {
-    await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`, {
-      method: "GET",
-      credentials: "include",
-      headers: fetchHeaders,
-    });
-    dispatch({
-      type: "CLEAR_LOGGED_IN_USER",
-    });
-    toast.success(message);
-    localStorage.clear();
-    navigate("/");
+    try {
+      await fetch(`${BACKEND}/${state.loggedInUser.type}/logout`, {
+        method: "GET",
+        credentials: "include",
+        headers: fetchHeaders,
+      });
+      dispatch({
+        type: "CLEAR_LOGGED_IN_USER",
+      });
+      toast.success(message);
+      localStorage.clear();
+      navigate("/");
+    } catch (err) {
+      setIsPending(false);
+      console.error(err);
+    }
   };
 
   // DeleteAccount
