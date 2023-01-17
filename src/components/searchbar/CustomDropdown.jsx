@@ -7,7 +7,7 @@ import "./_CustomDropdown.scss";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 const CustomDropdown = ({
-  onChange,
+  onChange: propsOnChange,
   options,
   type,
   autocomplete,
@@ -59,7 +59,7 @@ const CustomDropdown = ({
           <li
             className={`list-item-no-selection ${globalUserType}-list-item"`}
             onClick={() => {
-              onChange && onChange("");
+              propsOnChange && propsOnChange("");
               setDisplayLabel("");
               autocomplete && setUserInput("");
             }}
@@ -81,7 +81,7 @@ const CustomDropdown = ({
                       setLatLng(option.coordinates);
                       setUserInput(label);
                     } else {
-                      !contact ? onChange(value) : setFieldValue("date", value);
+                      !contact ? propsOnChange(value) : setFieldValue("date", value);
                     }
                     setDisplayLabel(label);
                   }}
@@ -98,6 +98,8 @@ const CustomDropdown = ({
 
 CustomDropdown.defaultProps = {
   options: [],
+  contact: false,
+  autocomplete: false,
 };
 CustomDropdown.propTypes = {
   options: PropTypes.array,
