@@ -39,6 +39,8 @@ Our goal was to build an application that allows musicians and venues to get in 
 
 - Loading spinners are provided by David Hu's amazing [react-spinners](https://www.davidhu.io/react-spinners/).
 
+## Live Version:
+
 To see the live version please visit:
 
 https://venu-frontend.onrender.com
