@@ -21,7 +21,7 @@ export default function SearchBar() {
 
   const [searchText, setSearchText] = useState("");
   const [sort, setSort] = useState("");
-  const [radius, setRadius] = useState("");
+  const [radius, setRadius] = useState("10");
   const [dates, setDates] = useState("");
   const [genre, setGenre] = useState("");
   const [latLng, setLatLng] = useState("");
