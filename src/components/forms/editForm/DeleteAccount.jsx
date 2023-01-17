@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { MainContext } from "../../contexts/MainContext";
 import { useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 
 import ProfileButton from "../../buttons/ProfileButton";
 import ConfirmModal from "../../modal/confirmModal/ConfirmModal";
@@ -10,12 +11,13 @@ import "../../modal/confirmModal/_ConfirmModal.scss";
 
 function DeleteAccount() {
   const [showConfirm, setShowConfirm] = useState(false);
-  const { deleteAccount } = useContext(MainContext);
+  const { deleteAccount, isPending } = useContext(MainContext);
   const navigate = useNavigate();
 
   const hideModal = () => {
     setShowConfirm(false);
   };
+
   return (
     <>
       <div className="form-group-delete">
@@ -24,11 +26,23 @@ function DeleteAccount() {
           <span>Delete Your Account</span>
           <div className="delete-bar--right"></div>
         </div>
-        <ProfileButton
-          text="Delete account"
-          purpose="delete"
-          onClick={() => setShowConfirm(true)}
-        />
+        {isPending ? (
+          <ScaleLoader
+            color={"#e5534b"}
+            cssOverride={{
+              padding: "0.5rem 2.25rem",
+              transform: "scale(1.5)",
+            }}
+            aria-label="Loading Spinner"
+          />
+        ) : (
+          <ProfileButton
+            text={isPending ? "Is deleting..." : "Delete account"}
+            purpose="delete"
+            onClick={() => setShowConfirm(true)}
+          />
+        )}
+
         {showConfirm && (
           <ConfirmModal
             hideModal={hideModal}

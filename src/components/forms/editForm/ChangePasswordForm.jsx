@@ -6,12 +6,15 @@ import toast from "react-hot-toast";
 import ProfileButton from "../../buttons/ProfileButton";
 import InputFull from "../formInputs/InputFull";
 import { schemaBuilder } from "../signupForm/signUpSchema";
+import { ScaleLoader } from "react-spinners";
 
 function ChangePasswordForm() {
   const {
     loggedInUser: { type: userType },
+    isPending,
+    setIsPending,
   } = useContext(MainContext);
-  const [isPending, setIsPending] = useState(false);
+  // const [isPending, setIsPending] = useState(false);
   return (
     <Formik
       initialValues={{
@@ -79,7 +82,18 @@ function ChangePasswordForm() {
           canBeDisabled={true}
         />
         <div className="profile-button-container--password">
-          <ProfileButton text={!isPending ? "Change Password" : "Is Updating..."} />
+          {isPending ? (
+            <ScaleLoader
+              color={"#347d39"}
+              cssOverride={{
+                padding: ".83rem 2.5rem",
+                transform: "scale(1.5)",
+              }}
+              aria-label="Loading Spinner"
+            />
+          ) : (
+            <ProfileButton text="Change Password" />
+          )}
         </div>
       </Form>
     </Formik>

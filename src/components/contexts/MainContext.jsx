@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { mainContextReducer } from "./MainContextReducer";
 
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
@@ -16,6 +17,7 @@ export const MainContextProvider = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   // Conditionally disabled form inputs
   const [isDisabled, setIsDisabled] = useState(true);
+  const navigate = useNavigate();
 
   // REDUCER
   const initalState = {
@@ -151,8 +153,10 @@ export const MainContextProvider = ({ children }) => {
         headers: fetchHeaders,
       });
       const res = await req.json();
-      if (res.status === "fail" || res.status === "error")
+      if (res.status === "fail" || res.status === "error") {
+        navigate("/404");
         throw new Error(res.message || "Ups, something went wrong");
+      }
       dispatch({
         type: "GET_LOGGED_IN_USER",
         payload: res.data,
@@ -177,6 +181,10 @@ export const MainContextProvider = ({ children }) => {
         signal,
       });
       const data = await res.json();
+      if (!data) {
+        navigate("/404");
+        throw new Error("Couldn't open the profile page");
+      }
       // console.log(data);
       dispatch({
         type: "GET_WATCH_USER",
@@ -279,7 +287,7 @@ export const MainContextProvider = ({ children }) => {
       }
       console.log(formData);
       // Sending images in formData
-      const URL = `${BACKEND}}/${state.loggedInUser.type}/user/updateMe`;
+      const URL = `${BACKEND}/${state.loggedInUser.type}/user/updateMe`;
       const req = await fetch(URL, {
         method: "PATCH",
         credentials: "include",
@@ -446,6 +454,7 @@ export const MainContextProvider = ({ children }) => {
   const deleteAccount = async (setShowConfirm, navigate) => {
     try {
       setShowConfirm(false);
+      setIsPending(true);
       await fetch(`${BACKEND}/${state.loggedInUser.type}/user/deleteMe`, {
         method: "DELETE",
         credentials: "include",
@@ -458,13 +467,16 @@ export const MainContextProvider = ({ children }) => {
       });
       logoutUser(navigate, "Your account was deleted");
     } catch (err) {
+      setIsPending(false);
       console.error(err);
+      toast.error("Something went wrong ☹️");
     }
   };
 
   // Deactiavte Account
   const reactivateAccount = async (userType, id) => {
     try {
+      setIsPending(true);
       setIsLoading(true);
       await fetch(`${BACKEND}/${userType}/reactivateAccount/${id}`, {
         method: "POST",
@@ -473,10 +485,12 @@ export const MainContextProvider = ({ children }) => {
       });
       toast.success("Your account has been reactivated 🎉 \n Please login as usual");
       setIsLoading(false);
+      setIsPending(false);
     } catch (err) {
       console.error(err);
       toast.error("Sorry, something went wrong");
       setIsLoading(false);
+      setIsPending(false);
     }
   };
 
@@ -505,6 +519,7 @@ export const MainContextProvider = ({ children }) => {
         getWatchUser,
         watchUser: state.watchUser,
         isPending: state.isPending,
+        setIsPending,
         setIsLoading,
         isLoading: state.isLoading,
         logoutUser,

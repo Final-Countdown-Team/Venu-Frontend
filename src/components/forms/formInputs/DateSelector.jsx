@@ -23,7 +23,6 @@ function DateSelector(props) {
         <DatePicker
           multiple
           value={formikContext.values[name]}
-          // currentDate={new Date(Date.now())}
           minDate={Date.now()}
           format="MMMM/DD/YY"
           className="datepicker"

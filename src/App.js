@@ -131,6 +131,7 @@ function App() {
                 path="/:userType/confirmDate/:token"
                 element={<ConfirmDatePage />}
               />
+              <Route path="/404" element={<FourOhFour />} />
               <Route path="*" element={<FourOhFour />} />
             </Routes>
           </AnimatePresence>

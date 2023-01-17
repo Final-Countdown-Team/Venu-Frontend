@@ -6,9 +6,10 @@ import Textbox from "../formInputs/Textbox";
 import ButtonSecondary from "../../buttons/ButtonSecondary";
 import { MainContext } from "../../contexts/MainContext";
 import toast from "react-hot-toast";
+import { ScaleLoader } from "react-spinners";
 
 function ContactForm({ userType }) {
-  const { watchUser } = useContext(MainContext);
+  const { watchUser, isPending, setIsPending } = useContext(MainContext);
 
   return (
     <>
@@ -22,6 +23,7 @@ function ContactForm({ userType }) {
         onSubmit={async (values, actions) => {
           console.log(values);
           try {
+            setIsPending(true);
             const req = await fetch(
               `${process.env.REACT_APP_BACKEND_URL}/${watchUser.type}/contactUser/${watchUser._id}`,
               {
@@ -37,9 +39,11 @@ function ContactForm({ userType }) {
             const res = await req.json();
             console.log(res);
             toast.success("Successfully sent your message 🎉");
+            setIsPending(false);
           } catch (err) {
             toast.error("Sorry, something went wrong ☹️");
             console.error(err);
+            setIsPending(false);
           }
         }}
       >
@@ -72,11 +76,24 @@ function ContactForm({ userType }) {
               label="Your message:"
               customClass="textbox-user-profile"
             />
-            <ButtonSecondary
-              text="Send your message"
-              submit={true}
-              userType={userType}
-            />
+            <div style={{ height: "6rem" }}>
+              {isPending ? (
+                <ScaleLoader
+                  color={userType === "artists" ? "#0168b5" : "#b02476"}
+                  cssOverride={{
+                    paddingTop: "1rem",
+                    transform: "scale(1.5)",
+                  }}
+                  aria-label="Loading Spinner"
+                />
+              ) : (
+                <ButtonSecondary
+                  text="Send your message"
+                  submit={true}
+                  userType={userType}
+                />
+              )}
+            </div>
           </Form>
         )}
       </Formik>

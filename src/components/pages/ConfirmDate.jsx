@@ -8,14 +8,19 @@ import "./_Login.scss";
 import "../modal/forgotPasswordModal/_ForgotPasswordModal.scss";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { MainContext } from "../contexts/MainContext";
+import { ScaleLoader } from "react-spinners";
 
 function ConfirmDatePage() {
+  const { isPending, setIsPending } = useContext(MainContext);
   const { userType, token } = useParams();
 
   const navigate = useNavigate();
 
   const confirmDateHandler = async () => {
     try {
+      setIsPending(true);
       const req = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/${userType}/confirmBookedDate/${token}`,
         {
@@ -31,9 +36,11 @@ function ConfirmDatePage() {
       if (res.status === "fail") throw new Error(res.message);
       console.log(res);
       toast.success("Successfully confirmed the date!");
+      setIsPending(false);
     } catch (err) {
       toast.error(err.message);
       console.error(err);
+      setIsPending(false);
     }
     navigate("/");
   };
@@ -53,11 +60,25 @@ function ConfirmDatePage() {
           Congratulations, you're just one last click away to complete the booking
           process 🎉
         </p>
-        <ButtonSecondary
-          onClick={confirmDateHandler}
-          text="Confirm Date"
-          userType={userType}
-        />
+        <div style={{ height: "6.5rem" }}>
+          {isPending ? (
+            <ScaleLoader
+              color={userType === "artists" ? "#0168b5" : "#b02476"}
+              cssOverride={{
+                // padding: "0 2.25rem",
+                paddingTop: "1rem",
+                transform: "scale(1.5)",
+              }}
+              aria-label="Loading Spinner"
+            />
+          ) : (
+            <ButtonSecondary
+              onClick={confirmDateHandler}
+              text="Confirm Date"
+              userType={userType}
+            />
+          )}
+        </div>
         <ArrowBack
           userType={userType}
           className="arrow-back-login"

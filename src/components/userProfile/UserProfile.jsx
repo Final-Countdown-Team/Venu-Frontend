@@ -24,7 +24,7 @@ import { MainContext } from "../contexts/MainContext";
 
 // Get the booked Dates from the nested arrays
 const flatBookedDates = (user) => {
-  if (user.bookedDates) {
+  if (user?.bookedDates) {
     return user.bookedDates
       .map((object) => object.bookedDates.map((bookedDate) => bookedDate))
       .flat();
@@ -34,7 +34,7 @@ const flatBookedDates = (user) => {
 
 // Merge the avaialable dates with the bookedDates
 const mergeDates = (user, bookedDates) => {
-  if (user.dates) {
+  if (user?.dates) {
     return [...user.dates, ...bookedDates].sort();
   }
   return [];
@@ -56,7 +56,7 @@ function UserProfile({ purpose, editable }) {
 
   const user = purpose === "watchUser" ? watchUser : loggedInUser;
   const [bookedDates, setBookedDates] = useState(
-    user.bookedDates ? flatBookedDates(user) : []
+    user?.bookedDates ? flatBookedDates(user) : []
   );
 
   const [dimensions, setDimensions] = useState({ width: window.innerWidth });
@@ -177,7 +177,6 @@ function UserProfile({ purpose, editable }) {
             }
             multiple={true}
             minDate={Date.now()}
-            currentDate={Date.now()}
             mapDays={({ today, date, isSameDate }) => {
               let props = {};
               if (isSameDate(date, today))
@@ -209,7 +208,7 @@ function UserProfile({ purpose, editable }) {
           </p>
         </div>
 
-        {user.bookedDates && user.bookedDates?.length !== 0 && (
+        {user?.bookedDates && user?.bookedDates?.length !== 0 && (
           <div className="padding-group booked-dates-group">
             <h3>Upcoming Events:</h3>
             <ul>

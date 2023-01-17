@@ -12,6 +12,7 @@ import DateSelector from "../formInputs/DateSelector";
 import ImageUploader from "../formInputs/ImageUploader";
 import ProfileImageUploader from "../formInputs/ProfileImageUploader";
 import ProfileButton from "../../buttons/ProfileButton";
+import { ScaleLoader } from "react-spinners";
 
 function EditForm({ initialValues, setImageFiles, ...props }) {
   const { loggedInUser: user, isPending } = useContext(MainContext);
@@ -146,7 +147,18 @@ function EditForm({ initialValues, setImageFiles, ...props }) {
         <ImageUploader setImageFiles={setImageFiles} />
       </div>
       <div className="profile-button-container">
-        <ProfileButton text={!isPending ? "Update" : "Is Updating..."} />
+        {isPending ? (
+          <ScaleLoader
+            color={"#347d39"}
+            cssOverride={{
+              padding: "0.85rem 2.25rem",
+              transform: "scale(1.25)",
+            }}
+            aria-label="Loading Spinner"
+          />
+        ) : (
+          <ProfileButton text={!isPending ? "Update" : "Is Updating..."} />
+        )}
       </div>
     </Form>
   );
