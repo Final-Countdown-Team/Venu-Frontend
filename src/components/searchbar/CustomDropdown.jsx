@@ -79,13 +79,11 @@ const CustomDropdown = ({
                   onClick={() => {
                     if (autocomplete) {
                       setLatLng(option.coordinates);
+                      setUserInput(label);
                     } else {
-                      !contact && onChange
-                        ? onChange(value)
-                        : setFieldValue("date", value);
+                      !contact ? onChange(value) : setFieldValue("date", value);
                     }
                     setDisplayLabel(label);
-                    setUserInput(label);
                   }}
                 >
                   {label.includes("00.000Z") ? label.substring(0, 10) : label}
