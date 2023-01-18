@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { mainContextReducer } from "./MainContextReducer";
 
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
@@ -17,7 +16,6 @@ export const MainContextProvider = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   // Conditionally disabled form inputs
   const [isDisabled, setIsDisabled] = useState(true);
-  const navigate = useNavigate();
 
   // REDUCER
   const initalState = {
@@ -126,8 +124,7 @@ export const MainContextProvider = ({ children }) => {
       });
       const res = await req.json();
       if (res.status === "fail" || res.status === "error") {
-        navigate("/404");
-        throw new Error(res.message || "Ups, something went wrong");
+        throw new Error(res.message || "Couldn't load user profile");
       }
       dispatch({
         type: "GET_LOGGED_IN_USER",
@@ -154,7 +151,6 @@ export const MainContextProvider = ({ children }) => {
       });
       const data = await res.json();
       if (!data) {
-        navigate("/404");
         throw new Error("Couldn't open the profile page");
       }
       // console.log(data);
