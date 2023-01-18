@@ -7,6 +7,7 @@ import ButtonSecondary from "../../buttons/ButtonSecondary";
 import { MainContext } from "../../contexts/MainContext";
 import toast from "react-hot-toast";
 import { ScaleLoader } from "react-spinners";
+import { contactSchema } from "../signupForm/signUpSchema";
 
 function ContactForm({ userType }) {
   const { watchUser, isPending, setIsPending } = useContext(MainContext);
@@ -20,6 +21,7 @@ function ContactForm({ userType }) {
           message: "",
           receiver: watchUser.email,
         }}
+        validationSchema={contactSchema}
         onSubmit={async (values, actions) => {
           try {
             setIsPending(true);
@@ -54,6 +56,7 @@ function ContactForm({ userType }) {
                 label="First name"
                 placeholder="Enter your first name"
                 className={`input--contact`}
+                noError={true}
               />
               {watchUser?.dates?.length !== 0 && (
                 <div className={`form-input-full`}>
@@ -69,12 +72,14 @@ function ContactForm({ userType }) {
                 </div>
               )}
             </div>
-            <Textbox
-              name="message"
-              placeholder="Write me a message :)"
-              label="Your message:"
-              customClass="textbox-user-profile"
-            />
+            <div>
+              <Textbox
+                name="message"
+                placeholder="Write me a message :)"
+                label="Your message:"
+                customClass="textbox-user-profile"
+              />
+            </div>
             <div style={{ height: "6rem" }}>
               {isPending ? (
                 <ScaleLoader

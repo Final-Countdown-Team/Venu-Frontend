@@ -88,56 +88,18 @@ export const schemaBuilder = (purpose, userType) => {
   return;
 };
 
-// ---- INITIAL VALUES BUILDING -----
+//----- CONTACT SCHEMA -----
+export const contactSchema = yup.object().shape({
+  firstname: yup
+    .string()
+    .min(2, "Name needs to have min. 2 characters")
+    .max(50, "Your name cannot exceed 50 characters")
+    .required("This field is required"),
+  // date: yup.string().required("This field is required"),
+  message: yup.string().required("This field is required"),
+});
 
-// const coreInitial = {
-//   name: "",
-//   email: "",
-//   address: {
-//     street: "",
-//     city: "",
-//     zipcode: "",
-//   },
-//   description: "",
-//   dates: "",
-// };
-
-// const mediaLinksInitial = {
-//   facebookUrl: "",
-//   instagramTag: "",
-//   twitterTag: "",
-// };
-
-// const artistsInitial = {
-//   genre: "",
-//   members: "",
-//   mediaLinks: {
-//     ...mediaLinksInitial,
-//     youtubeUrl: "",
-//   },
-// };
-
-// const venuesInitial = {
-//   capacity: "",
-//   mediaLinks: {
-//     ...mediaLinksInitial,
-//     websiteUrl: "",
-//   },
-// };
-
-// const passwordInitial = {
-//   password: "",
-//   passwordConfirm: "",
-// };
-
-// export const initialValuesBuilder = (purpose, userType, user) => {
-//   const type = userType === "venues" ? venuesInitial : artistsInitial;
-
-//   if (purpose === "edit") return { ...coreInitial, ...type };
-//   if (purpose === "edit" && user) return { ...coreInitial, ...type, ...user };
-//   if (purpose === "signup") return { ...coreInitial, ...passwordInitial, ...type };
-//   return;
-// };
+//----- INITIAL VALUES -----
 
 export const venuesInitialValues = {
   name: "",

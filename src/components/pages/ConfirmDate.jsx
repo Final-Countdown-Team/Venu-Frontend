@@ -45,46 +45,48 @@ function ConfirmDatePage() {
   };
 
   return (
-    <motion.div
-      variants={containerVariantY}
-      transition={transitionTween}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      className="login-page"
-    >
-      <div className="login-container login-container--confirmDate">
-        <h1>save the date</h1>
-        <p className="text-left date-confirm-text">
-          Congratulations, you're just one last click away to complete the booking
-          process 🎉
-        </p>
-        <div style={{ height: "6.5rem" }}>
-          {isPending ? (
-            <ScaleLoader
-              color={userType === "artists" ? "#0168b5" : "#b02476"}
-              cssOverride={{
-                // padding: "0 2.25rem",
-                paddingTop: "1rem",
-                transform: "scale(1.5)",
-              }}
-              aria-label="Loading Spinner"
-            />
-          ) : (
-            <ButtonSecondary
-              onClick={confirmDateHandler}
-              text="Confirm Date"
-              userType={userType}
-            />
-          )}
+    <div className="login-wrapper">
+      <motion.div
+        variants={containerVariantY}
+        transition={transitionTween}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="login-page"
+      >
+        <div className="login-container login-container--confirmDate">
+          <h1>save the date</h1>
+          <p className="text-left date-confirm-text">
+            Congratulations, you're just one last click away to complete the booking
+            process 🎉
+          </p>
+          <div style={{ height: "6.5rem" }}>
+            {isPending ? (
+              <ScaleLoader
+                color={userType === "artists" ? "#0168b5" : "#b02476"}
+                cssOverride={{
+                  // padding: "0 2.25rem",
+                  paddingTop: "1rem",
+                  transform: "scale(1.5)",
+                }}
+                aria-label="Loading Spinner"
+              />
+            ) : (
+              <ButtonSecondary
+                onClick={confirmDateHandler}
+                text="Confirm Date"
+                userType={userType}
+              />
+            )}
+          </div>
+          <ArrowBack
+            userType={userType}
+            className="arrow-back-login"
+            to="/signupLogin"
+          />
         </div>
-        <ArrowBack
-          userType={userType}
-          className="arrow-back-login"
-          to="/signupLogin"
-        />
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 

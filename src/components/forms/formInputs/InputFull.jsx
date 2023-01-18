@@ -84,7 +84,9 @@ function InputFull(props) {
           To change this field, please enter your password
         </div>
       )}
+      {/* <div style={{ height: "10px" }}> */}
       <ErrorMessage name={name} component="div" className="error" />
+      {/* </div> */}
     </div>
   );
 }

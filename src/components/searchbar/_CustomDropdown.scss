@@ -76,12 +76,13 @@
 }
 
 .dropdown--contact {
-  width: 100%;
-  height: 5rem;
   font-size: 1.5rem;
-  padding: 1.6rem 1rem;
   background-color: #d9d9d9;
-  margin: 0.5rem 0;
+  width: 100%;
+  padding: 1.6rem 1rem;
+  min-height: 5rem;
+  margin: 0.5rem 0 2rem 0;
+  border: none;
 }
 
 .input--no-bottom-borders {

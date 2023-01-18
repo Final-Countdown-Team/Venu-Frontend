@@ -30,7 +30,6 @@
   min-height: 5rem;
   margin: 0.5rem 0 2rem 0;
   border: none;
-  outline-offset: 2px;
 
   &::placeholder {
     color: $color-text-placeholder;
@@ -43,6 +42,7 @@
   }
 
   &-error {
+    outline-offset: 2px;
     outline: 2px solid #fa5c5c;
   }
 }
@@ -113,7 +113,8 @@
 }
 
 .textbox-group-contact {
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
+  outline-offset: 2px;
 }
 
 .textbox-user-profile {
@@ -254,5 +255,6 @@
 
 .input--contact {
   height: 5rem;
-  margin: 0.5rem 0;
+  margin-bottom: 1.5rem;
+  // margin: 0.5rem 0;
 }
