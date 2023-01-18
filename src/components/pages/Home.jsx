@@ -78,11 +78,13 @@ function Home() {
         </div>
         <div className="home-map-container">
           {isLoading ? (
-            <ScaleLoader
-              cssOverride={spinnerOverride}
-              color={"#b02476"}
-              aria-label="Loading Spinner"
-            />
+            <div className="wrapper--loading">
+              <ScaleLoader
+                cssOverride={spinnerOverride}
+                color={"#b02476"}
+                aria-label="Loading Spinner"
+              />
+            </div>
           ) : (
             <div ref={ref}>
               <Map purpose={"home"} />

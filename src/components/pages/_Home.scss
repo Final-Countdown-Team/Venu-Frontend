@@ -58,6 +58,13 @@
     padding: 2rem 0;
     opacity: 0.75;
 
+    .wrapper--loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
     .map-container {
       border-radius: 15px;
       opacity: 0.9;
