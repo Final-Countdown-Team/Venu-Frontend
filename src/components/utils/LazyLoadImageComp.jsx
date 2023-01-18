@@ -5,7 +5,7 @@ import placeholder from "../../img/placeholder.jpg";
 import "./_LazyLoadImageComp.scss";
 
 function LazyLoadImageComp({ src, alt, className, wrapperClassName }) {
-  const LQIP = src?.replace("upload/", "upload/q_30/e_blur:1000/w_100");
+  const LQIP = src?.replace("upload/", "upload/q_30/e_blur:1000/w_100/");
   return (
     <LazyLoadImage
       style={{ display: "block" }}
