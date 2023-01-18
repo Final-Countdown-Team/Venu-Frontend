@@ -36,7 +36,7 @@ export default function SearchBar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Create query string for fetching previews
-    const URL = `${process.env.REACT_APP_BACKEND_URL}/${globalUserType}?name=${searchText}&fields=name,description,profileImage,location,address,availability,dates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
+    const URL = `${process.env.REACT_APP_BACKEND_URL}/${globalUserType}?name=${searchText}&fields=name,description,profileImage,location,address,availability,dates,bookedDates,genre&sort=${sort}&dates=${dates}&genre=${genre}&distance=${radius}&center=${latLng}`;
     const res = await fetch(URL, {
       method: "GET",
       credentials: "include",
