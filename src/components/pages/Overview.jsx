@@ -21,6 +21,8 @@ function Overview({ userType }) {
     previews,
     isLoading,
     setIsLoading,
+    isPending,
+    setIsPending,
     getPreviews,
     dispatch,
   } = useContext(MainContext);
@@ -56,6 +58,7 @@ function Overview({ userType }) {
     try {
       if (isLastPage) return;
       if (previews.length % 6 !== 0) return;
+      setIsPending(true);
       setNextPage((prev) => prev + 1);
       const res = await fetch(URL, {
         headers: {
@@ -64,6 +67,7 @@ function Overview({ userType }) {
         },
       });
       const data = await res.json();
+      console.log(data);
       if (data.results === 0) setIsLastPage(true);
       dispatch({
         type: "GET_PREVIEWS",
@@ -113,12 +117,22 @@ function Overview({ userType }) {
           transition={transitionTween}
         >
           {renderFetchedPreviews}
-          {(!isLastPage || previews.length % 6 === 0) && (
+          {!isLastPage && previews.length % 6 === 0 && (
             <div className={`double-arrow-down double-arrow--${userType}`}>
-              <RxDoubleArrowDown
-                onClick={() => getNextPreviews()}
-                className="arrow-icon"
-              />
+              {isPending ? (
+                <ScaleLoader
+                  color={userType === "artists" ? "#0168b5" : "#b02476"}
+                  cssOverride={{
+                    transform: "scale(1)",
+                  }}
+                  aria-label="Loading Spinner"
+                />
+              ) : (
+                <RxDoubleArrowDown
+                  onClick={() => getNextPreviews()}
+                  className="arrow-icon"
+                />
+              )}
             </div>
           )}
         </motion.div>

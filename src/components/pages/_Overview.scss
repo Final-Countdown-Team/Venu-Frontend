@@ -17,10 +17,14 @@
 
   .double-arrow-down {
     // width: 100%;
+    height: 5rem;
     flex-basis: 100%;
     margin: auto;
     justify-self: center;
     align-self: flex-end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     bottom: 0;
     font-size: 5rem;
 
@@ -49,8 +53,10 @@
   .double-arrow--venues {
     color: $color-venu-primary;
 
-    &:hover {
-      color: darken($color: $color-venu-primary, $amount: 10);
+    .arrow-icon {
+      &:hover {
+        color: darken($color: $color-venu-primary, $amount: 10);
+      }
     }
   }
 }
