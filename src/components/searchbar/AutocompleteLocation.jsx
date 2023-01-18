@@ -25,7 +25,7 @@ function AutocompleteLocation({ setLatLng, setRadius }) {
         try {
           const res = await fetch(
             //Sets queries for API, and sets radius (filter) to most of europa, via a radius (https://www.calcmaps.com/de/map-radius/)
-            `https://api.geoapify.com/v1/geocode/autocomplete?text=${finalQuery}&lang=de&type=city&limit=3&format=json&filter=circle:-0.51641,50.81340,1692697&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
+            `https://api.geoapify.com/v1/geocode/autocomplete?text=${finalQuery}&type=locality&lang=en&limit=3&format=json&filter=circle:-0.51641,50.81340,1692697&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
           );
           if (!res.ok) throw new Error(res);
           const data = await res.json();
@@ -34,7 +34,7 @@ function AutocompleteLocation({ setLatLng, setRadius }) {
             return {
               coordinates: `${item.lat},${item.lon}`,
               value: item.city,
-              label: `${item.city}, ${item.country}`,
+              label: `${item.formatted}`,
             };
           });
           // Set autoSuggestions state from options

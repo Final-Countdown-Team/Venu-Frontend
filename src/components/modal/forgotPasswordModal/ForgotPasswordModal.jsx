@@ -27,7 +27,6 @@ function ForgotPasswordModal({ setShowModal }) {
       onSubmit={async (values, actions) => {
         try {
           setIsPending(true);
-          console.log(values);
           const req = await fetch(
             `${process.env.REACT_APP_BACKEND_URL}/${globalUserType}/forgotPassword`,
             {
@@ -41,7 +40,6 @@ function ForgotPasswordModal({ setShowModal }) {
             }
           );
           const res = await req.json();
-          console.log(res);
           if (res.status === "fail" || res.status === "error")
             throw new Error(res.message);
 

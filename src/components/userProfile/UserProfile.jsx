@@ -10,6 +10,7 @@ import LazyLoadImageComp from "../utils/LazyLoadImageComp";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import ContactForm from "../forms/contactForm/ContactForm";
 import Map from "../map/Map";
+import { convertSocialMediaURL } from "../utils/URLConverter.js";
 
 import {
   AiFillFacebook as Facebook,
@@ -136,11 +137,17 @@ function UserProfile({ purpose, editable }) {
               Object.entries(user.mediaLinks).map((link) => {
                 const type = link[0].slice(0, -3);
                 const Icon = icons[type];
+                if (link[1] === "") return undefined;
+                let src = link[1];
+                if (type === "instagram")
+                  src = convertSocialMediaURL(link[1], "https://instagram.com/");
+                if (type === "twitter")
+                  src = convertSocialMediaURL(link[1], "https://twitter.com/");
                 return (
                   <a
                     className={`icon ${type}-icon brad-sm`}
                     key={link[0]}
-                    href={link[1]}
+                    href={src}
                     target="_blank"
                     rel="noreferrer"
                   >

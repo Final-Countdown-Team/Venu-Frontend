@@ -77,33 +77,6 @@ export const MainContextProvider = ({ children }) => {
     });
   };
 
-  // Delete outdated dates, is called when user is logged in
-  // const updateDates = async (response, userType) => {
-  //   try {
-  //     const updatedDates = response.data.dates.filter((date) => {
-  //       const today = new Date().toISOString();
-  //       return date > today;
-  //     });
-
-  //     const req = await fetch(`/${userType}/user/updateMe`, {
-  //       method: "PATCH",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ dates: updatedDates }),
-  //     });
-  //     const res = await req.json();
-  //     dispatch({
-  //       type: "GET_LOGGED_IN_USER",
-  //       payload: res.data,
-  //     });
-  //     console.log("Updated dates 👍");
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
   // Get logged in user
   const getLoggedInUser = async (values, actions, userType, navigate) => {
     try {
@@ -119,7 +92,6 @@ export const MainContextProvider = ({ children }) => {
         body: JSON.stringify(values),
       });
       const res = await req.json();
-      console.log(res);
       // Throw manual error if request fails
       if (res.status === "fail" || res.status === "error")
         throw new Error(res.message || "Ups, something went wrong");
@@ -198,10 +170,10 @@ export const MainContextProvider = ({ children }) => {
   };
 
   // Get the previews on the overview page
-  const getPreviews = async (userType, signal) => {
+  const getPreviews = async (URL, signal) => {
     try {
       setIsLoading(true);
-      const URL = `${BACKEND}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates`;
+      // const URL = `${BACKEND}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`;
       const res = await fetch(URL, {
         headers: fetchHeaders,
         signal,
@@ -209,7 +181,7 @@ export const MainContextProvider = ({ children }) => {
       const data = await res.json();
       dispatch({
         type: "GET_PREVIEWS",
-        payload: data,
+        payload: data.data,
       });
     } catch (err) {
       console.error(err);
@@ -222,7 +194,7 @@ export const MainContextProvider = ({ children }) => {
     try {
       setIsLoading(true);
       setIsPending(true);
-      const query = "fields=name,location,type&page=1&limit=10";
+      const query = "fields=name,location,type&page=1&limit=20";
       const artistsRes = await fetch(`${BACKEND}/artists?${query}`, {
         headers: fetchHeaders,
       });
@@ -248,7 +220,7 @@ export const MainContextProvider = ({ children }) => {
   const getSearchResults = (data) => {
     dispatch({
       type: "GET_PREVIEWS",
-      payload: data,
+      payload: data.data,
     });
   };
 
@@ -294,7 +266,6 @@ export const MainContextProvider = ({ children }) => {
           return formData.append("images", image, `replace-at-${i}`);
         });
       }
-      console.log(formData);
       // Sending images in formData
       const URL = `${BACKEND}/${state.loggedInUser.type}/user/updateMe`;
       const req = await fetch(URL, {
@@ -311,7 +282,6 @@ export const MainContextProvider = ({ children }) => {
         const error = res;
         throw error;
       }
-      console.log(res);
       updateAfterSubmit(res);
       // setTimeout(() => navigate("/me"), 1000);
     } catch (err) {
@@ -331,7 +301,6 @@ export const MainContextProvider = ({ children }) => {
       );
       // Get coordinates based on address
       const geoCodeValues = await geoCodeAddress(filteredValues);
-      console.log(geoCodeValues);
 
       const URL = `${BACKEND}/${state.loggedInUser.type}/user/updateMe`;
       // // Sending regular form data
@@ -368,9 +337,9 @@ export const MainContextProvider = ({ children }) => {
       const filteredValues = Object.fromEntries(
         Object.entries(values).filter(([_, value]) => value !== "")
       );
-      console.log(filteredValues);
+      // console.log(filteredValues);
       const geoCodeValues = await geoCodeAddress(filteredValues);
-      console.log(geoCodeValues);
+      // console.log(geoCodeValues);
       // Sending POST request to backend
       if (geoCodeValues) {
         const req = await fetch(`${BACKEND}/${userType}/signup`, {
@@ -380,7 +349,7 @@ export const MainContextProvider = ({ children }) => {
           body: JSON.stringify(geoCodeValues),
         });
         const res = await req.json();
-        console.log(res);
+        // console.log(res);
         // Throw error when failed
         if (res.status === "fail" || res.status === "error") {
           const error = res;
@@ -424,7 +393,7 @@ export const MainContextProvider = ({ children }) => {
       const geoRes = await fetch(
         `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
       );
-      console.log(geoRes);
+      // console.log(geoRes);
       const geoData = await geoRes.json();
 
       if (!geoRes.ok || !geoData.results.length) {
@@ -436,7 +405,6 @@ export const MainContextProvider = ({ children }) => {
       }
       // Destructuring coordinates
       const [{ lat, lon }] = geoData.results;
-      console.log(lat, lon);
 
       const newValues = {
         ...values,
@@ -543,6 +511,7 @@ export const MainContextProvider = ({ children }) => {
         logoutUser,
         deleteAccount,
         reactivateAccount,
+        dispatch,
       }}
     >
       {children}

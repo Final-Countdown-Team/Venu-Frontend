@@ -14,7 +14,7 @@ function PreviewCard({
   userType,
   id,
   availability,
-  bookedDates,
+  bookedDates = [],
 }) {
   const { isLoggedIn } = useContext(MainContext);
   const [showBooked, setShowBooked] = useState(false);

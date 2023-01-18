@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import "./_Overview.scss";
 import SearchBar from "../searchbar/SearchBar";
@@ -16,14 +16,32 @@ import { ScaleLoader } from "react-spinners";
 import { spinnerOverrideBig } from "../utils/spinnerOverride";
 
 function Overview({ userType }) {
-  const { setGlobalUserType, previews, isLoading, setIsLoading, getPreviews } =
-    useContext(MainContext);
+  const {
+    setGlobalUserType,
+    previews,
+    isLoading,
+    setIsLoading,
+    getPreviews,
+    dispatch,
+  } = useContext(MainContext);
+
+  const [nextPage, setNextPage] = useState(1);
+  const [URL, setURL] = useState(
+    `${process.env.REACT_APP_BACKEND_URL}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`
+  );
+
+  useEffect(() => {
+    setURL(
+      `${process.env.REACT_APP_BACKEND_URL}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`
+    );
+  }, [userType, nextPage]);
 
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
     setGlobalUserType(userType);
-    getPreviews(userType, signal);
+    getPreviews(URL, signal);
+    setNextPage((prev) => prev + 1);
 
     return () => {
       setIsLoading(true);
@@ -33,7 +51,27 @@ function Overview({ userType }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType]);
 
-  const renderFetchedPreviews = previews.data?.map((preview) => (
+  const getNextPreviews = async () => {
+    try {
+      if (previews.length % 6 !== 0) return;
+      setNextPage((prev) => prev + 1);
+      const res = await fetch(URL, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
+        },
+      });
+      const data = await res.json();
+      dispatch({
+        type: "GET_PREVIEWS",
+        payload: [...previews, ...data.data],
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const renderFetchedPreviews = previews.map((preview) => (
     <PreviewCard
       userType={userType}
       key={preview._id}
@@ -72,9 +110,14 @@ function Overview({ userType }) {
           transition={transitionTween}
         >
           {renderFetchedPreviews}
-          <div className={`double-arrow-down double-arrow--${userType}`}>
-            <RxDoubleArrowDown />
-          </div>
+          {previews.length % 6 === 0 && (
+            <div className={`double-arrow-down double-arrow--${userType}`}>
+              <RxDoubleArrowDown
+                onClick={() => getNextPreviews()}
+                className="arrow-icon"
+              />
+            </div>
+          )}
         </motion.div>
       ) : (
         <div className="preview-card-container no-results-container">

@@ -21,7 +21,6 @@ function ContactForm({ userType }) {
           receiver: watchUser.email,
         }}
         onSubmit={async (values, actions) => {
-          console.log(values);
           try {
             setIsPending(true);
             const req = await fetch(

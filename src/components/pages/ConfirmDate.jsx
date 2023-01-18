@@ -34,7 +34,6 @@ function ConfirmDatePage() {
       );
       const res = await req.json();
       if (res.status === "fail") throw new Error(res.message);
-      console.log(res);
       toast.success("Successfully confirmed the date!");
       setIsPending(false);
     } catch (err) {

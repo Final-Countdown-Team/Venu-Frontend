@@ -10,7 +10,6 @@ function DateSelector(props) {
   const handelDatePicker = (e) => {
     const dateObjectsArray = e.map((date) => new Date(date));
     const dateStringsArr = dateObjectsArray.flat();
-    console.log(dateStringsArr);
     formikContext.setFieldValue("dates", dateStringsArr);
   };
 

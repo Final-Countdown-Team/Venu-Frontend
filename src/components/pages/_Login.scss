@@ -1,25 +1,29 @@
 @import "../../Utilities";
 
-.login-page {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.login-wrapper {
+  .login-page {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: scroll;
 
-  .login-container {
-    width: 80%;
-    max-width: 50rem;
-    min-height: 50rem;
-    margin: auto;
-    h1 {
-      font-family: $font-special;
-      font-size: clamp(3.5rem, 10vmin, 5rem);
-      // padding: 1rem;
-    }
+    .login-container {
+      width: 80%;
+      max-width: 50rem;
+      min-height: 50rem;
+      margin: auto;
+      h1 {
+        font-family: $font-special;
+        font-size: clamp(3.5rem, 10vmin, 5rem);
+        // padding: 1rem;
+      }
 
-    .date-confirm-text {
-      font-size: 2rem;
+      .date-confirm-text {
+        font-size: 2rem;
+      }
     }
   }
 }

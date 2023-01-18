@@ -52,7 +52,7 @@ const CustomDropdown = ({
           onChange={(e) => setUserInput(e.target.value)}
           value={userInput}
           type="text"
-          placeholder="Enter City"
+          placeholder="Enter postcode"
         />
       )}
 

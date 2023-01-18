@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { MainContext } from "../../contexts/MainContext";
 import { Formik, Form } from "formik";
 import toast from "react-hot-toast";
@@ -14,7 +14,6 @@ function ChangePasswordForm() {
     isPending,
     setIsPending,
   } = useContext(MainContext);
-  // const [isPending, setIsPending] = useState(false);
   return (
     <Formik
       initialValues={{
@@ -24,7 +23,6 @@ function ChangePasswordForm() {
       }}
       validationSchema={schemaBuilder("changePassword", userType)}
       onSubmit={async (values, actions) => {
-        console.log(values);
         try {
           setIsPending(true);
           const req = await fetch(

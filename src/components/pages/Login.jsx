@@ -20,21 +20,26 @@ function Login({ userType }) {
   }, []);
 
   return (
-    <motion.div
-      variants={containerVariantY}
-      initial="exit"
-      animate="visible"
-      exit="hidden"
-      transition={transitionTween}
-      className="login-page"
-    >
-      <div className="login-container" style={{ filter: showModal && "blur(5px)" }}>
-        <h1>{userType === "venues" ? "Venues" : "Artists"}</h1>
-        <LoginForm userType={userType} setShowModal={setShowModal} />
-        <ArrowBack userType={userType} className="arrow-back-login" />
-      </div>
-      {showModal && <ForgotPasswordModal setShowModal={setShowModal} />}
-    </motion.div>
+    <div className="login-wrapper">
+      <motion.div
+        variants={containerVariantY}
+        initial="exit"
+        animate="visible"
+        exit="hidden"
+        transition={transitionTween}
+        className="login-page"
+      >
+        <div
+          className="login-container"
+          style={{ filter: showModal && "blur(5px)" }}
+        >
+          <h1>{userType === "venues" ? "Venues" : "Artists"}</h1>
+          <LoginForm userType={userType} setShowModal={setShowModal} />
+          <ArrowBack userType={userType} className="arrow-back-login" />
+        </div>
+        {showModal && <ForgotPasswordModal setShowModal={setShowModal} />}
+      </motion.div>
+    </div>
   );
 }
 

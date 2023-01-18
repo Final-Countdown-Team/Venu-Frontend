@@ -39,7 +39,6 @@ function ImageUploader({ setImageFiles }) {
   };
 
   const validateFileSize = (file) => {
-    console.log(file.size);
     if (file.size >= 5000000) {
       setError("This file is too big");
       toast.error("This file is too big");
