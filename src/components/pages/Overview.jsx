@@ -26,6 +26,7 @@ function Overview({ userType }) {
   } = useContext(MainContext);
 
   const [nextPage, setNextPage] = useState(1);
+  const [isLastPage, setIsLastPage] = useState(false);
   const [URL, setURL] = useState(
     `${process.env.REACT_APP_BACKEND_URL}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`
   );
@@ -53,6 +54,7 @@ function Overview({ userType }) {
 
   const getNextPreviews = async () => {
     try {
+      if (isLastPage) return;
       if (previews.length % 6 !== 0) return;
       setNextPage((prev) => prev + 1);
       const res = await fetch(URL, {
@@ -62,6 +64,7 @@ function Overview({ userType }) {
         },
       });
       const data = await res.json();
+      if (data.results === 0) setIsLastPage(true);
       dispatch({
         type: "GET_PREVIEWS",
         payload: [...previews, ...data.data],
@@ -110,7 +113,7 @@ function Overview({ userType }) {
           transition={transitionTween}
         >
           {renderFetchedPreviews}
-          {previews.length % 6 === 0 && (
+          {(!isLastPage || previews.length % 6 === 0) && (
             <div className={`double-arrow-down double-arrow--${userType}`}>
               <RxDoubleArrowDown
                 onClick={() => getNextPreviews()}
