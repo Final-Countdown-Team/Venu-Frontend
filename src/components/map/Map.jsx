@@ -41,6 +41,7 @@ const Map = ({ purpose }) => {
       style: "mapbox://styles/druckmax/clablcs6w002315ls0sly3qct",
       center: [13.405, 52.52],
       scrollZoom: false,
+      cooperativeGestures: true,
       zoom: 10,
       maxZoom: 10,
     });
