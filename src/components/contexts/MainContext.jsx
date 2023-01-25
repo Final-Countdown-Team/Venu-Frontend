@@ -8,6 +8,7 @@ const fetchHeaders = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": BACKEND,
 };
+console.log(BACKEND);
 
 export const MainContext = createContext();
 
@@ -188,7 +189,7 @@ export const MainContextProvider = ({ children }) => {
   // Get locations of 10 users of each userType for the map on Home
   const getLocations = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       setIsPending(true);
       const query = "fields=name,location,type&page=1&limit=20";
       const artistsRes = await fetch(`${BACKEND}/artists?${query}`, {
