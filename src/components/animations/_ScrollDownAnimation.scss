@@ -28,18 +28,17 @@
   }
 
   .bounce {
-    -moz-animation: bounce 2s infinite;
-    -webkit-animation: bounce 2s infinite;
-    animation: bounce 2s infinite;
-    animation-direction: alternate;
+    -moz-animation: bounce 1s infinite;
+    -webkit-animation: bounce 1s infinite;
+    animation: bounce 1s infinite;
   }
 
   @keyframes bounce {
-    40% {
-      transform: translateY(-8px);
+    0% {
+      transform: translateY(0);
     }
-    60% {
-      transform: translateY(-6px);
+    50% {
+      transform: translateY(-8px);
     }
     100% {
       transform: translateY(0);
