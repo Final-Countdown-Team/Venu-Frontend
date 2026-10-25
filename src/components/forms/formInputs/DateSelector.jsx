@@ -1,6 +1,8 @@
 import { useFormikContext } from "formik";
-import DatePicker from "react-multi-date-picker";
+import DatePickerModule from "react-multi-date-picker";
 import "react-multi-date-picker/styles/layouts/mobile.css";
+
+const DatePicker = DatePickerModule.default ?? DatePickerModule;
 import { MdChevronRight } from "react-icons/md";
 
 function DateSelector(props) {
