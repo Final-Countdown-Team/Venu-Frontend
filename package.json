@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "formik": "^2.4.9",
     "mapbox-gl": "^3.33.0",
