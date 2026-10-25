@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { containerVariantX, transitionTween } from "../animations/containerVariants";
 import { Calendar } from "react-multi-date-picker";
 import { useInView } from "react-intersection-observer";

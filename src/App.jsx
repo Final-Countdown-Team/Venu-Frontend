@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation, Outlet, Navigate } from "react-router-dom";
 import { MainContext } from "./components/contexts/MainContext";
 import { useContext, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { Toaster } from "react-hot-toast";
 
 import "./App.scss";

@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
-import PropTypes from "prop-types";
 import HandleClickOutside from "../utils/HandleClickOutside";
 import "./_CustomDropdown.scss";
 
@@ -8,15 +7,15 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 
 const CustomDropdown = ({
   onChange: propsOnChange,
-  options,
+  options = [],
   type,
-  autocomplete,
+  autocomplete = false,
   userInput,
   setUserInput,
   setLatLng,
   setRadius,
-  radius,
-  contact,
+  radius = "",
+  contact = false,
   setFieldValue,
 }) => {
   const { globalUserType, isLoading } = useContext(MainContext);
@@ -104,16 +103,6 @@ const CustomDropdown = ({
       )}
     </div>
   );
-};
-
-CustomDropdown.defaultProps = {
-  options: [],
-  contact: false,
-  autocomplete: false,
-  radius: "",
-};
-CustomDropdown.propTypes = {
-  options: PropTypes.array,
 };
 
 export default CustomDropdown;

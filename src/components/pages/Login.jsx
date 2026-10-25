@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { containerVariantY, transitionTween } from "../animations/containerVariants";
 import LoginForm from "../forms/loginForm/LoginForm";
 import ArrowBack from "../utils/ArrowBack";
@@ -10,7 +9,7 @@ import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { useEffect } from "react";
 
-function Login({ userType }) {
+function Login({ userType = "venues" }) {
   const { setGlobalUserType } = useContext(MainContext);
   const [showModal, setShowModal] = useState(false);
 
@@ -42,13 +41,5 @@ function Login({ userType }) {
     </div>
   );
 }
-
-Login.defaultProps = {
-  userType: "venues",
-};
-
-Login.propTypes = {
-  userType: PropTypes.string,
-};
 
 export default Login;

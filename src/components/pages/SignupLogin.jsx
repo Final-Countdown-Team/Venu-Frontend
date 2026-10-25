@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { containerVariantY, transitionTween } from "../animations/containerVariants";
 import ReuseButton from "../../components/buttons/Reusable_BB";
 

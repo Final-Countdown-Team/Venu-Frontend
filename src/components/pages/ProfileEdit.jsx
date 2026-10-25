@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { MainContext } from "../contexts/MainContext";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import "./_ProfileEdit.scss";
 

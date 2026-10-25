@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import { MainContext } from "../contexts/MainContext";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { containerVariantX, transitionTween } from "../animations/containerVariants";
 import { ScaleLoader } from "react-spinners";
 import Heading from "../heading/Heading";

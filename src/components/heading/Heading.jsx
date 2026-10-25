@@ -1,6 +1,6 @@
 import React from "react";
 import "./_Heading.scss";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { pathVariant } from "../animations/containerVariants";
 
 function Heading() {

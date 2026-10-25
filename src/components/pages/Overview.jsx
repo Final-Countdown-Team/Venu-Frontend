@@ -6,7 +6,7 @@ import PreviewCard from "../cards/PreviewCard";
 import ArrowBack from "../utils/ArrowBack";
 import { RxDoubleArrowDown } from "react-icons/rx";
 import NoResults from "../../img/no-results.gif";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   containerVariantX,
   containerVariantY,
