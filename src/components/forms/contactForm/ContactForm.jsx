@@ -26,13 +26,13 @@ function ContactForm({ userType }) {
           try {
             setIsPending(true);
             const req = await fetch(
-              `${process.env.REACT_APP_BACKEND_URL}/${watchUser.type}/contactUser/${watchUser._id}`,
+              `${import.meta.env.VITE_BACKEND_URL}/${watchUser.type}/contactUser/${watchUser._id}`,
               {
                 method: "POST",
                 credentials: "include",
                 headers: {
                   "Content-Type": "application/json",
-                  "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
+                  "Access-Control-Allow-Origin": import.meta.env.VITE_BACKEND_URL,
                 },
                 body: JSON.stringify(values),
               }

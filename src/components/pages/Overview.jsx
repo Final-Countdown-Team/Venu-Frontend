@@ -30,12 +30,12 @@ function Overview({ userType }) {
   const [nextPage, setNextPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false);
   const [URL, setURL] = useState(
-    `${process.env.REACT_APP_BACKEND_URL}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`
+    `${import.meta.env.VITE_BACKEND_URL}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`
   );
 
   useEffect(() => {
     setURL(
-      `${process.env.REACT_APP_BACKEND_URL}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`
+      `${import.meta.env.VITE_BACKEND_URL}/${userType}?fields=name,description,profileImage,availability,dates,bookedDates&page=${nextPage}&limit=6`
     );
   }, [userType, nextPage]);
 
@@ -63,7 +63,7 @@ function Overview({ userType }) {
       const res = await fetch(URL, {
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
+          "Access-Control-Allow-Origin": import.meta.env.VITE_BACKEND_URL,
         },
       });
       const data = await res.json();

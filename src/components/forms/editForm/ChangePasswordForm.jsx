@@ -26,13 +26,13 @@ function ChangePasswordForm() {
         try {
           setIsPending(true);
           const req = await fetch(
-            `${process.env.REACT_APP_BACKEND_URL}/${userType}/user/updateMyPassword`,
+            `${import.meta.env.VITE_BACKEND_URL}/${userType}/user/updateMyPassword`,
             {
               method: "PATCH",
               credentials: "include",
               headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
+                "Access-Control-Allow-Origin": import.meta.env.VITE_BACKEND_URL,
               },
               body: JSON.stringify(values),
             }

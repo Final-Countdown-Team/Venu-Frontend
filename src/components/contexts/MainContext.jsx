@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 import toast from "react-hot-toast";
 import { mainContextReducer } from "./MainContextReducer";
 
-const BACKEND = process.env.REACT_APP_BACKEND_URL;
+const BACKEND = import.meta.env.VITE_BACKEND_URL;
 const fetchHeaders = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": BACKEND,
@@ -388,7 +388,7 @@ export const MainContextProvider = ({ children }) => {
       const { street, city, zipcode } = values.address;
       // Fetching address data from geoApify
       const geoRes = await fetch(
-        `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${process.env.REACT_APP_GEOAPIFY_KEY}`
+        `https://api.geoapify.com/v1/geocode/search?street=${street}&postcode=${zipcode}&city=${city}&format=json&apiKey=${import.meta.env.VITE_GEOAPIFY_KEY}`
       );
       // console.log(geoRes);
       const geoData = await geoRes.json();

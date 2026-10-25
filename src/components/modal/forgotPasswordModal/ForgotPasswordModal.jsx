@@ -28,13 +28,13 @@ function ForgotPasswordModal({ setShowModal }) {
         try {
           setIsPending(true);
           const req = await fetch(
-            `${process.env.REACT_APP_BACKEND_URL}/${globalUserType}/forgotPassword`,
+            `${import.meta.env.VITE_BACKEND_URL}/${globalUserType}/forgotPassword`,
             {
               method: "POST",
               credentials: "include",
               headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": process.env.REACT_APP_BACKEND_URL,
+                "Access-Control-Allow-Origin": import.meta.env.VITE_BACKEND_URL,
               },
               body: JSON.stringify(values),
             }

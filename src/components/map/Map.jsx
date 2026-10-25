@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useContext } from "react";
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl from "!mapbox-gl";
+import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MainContext } from "../contexts/MainContext";
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
 
 const Map = ({ purpose }) => {
   const { mapLocations, watchUser, loggedInUser } = useContext(MainContext);
