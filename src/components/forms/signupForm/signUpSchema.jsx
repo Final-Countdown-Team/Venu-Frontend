@@ -39,12 +39,24 @@ const passwordSchema = yup.object().shape({
     .required("This field is required"),
 });
 
-const mediaLinksSchema = {
-  facebookUrl: yup.string().url("Please enter a valid URL"),
-  instagramTag: yup
+const httpsUrl = yup
+  .string()
+  .url("Please enter a valid URL")
+  .matches(/^https:\/\//, "URL must start with https://");
+
+const socialTag = (platform) =>
+  yup
     .string()
-    .matches(/^@/, "Your instagram tag must start with an @"),
-  twitterTag: yup.string().matches(/^@/, "Your twitter tag must start with an @"),
+    .matches(/^@/, `Your ${platform} tag must start with an @`)
+    .matches(
+      /^@[A-Za-z0-9._]{1,30}$/,
+      `Your ${platform} tag may only contain letters, numbers, periods and underscores`
+    );
+
+const mediaLinksSchema = {
+  facebookUrl: httpsUrl,
+  instagramTag: socialTag("instagram"),
+  twitterTag: socialTag("twitter"),
 };
 
 const venueSchema = yup.object().shape({
@@ -55,7 +67,7 @@ const venueSchema = yup.object().shape({
     .max(1000000),
   mediaLinks: yup.object().shape({
     ...mediaLinksSchema,
-    websiteUrl: yup.string().url("Please enter a valid URL"),
+    websiteUrl: httpsUrl,
   }),
 });
 
@@ -64,7 +76,7 @@ const artistSchema = yup.object().shape({
   members: yup.number().typeError("Please insert a valid number").min(1).max(1000),
   mediaLinks: yup.object().shape({
     ...mediaLinksSchema,
-    youtubeUrl: yup.string().url("Please enter a valid URL"),
+    youtubeUrl: httpsUrl,
   }),
 });
 
